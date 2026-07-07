@@ -31,6 +31,14 @@
   .mark { font-family: "Fraunces", serif; font-weight: 650; font-size: 22px; letter-spacing: -0.01em; }
   .mark em { font-style: normal; color: var(--seal); }
   .asof { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-soft); letter-spacing: 0.04em; }
+  .head-right { display: flex; align-items: center; gap: 16px; }
+  .fb-btn { font-family: "Archivo", sans-serif; font-size: 13px; font-weight: 600;
+    color: #fff; background: var(--seal); border: 1.5px solid var(--seal);
+    border-radius: 6px; padding: 8px 14px; text-decoration: none; white-space: nowrap;
+    box-shadow: 2px 2px 0 rgba(28,50,39,0.18); transition: transform .12s ease, background .12s ease; }
+  .fb-btn:hover { background: var(--seal-bright); transform: translateY(-1px); }
+  .fb-btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  @media (max-width: 560px) { .asof { display: none; } }
 
   .hero { padding: 52px 0 8px; }
   .hero h1 { font-family: "Fraunces", serif; font-weight: 500;
@@ -144,7 +152,11 @@
 <div class="wrap">
   <header class="top">
     <div class="mark">Per<em>Dollar</em></div>
-    <div class="asof">PRICES VERIFIED · JUL 2026</div>
+    <div class="head-right">
+      <div class="asof">PRICES VERIFIED · JUL 2026</div>
+      <!-- REPLACE the href below with your Google Form link (see README) -->
+      <a class="fb-btn" href="https://forms.gle/REPLACE_ME" target="_blank" rel="noopener">Give feedback</a>
+    </div>
   </header>
 </div>
 <div class="tape" aria-label="Recent market events"><div class="tape-inner" id="tape"></div></div>
