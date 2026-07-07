@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PerDollar — what your AI budget actually buys</title>
+<meta name="description" content="Compare LLM API costs by completed job, not by token. Pick a budget and a real task and see how many jobs each model delivers." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #edf1ea; --paper-deep: #e2e8de;
+    --ink: #1c3227; --ink-soft: #47604f;
+    --seal: #0e7b4f; --seal-bright: #12a366;
+    --warn: #a33f2a; --line: #c3cec0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; color: var(--ink);
+    font-family: "Archivo", system-ui, sans-serif;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, #f6f8f3 0%, transparent 60%),
+      var(--paper);
+    padding-bottom: 64px;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+  header.top { display: flex; align-items: baseline; justify-content: space-between;
+    padding: 26px 0 18px; border-bottom: 1px solid var(--line); }
+  .mark { font-family: "Fraunces", serif; font-weight: 650; font-size: 22px; letter-spacing: -0.01em; }
+  .mark em { font-style: normal; color: var(--seal); }
+  .asof { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-soft); letter-spacing: 0.04em; }
+
+  .hero { padding: 52px 0 8px; }
+  .hero h1 { font-family: "Fraunces", serif; font-weight: 500;
+    font-size: clamp(34px, 5.4vw, 58px); line-height: 1.04;
+    letter-spacing: -0.02em; margin: 0 0 10px; max-width: 15ch; }
+  .hero h1 strong { font-weight: 650; color: var(--seal); }
+  .sub { color: var(--ink-soft); font-size: 16px; max-width: 52ch; margin: 0 0 34px; line-height: 1.55; }
+
+  .notes { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
+  .note { font-family: "IBM Plex Mono", monospace; font-weight: 600;
+    border: 1.5px solid var(--ink); background: #f7f9f4; border-radius: 6px;
+    padding: 10px 18px 8px; cursor: pointer; font-size: 18px; color: var(--ink);
+    box-shadow: 2px 2px 0 rgba(28,50,39,0.18); transition: transform .12s ease, background .12s ease; }
+  .note small { display: block; font-size: 9px; letter-spacing: .14em; font-weight: 500; color: var(--ink-soft); }
+  .note:hover { transform: translateY(-2px); }
+  .note:focus-visible { outline: 3px solid var(--seal-bright); outline-offset: 2px; }
+  .note.on { background: var(--ink); color: var(--paper); box-shadow: 2px 2px 0 var(--seal); }
+  .note.on small { color: var(--paper-deep); }
+
+  .controls { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+  select { font-family: "Archivo", sans-serif; font-size: 15px; font-weight: 500;
+    padding: 10px 14px; border-radius: 6px; border: 1.5px solid var(--ink);
+    background: #f7f9f4; color: var(--ink); cursor: pointer; }
+  .toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 13px;
+    color: var(--ink-soft); cursor: pointer; user-select: none; }
+  .toggle input { accent-color: var(--seal); width: 15px; height: 15px; }
+  .why { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .03em;
+    color: var(--ink-soft); max-width: 78ch; line-height: 1.6;
+    border-left: 3px solid var(--seal); padding-left: 10px; margin: 14px 0 0; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+    gap: 18px; padding: 30px 0 10px; }
+  .rcpt { background: #fbfcf8; border: 1px solid var(--line); border-radius: 3px 3px 0 0;
+    padding: 16px 16px 20px; position: relative;
+    box-shadow: 0 1px 0 rgba(28,50,39,.08), 0 6px 14px -10px rgba(28,50,39,.35); }
+  .rcpt::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 8px;
+    background:
+      linear-gradient(-45deg, transparent 5px, #fbfcf8 5px) 0 0/12px 8px repeat-x,
+      linear-gradient(45deg, transparent 5px, #fbfcf8 5px) 6px 0/12px 8px repeat-x;
+    filter: drop-shadow(0 2px 2px rgba(28,50,39,.12)); }
+  .rcpt .prov { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .16em;
+    text-transform: uppercase; margin-bottom: 2px; }
+  .rcpt h3 { margin: 0 0 12px; font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em; }
+  .rcpt .qty { font-family: "Fraunces", serif; font-weight: 650; font-size: 40px;
+    line-height: 1; letter-spacing: -0.02em; }
+  .rcpt .unit { font-size: 12.5px; color: var(--ink-soft); margin: 4px 0 12px; }
+  .rcpt .bar { height: 5px; background: var(--paper-deep); border-radius: 99px; overflow: hidden; margin-bottom: 12px; }
+  .rcpt .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--seal), var(--seal-bright)); }
+  .rcpt .cpt { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--ink-soft);
+    border-top: 1px dashed var(--line); padding-top: 9px; display: flex; justify-content: space-between; }
+  .best { position: absolute; top: 12px; right: 12px; font-family: "IBM Plex Mono", monospace;
+    font-size: 9px; letter-spacing: .12em; background: var(--seal); color: #fff;
+    padding: 3px 7px; border-radius: 3px; }
+
+  .sect { margin-top: 56px; }
+  .sect h2 { font-family: "Fraunces", serif; font-weight: 650; font-size: 26px; letter-spacing: -0.015em; margin: 0 0 4px; }
+  .sect .cap { color: var(--ink-soft); font-size: 14px; margin: 0 0 18px; max-width: 62ch; line-height: 1.55; }
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: #fbfcf8; }
+  table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 13.5px; }
+  th { text-align: right; font-family: "IBM Plex Mono", monospace; font-weight: 500;
+    font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
+    padding: 12px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  td { padding: 11px 14px; border-bottom: 1px solid #e7ece4; text-align: right;
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; }
+  td:first-child { font-family: "Archivo", sans-serif; font-weight: 600; font-size: 13.5px; }
+  tr:last-child td { border-bottom: none; }
+  td .p { display: block; font-family: "IBM Plex Mono", monospace; font-weight: 400;
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+  .hi { color: var(--seal); font-weight: 600; }
+  .lo { color: var(--warn); }
+
+  .foot { margin-top: 46px; border-top: 1px solid var(--line); padding-top: 18px;
+    font-size: 12.5px; color: var(--ink-soft); line-height: 1.7; max-width: 78ch; }
+  .foot b { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) { .note { transition: none; } }
+  @media (max-width: 560px) {
+    .hero { padding-top: 36px; }
+    .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+    .rcpt .qty { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="mark">Per<em>Dollar</em></div>
+    <div class="asof">PRICES VERIFIED · JUL 2026</div>
+  </header>
+
+  <section class="hero">
+    <h1>What does <strong id="h-budget">$1</strong> actually buy?</h1>
+    <p class="sub">Token prices are abstractions. Jobs are not. Pick a budget and a task,
+      and see how many completed jobs each model delivers — normalized for how
+      verbose each model's answers really are.</p>
+    <div class="notes" id="notes" role="group" aria-label="Budget"></div>
+    <div class="controls">
+      <select id="task" aria-label="Task"></select>
+      <label class="toggle">
+        <input type="checkbox" id="norm" checked /> Normalize for answer verbosity
+      </label>
+    </div>
+    <p class="why" id="why"></p>
+  </section>
+
+  <section class="grid" id="grid" aria-label="Results"></section>
+
+  <section class="sect">
+    <h2>The ledger</h2>
+    <p class="cap" id="ledgercap"></p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>Model</th><th>Input / 1M</th><th>Output / 1M</th>
+          <th>Verbosity ×</th><th>Cost per job</th><th>Jobs per $1</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <b>Methodology.</b> Cost per job = (input tokens × input price) + (baseline
+    output tokens × verbosity factor × output price). Verbosity factors are
+    illustrative estimates of how long each model's answers run for the same
+    prompt — the real product measures these empirically per task, because
+    different tokenizers and response styles mean 1,000 tokens is not the same
+    amount of answer everywhere. List prices are standard-tier, first-party API
+    rates as of July 2026; batch discounts (~50%) and cached-input rates (~10%
+    of input price) are excluded here. The task list is usage-weighted, drawn
+    from published studies (Anthropic Economic Index, OpenRouter State of AI,
+    OpenAI usage report); token footprints per task are still estimates pending
+    an empirical benchmark suite. Capability is not modeled: a cheap model that
+    fails the job costs more than a dear one that succeeds.
+  </footer>
+</div>
+
+<script>
+const MODELS = [
+  { id:"gpt55",   name:"GPT-5.5",               provider:"OpenAI",    inP:5.0,  outP:30.0, verbosity:1.0,  tier:"Frontier" },
+  { id:"opus48",  name:"Claude Opus 4.8",       provider:"Anthropic", inP:5.0,  outP:25.0, verbosity:1.15, tier:"Frontier" },
+  { id:"gpt54",   name:"GPT-5.4",               provider:"OpenAI",    inP:2.5,  outP:15.0, verbosity:1.05, tier:"Production" },
+  { id:"son46",   name:"Claude Sonnet 4.6",     provider:"Anthropic", inP:3.0,  outP:15.0, verbosity:1.1,  tier:"Production" },
+  { id:"gem31p",  name:"Gemini 3.1 Pro",        provider:"Google",    inP:2.0,  outP:12.0, verbosity:0.85, tier:"Production" },
+  { id:"glm52",   name:"GLM-5.2",               provider:"Z.AI",      inP:1.4,  outP:4.4,  verbosity:0.95, tier:"Production" },
+  { id:"haiku45", name:"Claude Haiku 4.5",      provider:"Anthropic", inP:1.0,  outP:5.0,  verbosity:1.0,  tier:"Budget" },
+  { id:"mm3",     name:"MiniMax M3",            provider:"MiniMax",   inP:0.6,  outP:2.4,  verbosity:0.95, tier:"Budget" },
+  { id:"gem3f",   name:"Gemini 3 Flash",        provider:"Google",    inP:0.5,  outP:3.0,  verbosity:0.8,  tier:"Budget" },
+  { id:"g41mini", name:"GPT-4.1 Mini",          provider:"OpenAI",    inP:0.4,  outP:1.6,  verbosity:0.95, tier:"Budget" },
+  { id:"dsv4f",   name:"DeepSeek V4 Flash",     provider:"DeepSeek",  inP:0.14, outP:0.28, verbosity:0.9,  tier:"Ultra-budget" },
+  { id:"g41nano", name:"GPT-4.1 Nano",          provider:"OpenAI",    inP:0.1,  outP:0.4,  verbosity:0.9,  tier:"Ultra-budget" },
+  { id:"gem31fl", name:"Gemini 3.1 Flash-Lite", provider:"Google",    inP:0.1,  outP:0.4,  verbosity:0.75, tier:"Ultra-budget" },
+];
+
+// Usage-weighted task list; `src` cites why each task earns its slot.
+const TASKS = [
+  { id:"bugfix",  label:"Fix a bug in existing code",   unit:"bug fixes",   inT:9000,  outT:1100,
+    src:"Modifying software to correct errors is the single most prevalent task in Anthropic's Economic Index (~6% of usage)." },
+  { id:"codegen", label:"Generate a code feature",      unit:"features",    inT:3500,  outT:2000,
+    src:"Programming exceeds 50% of token volume in OpenRouter's 100T-token State of AI study." },
+  { id:"agent",   label:"One coding-agent step",        unit:"agent steps", inT:12000, outT:700,
+    src:"Agentic coding tools split work into many context-heavy API calls — a growing share of first-party API traffic." },
+  { id:"review",  label:"Review a pull request",        unit:"PR reviews",  inT:6000,  outT:1200,
+    src:"Code review and debugging sit alongside generation in the programming category that dominates API spend." },
+  { id:"script",  label:"Write a data-analysis script", unit:"scripts",     inT:1500,  outT:1000,
+    src:"Data scripting is called out as a core applied-programming use in OpenRouter's usage taxonomy." },
+  { id:"support", label:"Resolve a support ticket",     unit:"resolutions", inT:2500,  outT:450,
+    src:"Customer support is a canonical high-volume production workload across provider case studies." },
+  { id:"pdf",     label:"Summarize a 10-page document", unit:"summaries",   inT:7000,  outT:600,
+    src:"Document processing and summarization are staple business API workloads." },
+  { id:"xlate",   label:"Translate one page",           unit:"pages",       inT:700,   outT:750,
+    src:"Translation is a long-standing high-volume API category, especially outside English." },
+  { id:"email",   label:"Draft a business email",       unit:"emails",      inT:300,   outT:250,
+    src:"Writing assistance leads consumer-side usage in OpenAI's 'How People Use ChatGPT' report." },
+  { id:"rp",      label:"One roleplay chat turn",       unit:"turns",       inT:2000,  outT:350,
+    src:"Roleplay/companionship is a large, usually unlisted category in OpenRouter's usage data." },
+];
+
+const BUDGETS = [0.1, 1, 5, 20, 100];
+const HUES = { OpenAI:"#3f6d5a", Anthropic:"#7a5230", Google:"#33566e",
+               DeepSeek:"#5a4a6e", MiniMax:"#6e3d4d", "Z.AI":"#4a5a3d" };
+
+let budget = 1, taskId = "bugfix", normalize = true;
+
+const money = v => v >= 0.01 ? "$" + v.toFixed(v >= 1 ? 2 : 3) : "$" + v.toFixed(4);
+const big = n => n.toLocaleString("en-US");
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+function costPerTask(m, t, useVerb) {
+  const v = useVerb ? m.verbosity : 1;
+  return (t.inT * m.inP) / 1e6 + (t.outT * v * m.outP) / 1e6;
+}
+
+function render() {
+  const task = TASKS.find(t => t.id === taskId);
+  document.getElementById("h-budget").textContent = budget < 1 ? Math.round(budget*100) + "¢" : "$" + budget;
+  document.getElementById("why").textContent = "WHY THIS TASK — " + task.src;
+
+  document.getElementById("notes").innerHTML = BUDGETS.map(b =>
+    `<button class="note${b===budget?" on":""}" data-b="${b}">${b<1?Math.round(b*100)+"¢":"$"+b}<small>BUDGET</small></button>`
+  ).join("");
+  document.querySelectorAll(".note").forEach(el =>
+    el.addEventListener("click", () => { budget = parseFloat(el.dataset.b); render(); }));
+
+  const rows = MODELS.map(m => {
+    const cpt = costPerTask(m, task, normalize);
+    return { ...m, cpt, count: Math.floor(budget / cpt) };
+  }).sort((a,b) => b.count - a.count);
+  const max = rows[0].count || 1;
+
+  document.getElementById("grid").innerHTML = rows.map((m,i) => `
+    <article class="rcpt">
+      ${i===0 ? '<span class="best">MOST PER $</span>' : ""}
+      <div class="prov" style="color:${HUES[m.provider]}">${esc(m.provider)} · ${esc(m.tier)}</div>
+      <h3>${esc(m.name)}</h3>
+      <div class="qty">${big(m.count)}</div>
+      <div class="unit">${esc(task.unit)} for ${money(budget)}</div>
+      <div class="bar"><i style="width:${Math.max(2,(m.count/max)*100)}%"></i></div>
+      <div class="cpt"><span>per job</span><span>${money(m.cpt)}</span></div>
+    </article>`).join("");
+
+  document.getElementById("ledgercap").textContent =
+    `List prices per million tokens, and what they translate to for "${task.label.toLowerCase()}" ` +
+    `(~${big(task.inT)} tokens in, ~${big(task.outT)} baseline tokens out).`;
+
+  document.getElementById("tbody").innerHTML = rows.map((m,i) => `
+    <tr>
+      <td>${esc(m.name)}<span class="p" style="color:${HUES[m.provider]}">${esc(m.provider)}</span></td>
+      <td>$${m.inP.toFixed(2)}</td>
+      <td>$${m.outP.toFixed(2)}</td>
+      <td>${normalize ? m.verbosity.toFixed(2) : "—"}</td>
+      <td class="${i===rows.length-1?"lo":""}">${money(m.cpt)}</td>
+      <td class="${i===0?"hi":""}">${big(Math.floor(1/m.cpt))}</td>
+    </tr>`).join("");
+}
+
+const sel = document.getElementById("task");
+sel.innerHTML = TASKS.map(t => `<option value="${t.id}">${esc(t.label)}</option>`).join("");
+sel.value = taskId;
+sel.addEventListener("change", e => { taskId = e.target.value; render(); });
+document.getElementById("norm").addEventListener("change", e => { normalize = e.target.checked; render(); });
+render();
+</script>
+</body>
+</html>
