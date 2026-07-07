@@ -107,7 +107,32 @@
     font-size: 12.5px; color: var(--ink-soft); line-height: 1.7; max-width: 78ch; }
   .foot b { color: var(--ink); }
 
-  @media (prefers-reduced-motion: reduce) { .note { transition: none; } }
+  /* market screen */
+  .tape { overflow: hidden; border-bottom: 1px solid var(--line); background: #f3f6f1; }
+  .tape-inner { display: flex; gap: 40px; white-space: nowrap; padding: 8px 24px;
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .04em;
+    color: var(--ink-soft); width: max-content; animation: tape 45s linear infinite; }
+  .tape-inner b { color: var(--ink); font-weight: 600; }
+  .dn { color: var(--seal); } .up { color: var(--warn); }
+  @keyframes tape { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .idx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px; margin-bottom: 26px; }
+  .idx { background: #fbfcf8; border: 1px solid var(--line); border-radius: 6px; padding: 16px; }
+  .idx .lbl { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--ink-soft); }
+  .idx h3 { margin: 2px 0 8px; font-family: "Fraunces", serif; font-weight: 650; font-size: 19px; letter-spacing: -0.01em; }
+  .idx .val { font-family: "IBM Plex Mono", monospace; font-size: 22px; font-weight: 600; }
+  .idx .chg { font-family: "IBM Plex Mono", monospace; font-size: 12px; margin-left: 8px; }
+  .idx svg { width: 100%; height: 56px; margin-top: 10px; display: block; }
+  .idx .sub2 { font-size: 11.5px; color: var(--ink-soft); margin-top: 6px; }
+  .star { background: none; border: none; cursor: pointer; font-size: 16px; line-height: 1;
+    color: #b9c5b5; padding: 0 2px; vertical-align: -1px; }
+  .star.on { color: #c9a227; }
+  .star:focus-visible { outline: 2px solid var(--seal-bright); outline-offset: 2px; border-radius: 3px; }
+  @media (prefers-reduced-motion: reduce) {
+    .note { transition: none; }
+    .tape-inner { animation: none; white-space: normal; flex-wrap: wrap; width: auto; }
+  }
   @media (max-width: 560px) {
     .hero { padding-top: 36px; }
     .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
@@ -121,6 +146,9 @@
     <div class="mark">Per<em>Dollar</em></div>
     <div class="asof">PRICES VERIFIED · JUL 2026</div>
   </header>
+</div>
+<div class="tape" aria-label="Recent market events"><div class="tape-inner" id="tape"></div></div>
+<div class="wrap">
 
   <section class="hero">
     <h1>What does <strong id="h-budget">$1</strong> actually buy?</h1>
@@ -132,6 +160,9 @@
       <select id="task" aria-label="Task"></select>
       <label class="toggle">
         <input type="checkbox" id="norm" checked /> Normalize for answer verbosity
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="wl" /> Watchlist only <span id="wlcount"></span>
       </label>
     </div>
     <p class="why" id="why"></p>
@@ -149,6 +180,27 @@
           <th>Verbosity ×</th><th>Cost per job</th><th>Jobs per $1</th>
         </tr></thead>
         <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sect">
+    <h2>Market screen</h2>
+    <p class="cap">The exchange view. Indices track the cost of one completed job over time —
+      a consumer-price index for AI work. Movers show the biggest effective-cost changes on the
+      tape. One inversion from the stock market: falling cost is good news for buyers, so
+      <span class="dn">green means down</span>. Series and movers shown here are sample data;
+      the live version is driven by the verified price-changes feed.</p>
+    <div class="idx-grid">
+      <div class="idx" id="idx-budget"></div>
+      <div class="idx" id="idx-frontier"></div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>Mover</th><th>Event</th><th>Δ cost / job</th><th>Date</th>
+        </tr></thead>
+        <tbody id="movers"></tbody>
       </table>
     </div>
   </section>
@@ -214,7 +266,33 @@ const BUDGETS = [0.1, 1, 5, 20, 100];
 const HUES = { OpenAI:"#3f6d5a", Anthropic:"#7a5230", Google:"#33566e",
                DeepSeek:"#5a4a6e", MiniMax:"#6e3d4d", "Z.AI":"#4a5a3d" };
 
-let budget = 1, taskId = "bugfix", normalize = true;
+// ---- market screen data (sample feed; live version reads price_changes) ----
+const EVENTS = [
+  { d:"JUL 1",  t:"Claude Sonnet 5 listed", dir:"" },
+  { d:"JUL 1",  t:"Gemini 3.1 Flash-Lite Image listed", dir:"" },
+  { d:"JUN 28", t:"MiniMax M3 launch promo", v:"−50%", dir:"dn" },
+  { d:"JUN 24", t:"Grok 4.3 listed", dir:"" },
+  { d:"JUN 23", t:"Qwen3.5 family refresh", dir:"" },
+  { d:"JUN",    t:"Gemini 3.1 Pro long-context tier", v:">200K +100%", dir:"up" },
+  { d:"MAR",    t:"GPT-5.4 family repriced", v:"−17%", dir:"dn" },
+];
+// Cost of one bug fix, monthly, Jan–Jul 2026 (sample series ending at live values)
+const IDX = {
+  budget:   { name:"Budget Bug-Fix Index",   sub:"Cheapest verified cost to fix one bug, any model",
+              pts:[0.0048, 0.0041, 0.0035, 0.0028, 0.0022, 0.0018, 0.0015] },
+  frontier: { name:"Frontier Bug-Fix Index", sub:"Cost to fix one bug on the top frontier model",
+              pts:[0.132, 0.121, 0.110, 0.098, 0.090, 0.083, 0.078] },
+};
+const MOVERS = [
+  { m:"MiniMax M3",            e:"Launch promo halves list price",      v:"−50.0%", dir:"dn", d:"Jun 28" },
+  { m:"Gemini 3.1 Flash-Lite", e:"New listing at $0.10/$0.40",          v:"NEW",    dir:"dn", d:"Jul 1"  },
+  { m:"Claude Sonnet 5",       e:"New listing — output price pending verification", v:"NEW", dir:"", d:"Jul 1" },
+  { m:"Grok 4.3",              e:"New listing — pending verification",  v:"NEW",    dir:"", d:"Jun 24" },
+  { m:"Gemini 3.1 Pro",        e:"Long-context tier above 200K input",  v:"+100%",  dir:"up", d:"Jun"   },
+];
+
+let budget = 1, taskId = "bugfix", normalize = true, wlOnly = false;
+const watch = new Set();  // in-memory watchlist (session only)
 
 const money = v => v >= 0.01 ? "$" + v.toFixed(v >= 1 ? 2 : 3) : "$" + v.toFixed(4);
 const big = n => n.toLocaleString("en-US");
@@ -236,17 +314,20 @@ function render() {
   document.querySelectorAll(".note").forEach(el =>
     el.addEventListener("click", () => { budget = parseFloat(el.dataset.b); render(); }));
 
-  const rows = MODELS.map(m => {
+  let rows = MODELS.map(m => {
     const cpt = costPerTask(m, task, normalize);
     return { ...m, cpt, count: Math.floor(budget / cpt) };
   }).sort((a,b) => b.count - a.count);
-  const max = rows[0].count || 1;
+  if (wlOnly && watch.size) rows = rows.filter(m => watch.has(m.id));
+  const max = (rows[0] && rows[0].count) || 1;
+  document.getElementById("wlcount").textContent = watch.size ? `(${watch.size} ★)` : "";
 
   document.getElementById("grid").innerHTML = rows.map((m,i) => `
     <article class="rcpt">
       ${i===0 ? '<span class="best">MOST PER $</span>' : ""}
       <div class="prov" style="color:${HUES[m.provider]}">${esc(m.provider)} · ${esc(m.tier)}</div>
-      <h3>${esc(m.name)}</h3>
+      <h3>${esc(m.name)}<button class="star${watch.has(m.id)?" on":""}" data-w="${m.id}"
+        aria-label="${watch.has(m.id)?"Remove from":"Add to"} watchlist" title="Watchlist">★</button></h3>
       <div class="qty">${big(m.count)}</div>
       <div class="unit">${esc(task.unit)} for ${money(budget)}</div>
       <div class="bar"><i style="width:${Math.max(2,(m.count/max)*100)}%"></i></div>
@@ -266,6 +347,53 @@ function render() {
       <td class="${i===rows.length-1?"lo":""}">${money(m.cpt)}</td>
       <td class="${i===0?"hi":""}">${big(Math.floor(1/m.cpt))}</td>
     </tr>`).join("");
+
+  document.querySelectorAll(".star").forEach(el =>
+    el.addEventListener("click", () => {
+      const id = el.dataset.w;
+      watch.has(id) ? watch.delete(id) : watch.add(id);
+      render();
+    }));
+}
+
+function spark(pts) {
+  const w = 280, h = 56, min = Math.min(...pts), max = Math.max(...pts);
+  const xy = pts.map((p,i) => [ (i/(pts.length-1))*(w-4)+2,
+                                h-4-((p-min)/(max-min||1))*(h-10) ]);
+  const line = xy.map(p => p.map(n => n.toFixed(1)).join(",")).join(" ");
+  const area = `2,${h} ${line} ${w-2},${h}`;
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Price trend, Jan to Jul 2026">
+    <polygon points="${area}" fill="#0e7b4f" opacity="0.10"/>
+    <polyline points="${line}" fill="none" stroke="#0e7b4f" stroke-width="2"/>
+    <circle cx="${xy[xy.length-1][0]}" cy="${xy[xy.length-1][1]}" r="3" fill="#12a366"/>
+  </svg>`;
+}
+
+function renderMarket() {
+  const tapeItems = EVENTS.map(e =>
+    `<span><b>${esc(e.d)}</b> ${esc(e.t)}${e.v ? ` <span class="${e.dir}">${esc(e.v)}</span>` : ""}</span>`
+  ).join("<span>·</span>");
+  document.getElementById("tape").innerHTML = tapeItems + "<span>·</span>" + tapeItems; // duplicated for seamless loop
+
+  for (const key of ["budget","frontier"]) {
+    const ix = IDX[key], cur = ix.pts[ix.pts.length-1], prev = ix.pts[ix.pts.length-2];
+    const chg = ((cur - prev) / prev * 100);
+    document.getElementById("idx-" + key).innerHTML = `
+      <div class="lbl">INDEX · JAN–JUL 2026</div>
+      <h3>${esc(ix.name)}</h3>
+      <span class="val">${money(cur)}</span>
+      <span class="chg ${chg <= 0 ? "dn" : "up"}">${chg <= 0 ? "▼" : "▲"} ${Math.abs(chg).toFixed(1)}% m/m</span>
+      ${spark(ix.pts)}
+      <div class="sub2">${esc(ix.sub)}</div>`;
+  }
+
+  document.getElementById("movers").innerHTML = MOVERS.map(m => `
+    <tr>
+      <td>${esc(m.m)}</td>
+      <td style="text-align:left;font-family:Archivo,sans-serif;font-size:13px;color:var(--ink-soft)">${esc(m.e)}</td>
+      <td class="${m.dir}">${esc(m.v)}</td>
+      <td>${esc(m.d)}</td>
+    </tr>`).join("");
 }
 
 const sel = document.getElementById("task");
@@ -273,7 +401,9 @@ sel.innerHTML = TASKS.map(t => `<option value="${t.id}">${esc(t.label)}</option>
 sel.value = taskId;
 sel.addEventListener("change", e => { taskId = e.target.value; render(); });
 document.getElementById("norm").addEventListener("change", e => { normalize = e.target.checked; render(); });
+document.getElementById("wl").addEventListener("change", e => { wlOnly = e.target.checked; render(); });
 render();
+renderMarket();
 </script>
 </body>
 </html>
