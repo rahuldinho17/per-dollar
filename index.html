@@ -42,8 +42,10 @@
   .stand { padding: 40px 0 8px; }
   .stand h1 { font-family: "Newsreader", serif; font-weight: 500;
     font-size: clamp(30px, 4.6vw, 50px); line-height: 1.12; letter-spacing: -0.01em;
-    margin: 0 0 12px; max-width: 24ch; }
+    margin: 0 0 12px; max-width: 26ch; }
   .stand h1 b { font-weight: 600; color: var(--claret); }
+  .stand h1 .ch { font-weight: 600; color: var(--teal); }
+  .stand h1 .ex { color: var(--claret); }
   .stand .deck { font-family: "Newsreader", serif; font-style: italic; font-size: 18px;
     color: var(--ink-2); margin: 0 0 30px; max-width: 58ch; line-height: 1.5; }
 
@@ -61,8 +63,10 @@
   .bgroup button:hover { background: var(--wheat); }
   .bgroup button:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; }
   .bgroup button.on { background: var(--ink); color: var(--paper); }
-  select, .tok input { font: 500 14px "Source Sans 3", sans-serif; color: var(--ink);
+  select, .tok input, .cbud input { font: 500 14px "Source Sans 3", sans-serif; color: var(--ink);
     background: var(--raised); border: 1px solid var(--ink); border-radius: 2px; padding: 7px 10px; }
+  .cbud { display: inline-flex; align-items: center; gap: 6px; }
+  .cbud input { width: 84px; font-family: "Spline Sans Mono", monospace; }
   .check { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-2); cursor: pointer; }
   .check input { accent-color: var(--teal); width: 14px; height: 14px; }
   .tok { display: none; gap: 10px; align-items: center; }
@@ -70,19 +74,30 @@
   .tok input { width: 96px; font-family: "Spline Sans Mono", monospace; }
   .tok label { font-size: 12px; color: var(--ink-2); }
 
-  /* assumptions */
-  .spec { display: flex; gap: 10px; padding: 12px 0 0; font-size: 13.5px;
-    color: var(--ink-2); max-width: 86ch; line-height: 1.55; }
-  .spec .tag { flex: none; font-family: "Spline Sans Mono", monospace; font-size: 10px;
-    letter-spacing: 0.1em; color: var(--claret); padding-top: 3px; }
+  /* assumptions callout */
+  .assume { border: 1px solid var(--wheat-2); border-left: 3px solid var(--claret);
+    background: var(--raised); padding: 12px 14px; font-size: 13.5px; margin-top: 14px;
+    max-width: 86ch; line-height: 1.55; }
+  .assume .t { font-family: "Spline Sans Mono", monospace; font-size: 10px;
+    letter-spacing: 0.1em; color: var(--claret); margin-bottom: 5px; }
+  .assume .kf { font-family: "Spline Sans Mono", monospace; font-weight: 600; color: var(--ink); font-size: 12.5px; }
+  .assume details { margin-top: 6px; color: var(--ink-2); }
+  .assume summary { cursor: pointer; color: var(--teal); font-size: 12.5px; }
+  .assume summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 
   /* ledger */
   .ledger-wrap { margin-top: 26px; overflow-x: auto; }
-  table { border-collapse: collapse; width: 100%; min-width: 860px; }
+  table { border-collapse: collapse; width: 100%; min-width: 900px; }
   thead th { font-family: "Spline Sans Mono", monospace; font-weight: 500; font-size: 10px;
     letter-spacing: 0.1em; color: var(--ink-2); text-align: right; padding: 0 12px 8px;
     border-bottom: 1.5px solid var(--ink); white-space: nowrap; }
   thead th.l { text-align: left; }
+  thead th.sort { cursor: pointer; }
+  thead th.sort:hover { color: var(--ink); }
+  thead th.sort .dir { color: #C9B7A5; margin-left: 3px; }
+  thead th.sort.active { color: var(--ink); border-bottom: 2.5px solid var(--teal); }
+  thead th.sort.active .dir { color: var(--teal); }
+  thead th.sort:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
   tbody td { padding: 10px 12px; border-bottom: 1px solid var(--wheat-2);
     text-align: right; vertical-align: middle; }
   tbody td.l { text-align: left; }
@@ -90,10 +105,14 @@
   .mname { font-weight: 600; font-size: 14.5px; }
   .msub { font-family: "Spline Sans Mono", monospace; font-size: 10px; letter-spacing: 0.08em;
     color: var(--ink-2); margin-top: 1px; }
-  .msub .v { color: var(--teal); }
+  .msub a { color: var(--teal); text-decoration: underline dotted; text-underline-offset: 2px; }
   td.num { font-family: "Spline Sans Mono", monospace; font-size: 13px; }
   td.cpj { font-size: 15px; font-weight: 600; }
   td.jobs { font-size: 17px; font-weight: 600; }
+  td.barcell { position: relative; }
+  td.barcell .bar { position: absolute; right: 8px; top: 7px; bottom: 7px;
+    background: var(--wheat); border-radius: 1px; z-index: 0; }
+  td.barcell span { position: relative; z-index: 1; }
   tr.best td.jobs { color: var(--teal); }
   tr.best .mname::after { content: "BEST VALUE"; font: 600 9px "Spline Sans Mono", monospace;
     letter-spacing: 0.1em; color: var(--paper); background: var(--teal);
@@ -105,6 +124,11 @@
   .watch:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   .watch.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
   .spark { display: block; width: 110px; height: 26px; margin-left: auto; }
+  .sparkchg { font-family: "Spline Sans Mono", monospace; font-size: 10px; display: block; text-align: right; }
+  .sparkchg.dn { color: var(--teal); } .sparkchg.up { color: var(--claret); }
+  .empty { border: 1px dashed #C9B7A5; background: var(--raised); padding: 26px;
+    text-align: center; color: var(--ink-2); font-size: 13.5px; }
+  .empty b { font-family: "Spline Sans Mono", monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--ink); }
 
   /* sections */
   .sect { margin-top: 56px; }
@@ -114,7 +138,6 @@
   .cap .up { color: var(--claret); font-weight: 600; }
   .cap .dn { color: var(--teal); font-weight: 600; }
 
-  /* small multiples */
   .indices { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 34px; }
   .idx h3 { font: 600 14px "Source Sans 3", sans-serif; margin: 0; }
   .idx .val { font-family: "Spline Sans Mono", monospace; font-size: 20px; font-weight: 600; margin: 2px 0 0; }
@@ -123,7 +146,6 @@
   .idx svg { width: 100%; height: 74px; display: block; margin-top: 8px; }
   .idx .def { font-size: 12.5px; color: var(--ink-2); margin-top: 6px; }
 
-  /* repricings */
   .reprice { list-style: none; margin: 0; padding: 0; max-width: 78ch; }
   .reprice li { display: flex; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--wheat-2);
     font-size: 14px; align-items: baseline; }
@@ -137,10 +159,30 @@
     font-size: 13px; color: var(--ink-2); line-height: 1.7; max-width: 82ch; }
   .method b { color: var(--ink); }
 
+  /* S9: stacked ledger on phones */
   @media (max-width: 640px) {
     .stand { padding-top: 28px; }
     .status { display: none; }
     .filters { gap: 10px 14px; }
+    .ledger-wrap { overflow-x: visible; }
+    table { min-width: 0; }
+    thead { display: none; }
+    tbody, tr, td { display: block; }
+    tr { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px 10px;
+      padding: 13px 0; border-bottom: 1px solid var(--wheat-2); }
+    tbody td { border: none; padding: 0; text-align: left; }
+    td.c-model { grid-column: 1 / 4; grid-row: 1; }
+    td.c-jobs  { grid-column: 4 / 5; grid-row: 1; text-align: right; }
+    td.c-jobs::before, td.c-cpj::before, td.c-in::before, td.c-out::before, td.c-verb::before {
+      content: attr(data-label); display: block; font: 500 9px "Spline Sans Mono", monospace;
+      letter-spacing: 0.1em; color: var(--ink-2); }
+    td.c-cpj, td.c-in, td.c-out, td.c-verb { grid-row: 2; }
+    td.c-spark { grid-column: 1 / 3; grid-row: 3; }
+    td.c-spark .spark { margin-left: 0; }
+    td.c-spark .sparkchg { text-align: left; }
+    td.c-watch { grid-column: 3 / 5; grid-row: 3; text-align: right; align-self: end; }
+    td.barcell .bar { display: none; }
+    tr:hover { background: none; }
   }
 </style>
 </head>
@@ -162,7 +204,11 @@
 
   <div class="filters">
     <span class="flabel">BUDGET</span>
-    <span class="bgroup" id="budgets" role="group" aria-label="Budget"></span>
+    <span class="bgroup" id="budgets" role="group" aria-label="Budget presets"></span>
+    <span class="cbud"><span class="flabel">OR</span>
+      <span class="num" style="font-size:13px">$</span>
+      <input type="number" id="cb" min="0.01" step="1" placeholder="250" aria-label="Custom budget in dollars" />
+    </span>
     <span class="flabel">TASK</span>
     <select id="task" aria-label="Task"></select>
     <span class="tok" id="tok">
@@ -173,17 +219,17 @@
     <label class="check"><input type="checkbox" id="wl" /> Watchlist only <span id="wlcount" class="num"></span></label>
   </div>
 
-  <p class="spec"><span class="tag">ASSUMES</span><span id="spec"></span></p>
+  <div class="assume" id="assume"></div>
 
   <div class="ledger-wrap">
     <table aria-label="Model ledger">
       <thead><tr>
-        <th class="l">MODEL</th>
-        <th>IN $/M</th>
-        <th>OUT $/M</th>
-        <th>LENGTH ×</th>
-        <th>COST / JOB</th>
-        <th id="jobsHead"></th>
+        <th class="l sort" data-key="name" tabindex="0">MODEL <span class="dir">↕</span></th>
+        <th class="sort" data-key="inP" tabindex="0">IN $/M <span class="dir">↕</span></th>
+        <th class="sort" data-key="outP" tabindex="0">OUT $/M <span class="dir">↕</span></th>
+        <th class="sort" data-key="verbosity" tabindex="0">LENGTH × <span class="dir">↕</span></th>
+        <th class="sort" data-key="cpt" tabindex="0">COST / JOB <span class="dir">↕</span></th>
+        <th class="sort" data-key="count" tabindex="0"><span id="jobsHead"></span> <span class="dir">↕</span></th>
         <th>6-MO TREND</th>
         <th></th>
       </tr></thead>
@@ -214,19 +260,28 @@
     answer-length factor × output price). Length factors estimate how long each model's
     answers run for the same prompt — different tokenizers and response styles mean 1,000
     tokens is not the same amount of answer everywhere; the live product measures these
-    per task. Prices are standard-tier, first-party API list rates verified 7 July 2026;
-    batch (~50% off) and cached-input (~90% off) rates are excluded here. Task definitions
-    are usage-weighted from published studies (Anthropic Economic Index, OpenRouter State
-    of AI, OpenAI usage report); each task states its assumptions above the ledger, and
-    token footprints are estimates until the benchmark suite replaces them with measured
-    medians. Capability is not modeled: a cheap model that fails the job costs more than a
-    dear one that succeeds. For custom tasks: 1 token ≈ ¾ of an English word; 100 lines of
-    code ≈ 900 tokens.
+    per task. Prices are standard-tier, first-party API list rates verified 7 July 2026,
+    each linked to its source from the ledger; batch (~50% off) and cached-input (~90% off)
+    rates are excluded here. Task definitions are usage-weighted from published studies
+    (Anthropic Economic Index, OpenRouter State of AI, OpenAI usage report); each task
+    states its assumptions above the ledger, and token footprints are estimates until the
+    benchmark suite replaces them with measured medians. Capability is not modeled: a cheap
+    model that fails the job costs more than a dear one that succeeds. For custom tasks:
+    1 token ≈ ¾ of an English word; 100 lines of code ≈ 900 tokens.
   </footer>
 
 </div>
 
 <script>
+const SOURCES = {
+  OpenAI:    "https://openai.com/api/pricing/",
+  Anthropic: "https://www.anthropic.com/pricing",
+  Google:    "https://ai.google.dev/pricing",
+  DeepSeek:  "https://api-docs.deepseek.com/quick_start/pricing",
+  MiniMax:   "https://www.minimax.io/price",
+  "Z.AI":    "https://z.ai/pricing",
+};
+
 const MODELS = [
   { id:"gpt55",   name:"GPT-5.5",               provider:"OpenAI",    inP:5.0,  outP:30.0, verbosity:1.0,  trend:[1.35,1.35,1.3,1.2,1.1,1.05,1.0] },
   { id:"opus48",  name:"Claude Opus 4.8",       provider:"Anthropic", inP:5.0,  outP:25.0, verbosity:1.15, trend:[1.5,1.5,1.4,1.3,1.15,1.05,1.0] },
@@ -245,27 +300,38 @@ const MODELS = [
 
 const TASKS = [
   { id:"bugfix",  label:"Fix a bug in existing code",   unit:"bug fixes",   inT:9000,  outT:1100,
-    spec:"An agent reads ~20 files of ~350 lines each plus a failing test log (~9,000 tokens in) and returns a ~50-line patch with a short explanation (~1,100 tokens out). Real bugs vary widely; treat this as a mid-size ticket. Ranked first because fixing software errors is the most prevalent task in Anthropic's Economic Index (~6% of usage)." },
+    short:"An agent reads ~20 files of ~350 lines each plus a failing test log (≈9,000 tokens in) and returns a ~50-line patch with a short explanation (≈1,100 tokens out).",
+    detail:"Real bugs vary widely; treat this as a mid-size ticket. Ranked first because fixing software errors is the most prevalent task in Anthropic's Economic Index (~6% of usage)." },
   { id:"codegen", label:"Generate a code feature",      unit:"features",    inT:3500,  outT:2000,
-    spec:"A written spec plus ~2,500 tokens of surrounding code in; a ~150-line module with basic tests out. Programming exceeds 50% of token volume in OpenRouter's State of AI study." },
+    short:"A written spec plus surrounding code (≈3,500 tokens in); a ~150-line module with basic tests (≈2,000 tokens out).",
+    detail:"Programming exceeds 50% of token volume in OpenRouter's State of AI study." },
   { id:"agent",   label:"One coding-agent step",        unit:"agent steps", inT:12000, outT:700,
-    spec:"A single step of an agent loop: ~12,000 tokens of accumulated files, history and tool results in; a short plan plus one diff out. Full agent sessions chain many such steps." },
+    short:"A single step of an agent loop: accumulated files, history and tool results (≈12,000 tokens in); a short plan plus one diff (≈700 tokens out).",
+    detail:"Full agent sessions chain many such steps, so cached-input pricing matters most here — excluded from this view, covered in methodology." },
   { id:"review",  label:"Review a pull request",        unit:"PR reviews",  inT:6000,  outT:1200,
-    spec:"A ~500-line diff plus team guidelines in; inline comments and a summary verdict out." },
+    short:"A ~500-line diff plus team guidelines (≈6,000 tokens in); inline comments and a summary verdict (≈1,200 tokens out).",
+    detail:"Code review sits in the programming category that dominates paid API volume." },
   { id:"script",  label:"Write a data-analysis script", unit:"scripts",     inT:1500,  outT:1000,
-    spec:"A schema sample and a plain-language question in; a ~100-line analysis script out." },
+    short:"A schema sample and a plain-language question (≈1,500 tokens in); a ~100-line analysis script (≈1,000 tokens out).",
+    detail:"Data scripting is a core applied-programming use in OpenRouter's usage taxonomy." },
   { id:"support", label:"Resolve a support ticket",     unit:"resolutions", inT:2500,  outT:450,
-    spec:"The ticket, recent customer history and relevant policy snippets in; one resolution reply out. Assumes a single-pass resolution, no escalation." },
+    short:"The ticket, recent customer history and policy snippets (≈2,500 tokens in); one resolution reply (≈450 tokens out).",
+    detail:"Assumes a single-pass resolution with no escalation — multi-turn tickets cost proportionally more." },
   { id:"pdf",     label:"Summarize a 10-page document", unit:"summaries",   inT:7000,  outT:600,
-    spec:"About ten pages of prose (~7,000 tokens) in; a one-page executive summary out." },
+    short:"About ten pages of prose (≈7,000 tokens in); a one-page executive summary (≈600 tokens out).",
+    detail:"Document processing is a staple business API workload." },
   { id:"xlate",   label:"Translate one page",           unit:"pages",       inT:700,   outT:750,
-    spec:"~500 words in; the same content out in the target language." },
+    short:"~500 words (≈700 tokens in); the same content in the target language (≈750 tokens out).",
+    detail:"A long-standing high-volume category, especially outside English." },
   { id:"email",   label:"Draft a business email",       unit:"emails",      inT:300,   outT:250,
-    spec:"A short brief and context in; a ~200-word email out. Included for the consumer-side audience — writing leads consumer usage in OpenAI's report." },
+    short:"A short brief and context (≈300 tokens in); a ~200-word email (≈250 tokens out).",
+    detail:"Included for the consumer-side audience — writing leads consumer usage in OpenAI's report." },
   { id:"rp",      label:"One roleplay chat turn",       unit:"turns",       inT:2000,  outT:350,
-    spec:"A persona card and recent conversation history in; one in-character reply out. A large, usually unlisted category in OpenRouter's usage data." },
+    short:"A persona card and recent conversation history (≈2,000 tokens in); one in-character reply (≈350 tokens out).",
+    detail:"A large, usually unlisted category in OpenRouter's usage data." },
   { id:"custom",  label:"Custom task…",                 unit:"jobs",        inT:5000,  outT:800,
-    spec:"Your own job: set the tokens one run reads and writes. Rule of thumb — 1 token ≈ ¾ of an English word; 100 lines of code ≈ 900 tokens. Estimates only; the same prompt produces different token counts on different models." },
+    short:"Your own job: set the tokens one run reads and writes in the fields above.",
+    detail:"Rule of thumb — 1 token ≈ ¾ of an English word; 100 lines of code ≈ 900 tokens. Estimates only; the same prompt produces different token counts on different models." },
 ];
 
 const BUDGETS = [0.1, 1, 5, 20, 100];
@@ -287,12 +353,14 @@ const REPRICE = [
   { d:"MAR",    t:"GPT-5.4 family repriced downward",                           v:"−17%", dir:"dn" },
 ];
 
-let budget = 1, taskId = "bugfix", normalize = true, wlOnly = false;
+let budget = 1, customBudget = false, taskId = "bugfix", normalize = true, wlOnly = false;
 let customIn = 5000, customOut = 800;
+let sortKey = "cpt", sortDir = 1;
 const watch = new Set(); // session-only watchlist
 
 const money = v => v >= 0.01 ? "$" + v.toFixed(v >= 1 ? 2 : 3) : "$" + v.toFixed(4);
-const fmtBudget = b => b < 1 ? Math.round(b * 100) + "\u00A2" : "$" + b;
+const fmtBudget = b => b < 1 ? Math.round(b * 100) + "\u00A2"
+  : "$" + (+b).toLocaleString("en-US", { maximumFractionDigits: 2 });
 const big = n => n.toLocaleString("en-US");
 const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
@@ -304,6 +372,12 @@ function costPerTask(m, t) {
   const v = normalize ? m.verbosity : 1;
   return (t.inT * m.inP) / 1e6 + (t.outT * v * m.outP) / 1e6;
 }
+const kf = s => esc(s).replace(/≈[\d,]+ tokens (in|out)/g, x => '<span class="kf">' + x + "</span>");
+
+function trendChange(m) {
+  const first = m.trend[0], last = m.trend[m.trend.length - 1];
+  return { pct: (last - first) / first * 100, months: m.trend.length - 1 };
+}
 
 function spark(mults, cpt, color) {
   const pts = mults.map(f => f * cpt);
@@ -312,7 +386,7 @@ function spark(mults, cpt, color) {
                                 h-4-((p-min)/(max-min||1))*(h-8) ]);
   const line = xy.map(p => p.map(n => n.toFixed(1)).join(",")).join(" ");
   const last = xy[xy.length-1];
-  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Six month cost trend">
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Cost trend">
     <polyline points="${line}" fill="none" stroke="${color}" stroke-width="1.5"/>
     <circle cx="${last[0]}" cy="${last[1]}" r="2.2" fill="${color}"/></svg>`;
 }
@@ -321,43 +395,83 @@ function render() {
   const task = currentTask();
 
   document.getElementById("budgets").innerHTML = BUDGETS.map(b =>
-    `<button class="${b===budget?"on":""}" data-b="${b}">${fmtBudget(b)}</button>`).join("");
+    `<button class="${!customBudget && b===budget ? "on" : ""}" data-b="${b}">${fmtBudget(b)}</button>`).join("");
   document.querySelectorAll("#budgets button").forEach(el =>
-    el.addEventListener("click", () => { budget = parseFloat(el.dataset.b); render(); }));
+    el.addEventListener("click", () => {
+      budget = parseFloat(el.dataset.b); customBudget = false;
+      document.getElementById("cb").value = "";
+      render();
+    }));
 
   document.getElementById("tok").className = "tok" + (taskId === "custom" ? " show" : "");
-  document.getElementById("spec").textContent = task.spec;
   document.getElementById("jobsHead").textContent =
     (task.unit + " per " + fmtBudget(budget)).toUpperCase();
 
-  let rows = MODELS.map(m => {
+  // assumptions callout (S4)
+  document.getElementById("assume").innerHTML = `
+    <div class="t">TASK ASSUMPTIONS — ${esc(task.label.replace("…","")).toUpperCase()}</div>
+    ${kf(task.short)}
+    <details><summary>Variance and sourcing</summary>${esc(task.detail)}</details>`;
+
+  // compute over all models; headline uses full set (S6)
+  const all = MODELS.map(m => {
     const cpt = costPerTask(m, task);
     return { ...m, cpt, count: Math.floor(budget / cpt) };
-  }).sort((a,b) => a.cpt - b.cpt);
-  if (wlOnly && watch.size) rows = rows.filter(m => watch.has(m.id));
+  });
+  const cheap = all.reduce((a,b) => a.cpt <= b.cpt ? a : b);
+  const dear  = all.reduce((a,b) => a.cpt >= b.cpt ? a : b);
+  document.getElementById("headline").innerHTML =
+    `For ${esc(fmtBudget(budget))}, <span class="ch">${esc(cheap.name)}</span> completes <b>${big(cheap.count)} ${esc(task.unit)}</b>; <span class="ex">${esc(dear.name)}</span> completes ${big(dear.count)}.`;
+
+  // sort (S2)
+  let rows = [...all].sort((a,b) => {
+    const x = a[sortKey], y = b[sortKey];
+    return (typeof x === "string" ? x.localeCompare(y) : x - y) * sortDir;
+  });
+  document.querySelectorAll("thead th.sort").forEach(th => {
+    const active = th.dataset.key === sortKey;
+    th.classList.toggle("active", active);
+    th.querySelector(".dir").textContent = active ? (sortDir === 1 ? "▲" : "▼") : "↕";
+    th.setAttribute("aria-sort", active ? (sortDir === 1 ? "ascending" : "descending") : "none");
+  });
+
+  // watchlist filter + empty state (S8)
+  if (wlOnly) rows = rows.filter(m => watch.has(m.id));
   document.getElementById("wlcount").textContent = watch.size ? "(" + watch.size + ")" : "";
 
-  if (rows.length) {
-    const bst = rows[0];
-    document.getElementById("headline").innerHTML =
-      `For ${esc(fmtBudget(budget))}, the cheapest verified model completes <b>${big(bst.count)} ${esc(task.unit)}</b>. The dearest completes ${big(rows[rows.length-1].count)}.`;
+  if (!rows.length) {
+    document.getElementById("tbody").innerHTML = `
+      <tr style="display:block"><td colspan="8" style="display:block">
+        <div class="empty">Your watchlist is empty.<br/>
+        Untick <b>WATCHLIST ONLY</b>, then press <b>WATCH</b> on any row to pin it here.</div>
+      </td></tr>`;
+    return;
   }
 
-  document.getElementById("tbody").innerHTML = rows.map((m,i) => `
-    <tr class="${i===0 ? "best" : ""}">
-      <td class="l">
+  const maxCount = Math.max(...rows.map(r => r.count), 1);
+  document.getElementById("tbody").innerHTML = rows.map(m => {
+    const tc = trendChange(m);
+    const src = SOURCES[m.provider];
+    return `
+    <tr class="${m.id === cheap.id ? "best" : ""}">
+      <td class="l c-model">
         <div class="mname">${esc(m.name)}</div>
-        <div class="msub">${esc(m.provider.toUpperCase())} · <span class="v">VERIFIED 7 JUL</span></div>
+        <div class="msub">${esc(m.provider.toUpperCase())} ·
+          <a href="${esc(src)}" target="_blank" rel="noopener"
+             title="${esc(src)} — snapshot 7 Jul 2026">VERIFIED 7 JUL · SOURCE ↗</a></div>
       </td>
-      <td class="num">${m.inP.toFixed(2)}</td>
-      <td class="num">${m.outP.toFixed(2)}</td>
-      <td class="num">${normalize ? m.verbosity.toFixed(2) : "—"}</td>
-      <td class="num cpj">${money(m.cpt)}</td>
-      <td class="num jobs">${big(m.count)}</td>
-      <td>${spark(m.trend, m.cpt, i===0 ? "#0D7680" : "#6b625b")}</td>
-      <td><button class="watch ${watch.has(m.id)?"on":""}" data-w="${m.id}"
+      <td class="num c-in" data-label="IN $/M">${m.inP.toFixed(2)}</td>
+      <td class="num c-out" data-label="OUT $/M">${m.outP.toFixed(2)}</td>
+      <td class="num c-verb" data-label="LENGTH ×">${normalize ? m.verbosity.toFixed(2) : "—"}</td>
+      <td class="num cpj c-cpj" data-label="COST / JOB">${money(m.cpt)}</td>
+      <td class="num jobs barcell c-jobs" data-label="${esc((task.unit + " per " + fmtBudget(budget)).toUpperCase())}">
+        <i class="bar" style="width:${Math.max(1.5, m.count / maxCount * 86)}%"></i><span>${big(m.count)}</span></td>
+      <td class="c-spark">${spark(m.trend, m.cpt, m.id === cheap.id ? "#0D7680" : "#6b625b")}
+        <span class="sparkchg ${tc.pct <= 0 ? "dn" : "up"}">${tc.pct <= 0 ? "▼" : "▲"} ${Math.abs(tc.pct).toFixed(0)}% · ${tc.months} MO</span></td>
+      <td class="c-watch"><button class="watch ${watch.has(m.id)?"on":""}" data-w="${m.id}"
         aria-pressed="${watch.has(m.id)}">${watch.has(m.id)?"WATCHING":"WATCH"}</button></td>
-    </tr>`).join("");
+    </tr>`;
+  }).join("");
 
   document.querySelectorAll(".watch").forEach(el =>
     el.addEventListener("click", () => {
@@ -394,10 +508,24 @@ const sel = document.getElementById("task");
 sel.innerHTML = TASKS.map(t => `<option value="${t.id}">${esc(t.label)}</option>`).join("");
 sel.value = taskId;
 sel.addEventListener("change", e => { taskId = e.target.value; render(); });
+document.getElementById("cb").addEventListener("input", e => {
+  const v = parseFloat(e.target.value);
+  if (v > 0) { budget = v; customBudget = true; render(); }
+});
 document.getElementById("tin").addEventListener("input", e => { customIn = Math.max(1, +e.target.value || 1); render(); });
 document.getElementById("tout").addEventListener("input", e => { customOut = Math.max(1, +e.target.value || 1); render(); });
 document.getElementById("norm").addEventListener("change", e => { normalize = e.target.checked; render(); });
 document.getElementById("wl").addEventListener("change", e => { wlOnly = e.target.checked; render(); });
+document.querySelectorAll("thead th.sort").forEach(th => {
+  const go = () => {
+    const k = th.dataset.key;
+    if (sortKey === k) sortDir = -sortDir;
+    else { sortKey = k; sortDir = k === "count" ? -1 : 1; }
+    render();
+  };
+  th.addEventListener("click", go);
+  th.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+});
 render();
 renderStatic();
 </script>
