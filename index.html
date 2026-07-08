@@ -3,364 +3,363 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PerDollar — what your AI budget actually buys</title>
-<meta name="description" content="Compare LLM API costs by completed job, not by token. Pick a budget and a real task and see how many jobs each model delivers." />
+<title>PerDollar — the price sheet for AI work</title>
+<meta name="description" content="Token prices translated into the cost of completed work. Pick a budget and a task; see what every major model delivers, with verified prices and explicit assumptions." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --paper: #edf1ea; --paper-deep: #e2e8de;
-    --ink: #1c3227; --ink-soft: #47604f;
-    --seal: #0e7b4f; --seal-bright: #12a366;
-    --warn: #a33f2a; --line: #c3cec0;
+    --paper: #FFF1E5; --raised: #FFF9F3;
+    --ink: #33302E; --ink-2: #6b625b;
+    --claret: #990F3D; --teal: #0D7680;
+    --wheat: #F2DFCE; --wheat-2: #E9D5C1;
   }
   * { box-sizing: border-box; }
-  body {
-    margin: 0; min-height: 100vh; color: var(--ink);
-    font-family: "Archivo", system-ui, sans-serif;
-    background:
-      radial-gradient(ellipse 80% 50% at 50% -10%, #f6f8f3 0%, transparent 60%),
-      var(--paper);
-    padding-bottom: 64px;
-  }
-  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Source Sans 3", system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--teal); }
+  .num { font-family: "Spline Sans Mono", monospace; font-variant-numeric: tabular-nums; }
 
-  header.top { display: flex; align-items: baseline; justify-content: space-between;
-    padding: 26px 0 18px; border-bottom: 1px solid var(--line); }
-  .mark { font-family: "Fraunces", serif; font-weight: 650; font-size: 22px; letter-spacing: -0.01em; }
-  .mark em { font-style: normal; color: var(--seal); }
-  .asof { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-soft); letter-spacing: 0.04em; }
-  .head-right { display: flex; align-items: center; gap: 16px; }
-  .fb-btn { font-family: "Archivo", sans-serif; font-size: 13px; font-weight: 600;
-    color: #fff; background: var(--seal); border: 1.5px solid var(--seal);
-    border-radius: 6px; padding: 8px 14px; text-decoration: none; white-space: nowrap;
-    box-shadow: 2px 2px 0 rgba(28,50,39,0.18); transition: transform .12s ease, background .12s ease; }
-  .fb-btn:hover { background: var(--seal-bright); transform: translateY(-1px); }
-  .fb-btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
-  @media (max-width: 560px) { .asof { display: none; } }
+  /* masthead */
+  .mast { display: flex; align-items: center; gap: 18px; padding: 14px 0 12px;
+    border-bottom: 3px double var(--ink); }
+  .mark { font-family: "Newsreader", serif; font-weight: 600; font-size: 24px;
+    letter-spacing: 0.01em; margin-right: auto; }
+  .mark span { color: var(--claret); }
+  .status { font-family: "Spline Sans Mono", monospace; font-size: 10.5px;
+    letter-spacing: 0.05em; color: var(--ink-2); text-align: right; line-height: 1.6; }
+  .status b { color: var(--teal); font-weight: 600; }
+  .fb { font: 600 13px "Source Sans 3", sans-serif; color: var(--paper);
+    background: var(--ink); border: 1px solid var(--ink); border-radius: 2px;
+    padding: 8px 14px; text-decoration: none; white-space: nowrap; }
+  .fb:hover { background: var(--claret); border-color: var(--claret); }
+  .fb:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 
-  .hero { padding: 52px 0 8px; }
-  .hero h1 { font-family: "Fraunces", serif; font-weight: 500;
-    font-size: clamp(34px, 5.4vw, 58px); line-height: 1.04;
-    letter-spacing: -0.02em; margin: 0 0 10px; max-width: 15ch; }
-  .hero h1 strong { font-weight: 650; color: var(--seal); }
-  .sub { color: var(--ink-soft); font-size: 16px; max-width: 52ch; margin: 0 0 34px; line-height: 1.55; }
+  /* standfirst */
+  .stand { padding: 40px 0 8px; }
+  .stand h1 { font-family: "Newsreader", serif; font-weight: 500;
+    font-size: clamp(30px, 4.6vw, 50px); line-height: 1.12; letter-spacing: -0.01em;
+    margin: 0 0 12px; max-width: 24ch; }
+  .stand h1 b { font-weight: 600; color: var(--claret); }
+  .stand .deck { font-family: "Newsreader", serif; font-style: italic; font-size: 18px;
+    color: var(--ink-2); margin: 0 0 30px; max-width: 58ch; line-height: 1.5; }
 
-  .notes { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
-  .note { font-family: "IBM Plex Mono", monospace; font-weight: 600;
-    border: 1.5px solid var(--ink); background: #f7f9f4; border-radius: 6px;
-    padding: 10px 18px 8px; cursor: pointer; font-size: 18px; color: var(--ink);
-    box-shadow: 2px 2px 0 rgba(28,50,39,0.18); transition: transform .12s ease, background .12s ease; }
-  .note small { display: block; font-size: 9px; letter-spacing: .14em; font-weight: 500; color: var(--ink-soft); }
-  .note:hover { transform: translateY(-2px); }
-  .note:focus-visible { outline: 3px solid var(--seal-bright); outline-offset: 2px; }
-  .note.on { background: var(--ink); color: var(--paper); box-shadow: 2px 2px 0 var(--seal); }
-  .note.on small { color: var(--paper-deep); }
+  /* filter row */
+  .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px;
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--wheat-2);
+    padding: 12px 0; }
+  .flabel { font-family: "Spline Sans Mono", monospace; font-size: 10px;
+    letter-spacing: 0.12em; color: var(--ink-2); }
+  .bgroup { display: inline-flex; border: 1px solid var(--ink); border-radius: 2px; overflow: hidden; }
+  .bgroup button { font: 500 13px "Spline Sans Mono", monospace; background: var(--raised);
+    color: var(--ink); border: none; border-right: 1px solid var(--wheat-2);
+    padding: 7px 13px; cursor: pointer; }
+  .bgroup button:last-child { border-right: none; }
+  .bgroup button:hover { background: var(--wheat); }
+  .bgroup button:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; }
+  .bgroup button.on { background: var(--ink); color: var(--paper); }
+  select, .tok input { font: 500 14px "Source Sans 3", sans-serif; color: var(--ink);
+    background: var(--raised); border: 1px solid var(--ink); border-radius: 2px; padding: 7px 10px; }
+  .check { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-2); cursor: pointer; }
+  .check input { accent-color: var(--teal); width: 14px; height: 14px; }
+  .tok { display: none; gap: 10px; align-items: center; }
+  .tok.show { display: inline-flex; flex-wrap: wrap; }
+  .tok input { width: 96px; font-family: "Spline Sans Mono", monospace; }
+  .tok label { font-size: 12px; color: var(--ink-2); }
 
-  .controls { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
-  select { font-family: "Archivo", sans-serif; font-size: 15px; font-weight: 500;
-    padding: 10px 14px; border-radius: 6px; border: 1.5px solid var(--ink);
-    background: #f7f9f4; color: var(--ink); cursor: pointer; }
-  .toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 13px;
-    color: var(--ink-soft); cursor: pointer; user-select: none; }
-  .toggle input { accent-color: var(--seal); width: 15px; height: 15px; }
-  .why { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .03em;
-    color: var(--ink-soft); max-width: 78ch; line-height: 1.6;
-    border-left: 3px solid var(--seal); padding-left: 10px; margin: 14px 0 0; }
+  /* assumptions */
+  .spec { display: flex; gap: 10px; padding: 12px 0 0; font-size: 13.5px;
+    color: var(--ink-2); max-width: 86ch; line-height: 1.55; }
+  .spec .tag { flex: none; font-family: "Spline Sans Mono", monospace; font-size: 10px;
+    letter-spacing: 0.1em; color: var(--claret); padding-top: 3px; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
-    gap: 18px; padding: 30px 0 10px; }
-  .rcpt { background: #fbfcf8; border: 1px solid var(--line); border-radius: 3px 3px 0 0;
-    padding: 16px 16px 20px; position: relative;
-    box-shadow: 0 1px 0 rgba(28,50,39,.08), 0 6px 14px -10px rgba(28,50,39,.35); }
-  .rcpt::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 8px;
-    background:
-      linear-gradient(-45deg, transparent 5px, #fbfcf8 5px) 0 0/12px 8px repeat-x,
-      linear-gradient(45deg, transparent 5px, #fbfcf8 5px) 6px 0/12px 8px repeat-x;
-    filter: drop-shadow(0 2px 2px rgba(28,50,39,.12)); }
-  .rcpt .prov { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .16em;
-    text-transform: uppercase; margin-bottom: 2px; }
-  .rcpt h3 { margin: 0 0 12px; font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em; }
-  .rcpt .qty { font-family: "Fraunces", serif; font-weight: 650; font-size: 40px;
-    line-height: 1; letter-spacing: -0.02em; }
-  .rcpt .unit { font-size: 12.5px; color: var(--ink-soft); margin: 4px 0 12px; }
-  .rcpt .bar { height: 5px; background: var(--paper-deep); border-radius: 99px; overflow: hidden; margin-bottom: 12px; }
-  .rcpt .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--seal), var(--seal-bright)); }
-  .rcpt .cpt { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--ink-soft);
-    border-top: 1px dashed var(--line); padding-top: 9px; display: flex; justify-content: space-between; }
-  .best { position: absolute; top: 12px; right: 12px; font-family: "IBM Plex Mono", monospace;
-    font-size: 9px; letter-spacing: .12em; background: var(--seal); color: #fff;
-    padding: 3px 7px; border-radius: 3px; }
+  /* ledger */
+  .ledger-wrap { margin-top: 26px; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 860px; }
+  thead th { font-family: "Spline Sans Mono", monospace; font-weight: 500; font-size: 10px;
+    letter-spacing: 0.1em; color: var(--ink-2); text-align: right; padding: 0 12px 8px;
+    border-bottom: 1.5px solid var(--ink); white-space: nowrap; }
+  thead th.l { text-align: left; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid var(--wheat-2);
+    text-align: right; vertical-align: middle; }
+  tbody td.l { text-align: left; }
+  tbody tr:hover { background: var(--raised); }
+  .mname { font-weight: 600; font-size: 14.5px; }
+  .msub { font-family: "Spline Sans Mono", monospace; font-size: 10px; letter-spacing: 0.08em;
+    color: var(--ink-2); margin-top: 1px; }
+  .msub .v { color: var(--teal); }
+  td.num { font-family: "Spline Sans Mono", monospace; font-size: 13px; }
+  td.cpj { font-size: 15px; font-weight: 600; }
+  td.jobs { font-size: 17px; font-weight: 600; }
+  tr.best td.jobs { color: var(--teal); }
+  tr.best .mname::after { content: "BEST VALUE"; font: 600 9px "Spline Sans Mono", monospace;
+    letter-spacing: 0.1em; color: var(--paper); background: var(--teal);
+    padding: 2px 6px; margin-left: 8px; vertical-align: 2px; border-radius: 2px; }
+  .watch { background: none; border: 1px solid var(--wheat-2); border-radius: 2px;
+    font: 500 10px "Spline Sans Mono", monospace; letter-spacing: 0.08em;
+    color: var(--ink-2); padding: 4px 8px; cursor: pointer; }
+  .watch:hover { border-color: var(--ink); color: var(--ink); }
+  .watch:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
+  .watch.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .spark { display: block; width: 110px; height: 26px; margin-left: auto; }
 
+  /* sections */
   .sect { margin-top: 56px; }
-  .sect h2 { font-family: "Fraunces", serif; font-weight: 650; font-size: 26px; letter-spacing: -0.015em; margin: 0 0 4px; }
-  .sect .cap { color: var(--ink-soft); font-size: 14px; margin: 0 0 18px; max-width: 62ch; line-height: 1.55; }
-  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: #fbfcf8; }
-  table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 13.5px; }
-  th { text-align: right; font-family: "IBM Plex Mono", monospace; font-weight: 500;
-    font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
-    padding: 12px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-  th:first-child, td:first-child { text-align: left; }
-  td { padding: 11px 14px; border-bottom: 1px solid #e7ece4; text-align: right;
-    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; }
-  td:first-child { font-family: "Archivo", sans-serif; font-weight: 600; font-size: 13.5px; }
-  tr:last-child td { border-bottom: none; }
-  td .p { display: block; font-family: "IBM Plex Mono", monospace; font-weight: 400;
-    font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
-  .hi { color: var(--seal); font-weight: 600; }
-  .lo { color: var(--warn); }
+  .sect h2 { font-family: "Newsreader", serif; font-weight: 600; font-size: 24px;
+    margin: 0 0 4px; border-top: 1px solid var(--ink); padding-top: 12px; }
+  .sect .cap { color: var(--ink-2); font-size: 13.5px; margin: 0 0 20px; max-width: 72ch; }
+  .cap .up { color: var(--claret); font-weight: 600; }
+  .cap .dn { color: var(--teal); font-weight: 600; }
 
-  .foot { margin-top: 46px; border-top: 1px solid var(--line); padding-top: 18px;
-    font-size: 12.5px; color: var(--ink-soft); line-height: 1.7; max-width: 78ch; }
-  .foot b { color: var(--ink); }
+  /* small multiples */
+  .indices { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 34px; }
+  .idx h3 { font: 600 14px "Source Sans 3", sans-serif; margin: 0; }
+  .idx .val { font-family: "Spline Sans Mono", monospace; font-size: 20px; font-weight: 600; margin: 2px 0 0; }
+  .idx .chg { font-family: "Spline Sans Mono", monospace; font-size: 12px; margin-left: 8px; }
+  .idx .chg.dn { color: var(--teal); } .idx .chg.up { color: var(--claret); }
+  .idx svg { width: 100%; height: 74px; display: block; margin-top: 8px; }
+  .idx .def { font-size: 12.5px; color: var(--ink-2); margin-top: 6px; }
 
-  /* market screen */
-  .tape { overflow: hidden; border-bottom: 1px solid var(--line); background: #f3f6f1; }
-  .tape-inner { display: flex; gap: 40px; white-space: nowrap; padding: 8px 24px;
-    font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .04em;
-    color: var(--ink-soft); width: max-content; animation: tape 45s linear infinite; }
-  .tape-inner b { color: var(--ink); font-weight: 600; }
-  .dn { color: var(--seal); } .up { color: var(--warn); }
-  @keyframes tape { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  .idx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 18px; margin-bottom: 26px; }
-  .idx { background: #fbfcf8; border: 1px solid var(--line); border-radius: 6px; padding: 16px; }
-  .idx .lbl { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .16em;
-    text-transform: uppercase; color: var(--ink-soft); }
-  .idx h3 { margin: 2px 0 8px; font-family: "Fraunces", serif; font-weight: 650; font-size: 19px; letter-spacing: -0.01em; }
-  .idx .val { font-family: "IBM Plex Mono", monospace; font-size: 22px; font-weight: 600; }
-  .idx .chg { font-family: "IBM Plex Mono", monospace; font-size: 12px; margin-left: 8px; }
-  .idx svg { width: 100%; height: 56px; margin-top: 10px; display: block; }
-  .idx .sub2 { font-size: 11.5px; color: var(--ink-soft); margin-top: 6px; }
-  .star { background: none; border: none; cursor: pointer; font-size: 16px; line-height: 1;
-    color: #b9c5b5; padding: 0 2px; vertical-align: -1px; }
-  .star.on { color: #c9a227; }
-  .star:focus-visible { outline: 2px solid var(--seal-bright); outline-offset: 2px; border-radius: 3px; }
-  @media (prefers-reduced-motion: reduce) {
-    .note { transition: none; }
-    .tape-inner { animation: none; white-space: normal; flex-wrap: wrap; width: auto; }
-  }
-  @media (max-width: 560px) {
-    .hero { padding-top: 36px; }
-    .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
-    .rcpt .qty { font-size: 30px; }
+  /* repricings */
+  .reprice { list-style: none; margin: 0; padding: 0; max-width: 78ch; }
+  .reprice li { display: flex; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--wheat-2);
+    font-size: 14px; align-items: baseline; }
+  .reprice .d { flex: none; width: 64px; font-family: "Spline Sans Mono", monospace;
+    font-size: 11px; letter-spacing: 0.06em; color: var(--ink-2); }
+  .reprice .delta { margin-left: auto; font-family: "Spline Sans Mono", monospace;
+    font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+  .delta.dn { color: var(--teal); } .delta.up { color: var(--claret); } .delta.nt { color: var(--ink-2); }
+
+  .method { margin-top: 56px; border-top: 3px double var(--ink); padding: 16px 0 60px;
+    font-size: 13px; color: var(--ink-2); line-height: 1.7; max-width: 82ch; }
+  .method b { color: var(--ink); }
+
+  @media (max-width: 640px) {
+    .stand { padding-top: 28px; }
+    .status { display: none; }
+    .filters { gap: 10px 14px; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="top">
-    <div class="mark">Per<em>Dollar</em></div>
-    <div class="head-right">
-      <div class="asof">PRICES VERIFIED · JUL 2026</div>
-      <!-- Feedback form -->
-      <a class="fb-btn" href="https://forms.gle/NKx36saGTsCPLe6n9" target="_blank" rel="noopener">Give feedback</a>
-    </div>
+
+  <header class="mast">
+    <div class="mark">Per<span>Dollar</span></div>
+    <div class="status">PRICES VERIFIED <b>7 JUL 2026</b> · 13 MODELS<br/>2 LISTINGS PENDING VERIFICATION</div>
+    <a class="fb" href="https://forms.gle/NKx36saGTsCPLe6n9" target="_blank" rel="noopener">Give feedback</a>
   </header>
-</div>
-<div class="tape" aria-label="Recent market events"><div class="tape-inner" id="tape"></div></div>
-<div class="wrap">
 
-  <section class="hero">
-    <h1>What does <strong id="h-budget">$1</strong> actually buy?</h1>
-    <p class="sub">Token prices are abstractions. Jobs are not. Pick a budget and a task,
-      and see how many completed jobs each model delivers — normalized for how
-      verbose each model's answers really are.</p>
-    <div class="notes" id="notes" role="group" aria-label="Budget"></div>
-    <div class="controls">
-      <select id="task" aria-label="Task"></select>
-      <label class="toggle">
-        <input type="checkbox" id="norm" checked /> Normalize for answer verbosity
-      </label>
-      <label class="toggle">
-        <input type="checkbox" id="wl" /> Watchlist only <span id="wlcount"></span>
-      </label>
-    </div>
-    <p class="why" id="why"></p>
+  <section class="stand">
+    <h1 id="headline"></h1>
+    <p class="deck">Token prices, translated into the cost of completed work — with verified
+      sources, explicit assumptions, and the month-by-month trend. Built for the people who
+      approve the AI invoice.</p>
   </section>
 
-  <section class="grid" id="grid" aria-label="Results"></section>
+  <div class="filters">
+    <span class="flabel">BUDGET</span>
+    <span class="bgroup" id="budgets" role="group" aria-label="Budget"></span>
+    <span class="flabel">TASK</span>
+    <select id="task" aria-label="Task"></select>
+    <span class="tok" id="tok">
+      <label>Tokens in <input type="number" id="tin" value="5000" min="1" step="100" /></label>
+      <label>Tokens out <input type="number" id="tout" value="800" min="1" step="100" /></label>
+    </span>
+    <label class="check"><input type="checkbox" id="norm" checked /> Adjust for answer length</label>
+    <label class="check"><input type="checkbox" id="wl" /> Watchlist only <span id="wlcount" class="num"></span></label>
+  </div>
+
+  <p class="spec"><span class="tag">ASSUMES</span><span id="spec"></span></p>
+
+  <div class="ledger-wrap">
+    <table aria-label="Model ledger">
+      <thead><tr>
+        <th class="l">MODEL</th>
+        <th>IN $/M</th>
+        <th>OUT $/M</th>
+        <th>LENGTH ×</th>
+        <th>COST / JOB</th>
+        <th id="jobsHead"></th>
+        <th>6-MO TREND</th>
+        <th></th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
 
   <section class="sect">
-    <h2>The ledger</h2>
-    <p class="cap" id="ledgercap"></p>
-    <div class="tablewrap">
-      <table>
-        <thead><tr>
-          <th>Model</th><th>Input / 1M</th><th>Output / 1M</th>
-          <th>Verbosity ×</th><th>Cost per job</th><th>Jobs per $1</th>
-        </tr></thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="sect">
-    <h2>Market screen</h2>
-    <p class="cap">The exchange view. Indices track the cost of one completed job over time —
-      a consumer-price index for AI work. Movers show the biggest effective-cost changes on the
-      tape. One inversion from the stock market: falling cost is good news for buyers, so
-      <span class="dn">green means down</span>. Series and movers shown here are sample data;
-      the live version is driven by the verified price-changes feed.</p>
-    <div class="idx-grid">
+    <h2>Indices</h2>
+    <p class="cap">A consumer-price index for AI work: the cost of completing one standard
+      bug fix, tracked monthly. <span class="dn">Teal is falling cost</span> — good news if
+      you pay the bill; <span class="up">claret is rising</span>. Series are sample data
+      pending the live feed.</p>
+    <div class="indices">
       <div class="idx" id="idx-budget"></div>
       <div class="idx" id="idx-frontier"></div>
     </div>
-    <div class="tablewrap">
-      <table>
-        <thead><tr>
-          <th>Mover</th><th>Event</th><th>Δ cost / job</th><th>Date</th>
-        </tr></thead>
-        <tbody id="movers"></tbody>
-      </table>
-    </div>
   </section>
 
-  <footer class="foot">
-    <b>Methodology.</b> Cost per job = (input tokens × input price) + (baseline
-    output tokens × verbosity factor × output price). Verbosity factors are
-    illustrative estimates of how long each model's answers run for the same
-    prompt — the real product measures these empirically per task, because
-    different tokenizers and response styles mean 1,000 tokens is not the same
-    amount of answer everywhere. List prices are standard-tier, first-party API
-    rates as of July 2026; batch discounts (~50%) and cached-input rates (~10%
-    of input price) are excluded here. The task list is usage-weighted, drawn
-    from published studies (Anthropic Economic Index, OpenRouter State of AI,
-    OpenAI usage report); token footprints per task are still estimates pending
-    an empirical benchmark suite. Capability is not modeled: a cheap model that
-    fails the job costs more than a dear one that succeeds.
+  <section class="sect">
+    <h2>Recent repricings</h2>
+    <p class="cap">Listings and price changes on the tape, most recent first.</p>
+    <ul class="reprice" id="reprice"></ul>
+  </section>
+
+  <footer class="method">
+    <b>Methodology.</b> Cost per job = (input tokens × input price) + (output tokens ×
+    answer-length factor × output price). Length factors estimate how long each model's
+    answers run for the same prompt — different tokenizers and response styles mean 1,000
+    tokens is not the same amount of answer everywhere; the live product measures these
+    per task. Prices are standard-tier, first-party API list rates verified 7 July 2026;
+    batch (~50% off) and cached-input (~90% off) rates are excluded here. Task definitions
+    are usage-weighted from published studies (Anthropic Economic Index, OpenRouter State
+    of AI, OpenAI usage report); each task states its assumptions above the ledger, and
+    token footprints are estimates until the benchmark suite replaces them with measured
+    medians. Capability is not modeled: a cheap model that fails the job costs more than a
+    dear one that succeeds. For custom tasks: 1 token ≈ ¾ of an English word; 100 lines of
+    code ≈ 900 tokens.
   </footer>
+
 </div>
 
 <script>
 const MODELS = [
-  { id:"gpt55",   name:"GPT-5.5",               provider:"OpenAI",    inP:5.0,  outP:30.0, verbosity:1.0,  tier:"Frontier" },
-  { id:"opus48",  name:"Claude Opus 4.8",       provider:"Anthropic", inP:5.0,  outP:25.0, verbosity:1.15, tier:"Frontier" },
-  { id:"gpt54",   name:"GPT-5.4",               provider:"OpenAI",    inP:2.5,  outP:15.0, verbosity:1.05, tier:"Production" },
-  { id:"son46",   name:"Claude Sonnet 4.6",     provider:"Anthropic", inP:3.0,  outP:15.0, verbosity:1.1,  tier:"Production" },
-  { id:"gem31p",  name:"Gemini 3.1 Pro",        provider:"Google",    inP:2.0,  outP:12.0, verbosity:0.85, tier:"Production" },
-  { id:"glm52",   name:"GLM-5.2",               provider:"Z.AI",      inP:1.4,  outP:4.4,  verbosity:0.95, tier:"Production" },
-  { id:"haiku45", name:"Claude Haiku 4.5",      provider:"Anthropic", inP:1.0,  outP:5.0,  verbosity:1.0,  tier:"Budget" },
-  { id:"mm3",     name:"MiniMax M3",            provider:"MiniMax",   inP:0.6,  outP:2.4,  verbosity:0.95, tier:"Budget" },
-  { id:"gem3f",   name:"Gemini 3 Flash",        provider:"Google",    inP:0.5,  outP:3.0,  verbosity:0.8,  tier:"Budget" },
-  { id:"g41mini", name:"GPT-4.1 Mini",          provider:"OpenAI",    inP:0.4,  outP:1.6,  verbosity:0.95, tier:"Budget" },
-  { id:"dsv4f",   name:"DeepSeek V4 Flash",     provider:"DeepSeek",  inP:0.14, outP:0.28, verbosity:0.9,  tier:"Ultra-budget" },
-  { id:"g41nano", name:"GPT-4.1 Nano",          provider:"OpenAI",    inP:0.1,  outP:0.4,  verbosity:0.9,  tier:"Ultra-budget" },
-  { id:"gem31fl", name:"Gemini 3.1 Flash-Lite", provider:"Google",    inP:0.1,  outP:0.4,  verbosity:0.75, tier:"Ultra-budget" },
+  { id:"gpt55",   name:"GPT-5.5",               provider:"OpenAI",    inP:5.0,  outP:30.0, verbosity:1.0,  trend:[1.35,1.35,1.3,1.2,1.1,1.05,1.0] },
+  { id:"opus48",  name:"Claude Opus 4.8",       provider:"Anthropic", inP:5.0,  outP:25.0, verbosity:1.15, trend:[1.5,1.5,1.4,1.3,1.15,1.05,1.0] },
+  { id:"gpt54",   name:"GPT-5.4",               provider:"OpenAI",    inP:2.5,  outP:15.0, verbosity:1.05, trend:[1.6,1.6,1.2,1.2,1.1,1.0,1.0] },
+  { id:"son46",   name:"Claude Sonnet 4.6",     provider:"Anthropic", inP:3.0,  outP:15.0, verbosity:1.1,  trend:[1.4,1.35,1.3,1.2,1.1,1.05,1.0] },
+  { id:"gem31p",  name:"Gemini 3.1 Pro",        provider:"Google",    inP:2.0,  outP:12.0, verbosity:0.85, trend:[1.45,1.4,1.3,1.2,1.1,1.0,1.0] },
+  { id:"glm52",   name:"GLM-5.2",               provider:"Z.AI",      inP:1.4,  outP:4.4,  verbosity:0.95, trend:[1.7,1.6,1.5,1.3,1.15,1.05,1.0] },
+  { id:"haiku45", name:"Claude Haiku 4.5",      provider:"Anthropic", inP:1.0,  outP:5.0,  verbosity:1.0,  trend:[1.3,1.3,1.25,1.2,1.1,1.0,1.0] },
+  { id:"mm3",     name:"MiniMax M3",            provider:"MiniMax",   inP:0.6,  outP:2.4,  verbosity:0.95, trend:[2.1,2.1,2.05,2.0,2.0,2.0,1.0] },
+  { id:"gem3f",   name:"Gemini 3 Flash",        provider:"Google",    inP:0.5,  outP:3.0,  verbosity:0.8,  trend:[1.5,1.45,1.35,1.25,1.1,1.0,1.0] },
+  { id:"g41mini", name:"GPT-4.1 Mini",          provider:"OpenAI",    inP:0.4,  outP:1.6,  verbosity:0.95, trend:[1.25,1.25,1.2,1.15,1.1,1.0,1.0] },
+  { id:"dsv4f",   name:"DeepSeek V4 Flash",     provider:"DeepSeek",  inP:0.14, outP:0.28, verbosity:0.9,  trend:[2.6,2.3,2.0,1.7,1.4,1.15,1.0] },
+  { id:"g41nano", name:"GPT-4.1 Nano",          provider:"OpenAI",    inP:0.1,  outP:0.4,  verbosity:0.9,  trend:[1.2,1.2,1.15,1.1,1.05,1.0,1.0] },
+  { id:"gem31fl", name:"Gemini 3.1 Flash-Lite", provider:"Google",    inP:0.1,  outP:0.4,  verbosity:0.75, trend:[1.1,1.05,1.0] },
 ];
 
-// Usage-weighted task list; `src` cites why each task earns its slot.
 const TASKS = [
   { id:"bugfix",  label:"Fix a bug in existing code",   unit:"bug fixes",   inT:9000,  outT:1100,
-    src:"Modifying software to correct errors is the single most prevalent task in Anthropic's Economic Index (~6% of usage)." },
+    spec:"An agent reads ~20 files of ~350 lines each plus a failing test log (~9,000 tokens in) and returns a ~50-line patch with a short explanation (~1,100 tokens out). Real bugs vary widely; treat this as a mid-size ticket. Ranked first because fixing software errors is the most prevalent task in Anthropic's Economic Index (~6% of usage)." },
   { id:"codegen", label:"Generate a code feature",      unit:"features",    inT:3500,  outT:2000,
-    src:"Programming exceeds 50% of token volume in OpenRouter's 100T-token State of AI study." },
+    spec:"A written spec plus ~2,500 tokens of surrounding code in; a ~150-line module with basic tests out. Programming exceeds 50% of token volume in OpenRouter's State of AI study." },
   { id:"agent",   label:"One coding-agent step",        unit:"agent steps", inT:12000, outT:700,
-    src:"Agentic coding tools split work into many context-heavy API calls — a growing share of first-party API traffic." },
+    spec:"A single step of an agent loop: ~12,000 tokens of accumulated files, history and tool results in; a short plan plus one diff out. Full agent sessions chain many such steps." },
   { id:"review",  label:"Review a pull request",        unit:"PR reviews",  inT:6000,  outT:1200,
-    src:"Code review and debugging sit alongside generation in the programming category that dominates API spend." },
+    spec:"A ~500-line diff plus team guidelines in; inline comments and a summary verdict out." },
   { id:"script",  label:"Write a data-analysis script", unit:"scripts",     inT:1500,  outT:1000,
-    src:"Data scripting is called out as a core applied-programming use in OpenRouter's usage taxonomy." },
+    spec:"A schema sample and a plain-language question in; a ~100-line analysis script out." },
   { id:"support", label:"Resolve a support ticket",     unit:"resolutions", inT:2500,  outT:450,
-    src:"Customer support is a canonical high-volume production workload across provider case studies." },
+    spec:"The ticket, recent customer history and relevant policy snippets in; one resolution reply out. Assumes a single-pass resolution, no escalation." },
   { id:"pdf",     label:"Summarize a 10-page document", unit:"summaries",   inT:7000,  outT:600,
-    src:"Document processing and summarization are staple business API workloads." },
+    spec:"About ten pages of prose (~7,000 tokens) in; a one-page executive summary out." },
   { id:"xlate",   label:"Translate one page",           unit:"pages",       inT:700,   outT:750,
-    src:"Translation is a long-standing high-volume API category, especially outside English." },
+    spec:"~500 words in; the same content out in the target language." },
   { id:"email",   label:"Draft a business email",       unit:"emails",      inT:300,   outT:250,
-    src:"Writing assistance leads consumer-side usage in OpenAI's 'How People Use ChatGPT' report." },
+    spec:"A short brief and context in; a ~200-word email out. Included for the consumer-side audience — writing leads consumer usage in OpenAI's report." },
   { id:"rp",      label:"One roleplay chat turn",       unit:"turns",       inT:2000,  outT:350,
-    src:"Roleplay/companionship is a large, usually unlisted category in OpenRouter's usage data." },
+    spec:"A persona card and recent conversation history in; one in-character reply out. A large, usually unlisted category in OpenRouter's usage data." },
+  { id:"custom",  label:"Custom task…",                 unit:"jobs",        inT:5000,  outT:800,
+    spec:"Your own job: set the tokens one run reads and writes. Rule of thumb — 1 token ≈ ¾ of an English word; 100 lines of code ≈ 900 tokens. Estimates only; the same prompt produces different token counts on different models." },
 ];
 
 const BUDGETS = [0.1, 1, 5, 20, 100];
-const HUES = { OpenAI:"#3f6d5a", Anthropic:"#7a5230", Google:"#33566e",
-               DeepSeek:"#5a4a6e", MiniMax:"#6e3d4d", "Z.AI":"#4a5a3d" };
 
-// ---- market screen data (sample feed; live version reads price_changes) ----
-const EVENTS = [
-  { d:"JUL 1",  t:"Claude Sonnet 5 listed", dir:"" },
-  { d:"JUL 1",  t:"Gemini 3.1 Flash-Lite Image listed", dir:"" },
-  { d:"JUN 28", t:"MiniMax M3 launch promo", v:"−50%", dir:"dn" },
-  { d:"JUN 24", t:"Grok 4.3 listed", dir:"" },
-  { d:"JUN 23", t:"Qwen3.5 family refresh", dir:"" },
-  { d:"JUN",    t:"Gemini 3.1 Pro long-context tier", v:">200K +100%", dir:"up" },
-  { d:"MAR",    t:"GPT-5.4 family repriced", v:"−17%", dir:"dn" },
-];
-// Cost of one bug fix, monthly, Jan–Jul 2026 (sample series ending at live values)
 const IDX = {
-  budget:   { name:"Budget Bug-Fix Index",   sub:"Cheapest verified cost to fix one bug, any model",
+  budget:   { name:"Budget Bug-Fix Index",   def:"Cheapest verified cost to fix one bug, any model.",
               pts:[0.0048, 0.0041, 0.0035, 0.0028, 0.0022, 0.0018, 0.0015] },
-  frontier: { name:"Frontier Bug-Fix Index", sub:"Cost to fix one bug on the top frontier model",
+  frontier: { name:"Frontier Bug-Fix Index", def:"Cost to fix one bug on the leading frontier model.",
               pts:[0.132, 0.121, 0.110, 0.098, 0.090, 0.083, 0.078] },
 };
-const MOVERS = [
-  { m:"MiniMax M3",            e:"Launch promo halves list price",      v:"−50.0%", dir:"dn", d:"Jun 28" },
-  { m:"Gemini 3.1 Flash-Lite", e:"New listing at $0.10/$0.40",          v:"NEW",    dir:"dn", d:"Jul 1"  },
-  { m:"Claude Sonnet 5",       e:"New listing — output price pending verification", v:"NEW", dir:"", d:"Jul 1" },
-  { m:"Grok 4.3",              e:"New listing — pending verification",  v:"NEW",    dir:"", d:"Jun 24" },
-  { m:"Gemini 3.1 Pro",        e:"Long-context tier above 200K input",  v:"+100%",  dir:"up", d:"Jun"   },
+
+const REPRICE = [
+  { d:"JUL 1",  t:"Claude Sonnet 5 listed — output price pending verification", v:"NEW", dir:"nt" },
+  { d:"JUL 1",  t:"Gemini 3.1 Flash-Lite Image listed at $0.10 / $0.40",        v:"NEW", dir:"dn" },
+  { d:"JUN 28", t:"MiniMax M3 launch promo halves list price",                  v:"−50.0%", dir:"dn" },
+  { d:"JUN 24", t:"Grok 4.3 listed — pending verification",                     v:"NEW", dir:"nt" },
+  { d:"JUN 23", t:"Qwen3.5 family refresh",                                     v:"NEW", dir:"nt" },
+  { d:"JUN",    t:"Gemini 3.1 Pro long-context tier above 200K input",          v:"+100%", dir:"up" },
+  { d:"MAR",    t:"GPT-5.4 family repriced downward",                           v:"−17%", dir:"dn" },
 ];
 
 let budget = 1, taskId = "bugfix", normalize = true, wlOnly = false;
-const watch = new Set();  // in-memory watchlist (session only)
+let customIn = 5000, customOut = 800;
+const watch = new Set(); // session-only watchlist
 
 const money = v => v >= 0.01 ? "$" + v.toFixed(v >= 1 ? 2 : 3) : "$" + v.toFixed(4);
+const fmtBudget = b => b < 1 ? Math.round(b * 100) + "\u00A2" : "$" + b;
 const big = n => n.toLocaleString("en-US");
-const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
-function costPerTask(m, t, useVerb) {
-  const v = useVerb ? m.verbosity : 1;
+function currentTask() {
+  const t = TASKS.find(t => t.id === taskId);
+  return t.id === "custom" ? { ...t, inT: customIn, outT: customOut } : t;
+}
+function costPerTask(m, t) {
+  const v = normalize ? m.verbosity : 1;
   return (t.inT * m.inP) / 1e6 + (t.outT * v * m.outP) / 1e6;
 }
 
-function render() {
-  const task = TASKS.find(t => t.id === taskId);
-  document.getElementById("h-budget").textContent = budget < 1 ? Math.round(budget*100) + "¢" : "$" + budget;
-  document.getElementById("why").textContent = "WHY THIS TASK — " + task.src;
+function spark(mults, cpt, color) {
+  const pts = mults.map(f => f * cpt);
+  const w = 110, h = 26, min = Math.min(...pts), max = Math.max(...pts);
+  const xy = pts.map((p,i) => [ (i/(Math.max(pts.length-1,1)))*(w-6)+3,
+                                h-4-((p-min)/(max-min||1))*(h-8) ]);
+  const line = xy.map(p => p.map(n => n.toFixed(1)).join(",")).join(" ");
+  const last = xy[xy.length-1];
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Six month cost trend">
+    <polyline points="${line}" fill="none" stroke="${color}" stroke-width="1.5"/>
+    <circle cx="${last[0]}" cy="${last[1]}" r="2.2" fill="${color}"/></svg>`;
+}
 
-  document.getElementById("notes").innerHTML = BUDGETS.map(b =>
-    `<button class="note${b===budget?" on":""}" data-b="${b}">${b<1?Math.round(b*100)+"¢":"$"+b}<small>BUDGET</small></button>`
-  ).join("");
-  document.querySelectorAll(".note").forEach(el =>
+function render() {
+  const task = currentTask();
+
+  document.getElementById("budgets").innerHTML = BUDGETS.map(b =>
+    `<button class="${b===budget?"on":""}" data-b="${b}">${fmtBudget(b)}</button>`).join("");
+  document.querySelectorAll("#budgets button").forEach(el =>
     el.addEventListener("click", () => { budget = parseFloat(el.dataset.b); render(); }));
 
+  document.getElementById("tok").className = "tok" + (taskId === "custom" ? " show" : "");
+  document.getElementById("spec").textContent = task.spec;
+  document.getElementById("jobsHead").textContent =
+    (task.unit + " per " + fmtBudget(budget)).toUpperCase();
+
   let rows = MODELS.map(m => {
-    const cpt = costPerTask(m, task, normalize);
+    const cpt = costPerTask(m, task);
     return { ...m, cpt, count: Math.floor(budget / cpt) };
-  }).sort((a,b) => b.count - a.count);
+  }).sort((a,b) => a.cpt - b.cpt);
   if (wlOnly && watch.size) rows = rows.filter(m => watch.has(m.id));
-  const max = (rows[0] && rows[0].count) || 1;
-  document.getElementById("wlcount").textContent = watch.size ? `(${watch.size} ★)` : "";
+  document.getElementById("wlcount").textContent = watch.size ? "(" + watch.size + ")" : "";
 
-  document.getElementById("grid").innerHTML = rows.map((m,i) => `
-    <article class="rcpt">
-      ${i===0 ? '<span class="best">MOST PER $</span>' : ""}
-      <div class="prov" style="color:${HUES[m.provider]}">${esc(m.provider)} · ${esc(m.tier)}</div>
-      <h3>${esc(m.name)}<button class="star${watch.has(m.id)?" on":""}" data-w="${m.id}"
-        aria-label="${watch.has(m.id)?"Remove from":"Add to"} watchlist" title="Watchlist">★</button></h3>
-      <div class="qty">${big(m.count)}</div>
-      <div class="unit">${esc(task.unit)} for ${money(budget)}</div>
-      <div class="bar"><i style="width:${Math.max(2,(m.count/max)*100)}%"></i></div>
-      <div class="cpt"><span>per job</span><span>${money(m.cpt)}</span></div>
-    </article>`).join("");
-
-  document.getElementById("ledgercap").textContent =
-    `List prices per million tokens, and what they translate to for "${task.label.toLowerCase()}" ` +
-    `(~${big(task.inT)} tokens in, ~${big(task.outT)} baseline tokens out).`;
+  if (rows.length) {
+    const bst = rows[0];
+    document.getElementById("headline").innerHTML =
+      `For ${esc(fmtBudget(budget))}, the cheapest verified model completes <b>${big(bst.count)} ${esc(task.unit)}</b>. The dearest completes ${big(rows[rows.length-1].count)}.`;
+  }
 
   document.getElementById("tbody").innerHTML = rows.map((m,i) => `
-    <tr>
-      <td>${esc(m.name)}<span class="p" style="color:${HUES[m.provider]}">${esc(m.provider)}</span></td>
-      <td>$${m.inP.toFixed(2)}</td>
-      <td>$${m.outP.toFixed(2)}</td>
-      <td>${normalize ? m.verbosity.toFixed(2) : "—"}</td>
-      <td class="${i===rows.length-1?"lo":""}">${money(m.cpt)}</td>
-      <td class="${i===0?"hi":""}">${big(Math.floor(1/m.cpt))}</td>
+    <tr class="${i===0 ? "best" : ""}">
+      <td class="l">
+        <div class="mname">${esc(m.name)}</div>
+        <div class="msub">${esc(m.provider.toUpperCase())} · <span class="v">VERIFIED 7 JUL</span></div>
+      </td>
+      <td class="num">${m.inP.toFixed(2)}</td>
+      <td class="num">${m.outP.toFixed(2)}</td>
+      <td class="num">${normalize ? m.verbosity.toFixed(2) : "—"}</td>
+      <td class="num cpj">${money(m.cpt)}</td>
+      <td class="num jobs">${big(m.count)}</td>
+      <td>${spark(m.trend, m.cpt, i===0 ? "#0D7680" : "#6b625b")}</td>
+      <td><button class="watch ${watch.has(m.id)?"on":""}" data-w="${m.id}"
+        aria-pressed="${watch.has(m.id)}">${watch.has(m.id)?"WATCHING":"WATCH"}</button></td>
     </tr>`).join("");
 
-  document.querySelectorAll(".star").forEach(el =>
+  document.querySelectorAll(".watch").forEach(el =>
     el.addEventListener("click", () => {
       const id = el.dataset.w;
       watch.has(id) ? watch.delete(id) : watch.add(id);
@@ -368,54 +367,39 @@ function render() {
     }));
 }
 
-function spark(pts) {
-  const w = 280, h = 56, min = Math.min(...pts), max = Math.max(...pts);
-  const xy = pts.map((p,i) => [ (i/(pts.length-1))*(w-4)+2,
-                                h-4-((p-min)/(max-min||1))*(h-10) ]);
-  const line = xy.map(p => p.map(n => n.toFixed(1)).join(",")).join(" ");
-  const area = `2,${h} ${line} ${w-2},${h}`;
-  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Price trend, Jan to Jul 2026">
-    <polygon points="${area}" fill="#0e7b4f" opacity="0.10"/>
-    <polyline points="${line}" fill="none" stroke="#0e7b4f" stroke-width="2"/>
-    <circle cx="${xy[xy.length-1][0]}" cy="${xy[xy.length-1][1]}" r="3" fill="#12a366"/>
-  </svg>`;
-}
-
-function renderMarket() {
-  const tapeItems = EVENTS.map(e =>
-    `<span><b>${esc(e.d)}</b> ${esc(e.t)}${e.v ? ` <span class="${e.dir}">${esc(e.v)}</span>` : ""}</span>`
-  ).join("<span>·</span>");
-  document.getElementById("tape").innerHTML = tapeItems + "<span>·</span>" + tapeItems; // duplicated for seamless loop
-
+function renderStatic() {
   for (const key of ["budget","frontier"]) {
     const ix = IDX[key], cur = ix.pts[ix.pts.length-1], prev = ix.pts[ix.pts.length-2];
-    const chg = ((cur - prev) / prev * 100);
+    const chg = (cur - prev) / prev * 100;
+    const w = 320, h = 74, min = Math.min(...ix.pts), max = Math.max(...ix.pts);
+    const xy = ix.pts.map((p,i) => [ (i/(ix.pts.length-1))*(w-8)+4,
+                                     h-8-((p-min)/(max-min||1))*(h-16) ]);
+    const line = xy.map(p => p.map(n => n.toFixed(1)).join(",")).join(" ");
     document.getElementById("idx-" + key).innerHTML = `
-      <div class="lbl">INDEX · JAN–JUL 2026</div>
       <h3>${esc(ix.name)}</h3>
-      <span class="val">${money(cur)}</span>
-      <span class="chg ${chg <= 0 ? "dn" : "up"}">${chg <= 0 ? "▼" : "▲"} ${Math.abs(chg).toFixed(1)}% m/m</span>
-      ${spark(ix.pts)}
-      <div class="sub2">${esc(ix.sub)}</div>`;
+      <div><span class="val">${money(cur)}</span><span class="chg ${chg<=0?"dn":"up"}">${chg<=0?"▼":"▲"} ${Math.abs(chg).toFixed(1)}% m/m</span></div>
+      <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="${esc(ix.name)}, January to July 2026">
+        <line x1="4" y1="${h-8}" x2="${w-4}" y2="${h-8}" stroke="#E9D5C1" stroke-width="1"/>
+        <polyline points="${line}" fill="none" stroke="#0D7680" stroke-width="1.8"/>
+        <circle cx="${xy[xy.length-1][0]}" cy="${xy[xy.length-1][1]}" r="2.6" fill="#0D7680"/>
+      </svg>
+      <div class="def">${esc(ix.def)} JAN–JUL 2026.</div>`;
   }
-
-  document.getElementById("movers").innerHTML = MOVERS.map(m => `
-    <tr>
-      <td>${esc(m.m)}</td>
-      <td style="text-align:left;font-family:Archivo,sans-serif;font-size:13px;color:var(--ink-soft)">${esc(m.e)}</td>
-      <td class="${m.dir}">${esc(m.v)}</td>
-      <td>${esc(m.d)}</td>
-    </tr>`).join("");
+  document.getElementById("reprice").innerHTML = REPRICE.map(r => `
+    <li><span class="d">${esc(r.d)}</span><span>${esc(r.t)}</span>
+        <span class="delta ${r.dir}">${esc(r.v)}</span></li>`).join("");
 }
 
 const sel = document.getElementById("task");
 sel.innerHTML = TASKS.map(t => `<option value="${t.id}">${esc(t.label)}</option>`).join("");
 sel.value = taskId;
 sel.addEventListener("change", e => { taskId = e.target.value; render(); });
+document.getElementById("tin").addEventListener("input", e => { customIn = Math.max(1, +e.target.value || 1); render(); });
+document.getElementById("tout").addEventListener("input", e => { customOut = Math.max(1, +e.target.value || 1); render(); });
 document.getElementById("norm").addEventListener("change", e => { normalize = e.target.checked; render(); });
 document.getElementById("wl").addEventListener("change", e => { wlOnly = e.target.checked; render(); });
 render();
-renderMarket();
+renderStatic();
 </script>
 </body>
 </html>
