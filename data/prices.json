@@ -1,7 +1,7 @@
 {
-  "as_of": "2026-07-07",
-  "as_of_display": "7 JUL 2026",
-  "note": "Seed prices verified manually against first-party pricing pages on 2026-07-07. Subsequent updates are auto-tracked daily from the OpenRouter models API and marked as such until re-verified.",
+  "as_of": "2026-07-16",
+  "as_of_display": "16 JUL 2026",
+  "note": "Seed prices verified manually against first-party pricing pages and current published comparisons on 2026-07-16 (no changes vs 2026-07-07 seed). Subsequent updates are auto-tracked daily from the OpenRouter models API and marked as such until re-verified.",
   "models": [
     { "id": "gpt55",   "inP": 5.0,  "outP": 30.0, "verification": "verified" },
     { "id": "opus48",  "inP": 5.0,  "outP": 25.0, "verification": "verified" },
