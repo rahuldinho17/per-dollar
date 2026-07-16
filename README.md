@@ -42,3 +42,16 @@ Questions:
 6. Would your company pay for any of it?
    (multiple choice: Yes / Maybe, depends on price / No)
 7. Anything else? — paragraph, optional
+
+## Daily price refresh
+
+`data/prices.json` is the page's data source (the HTML carries a fallback copy).
+A GitHub Actions cron (`.github/workflows/refresh-prices.yml`) runs daily at
+05:17 UTC: it pulls current prices from the OpenRouter models API, applies
+changes, appends them to `data/changelog.json`, and commits — Vercel redeploys
+automatically. Safety rails: models not found on OpenRouter are left untouched;
+changes larger than 5x are held as anomalies for human review (visible in the
+Action log) rather than published; auto-updated prices display as AUTO-TRACKED
+until re-verified against first-party pages. Check the slugs in
+`scripts/openrouter-map.json` against openrouter.ai/models after the first run.
+Manual run: Actions tab → "Refresh prices (daily)" → Run workflow.

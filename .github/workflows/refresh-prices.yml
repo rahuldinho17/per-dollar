@@ -1,0 +1,31 @@
+name: Refresh prices (daily)
+
+on:
+  schedule:
+    - cron: "17 5 * * *"   # 05:17 UTC daily (off-peak minute to avoid load spikes)
+  workflow_dispatch: {}     # allow manual runs from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Fetch current prices
+        run: node scripts/refresh-prices.mjs
+      - name: Commit if changed
+        run: |
+          git config user.name "perdollar-bot"
+          git config user.email "bot@users.noreply.github.com"
+          if ! git diff --quiet -- data/; then
+            git add data/
+            git commit -m "chore: daily price refresh ($(date -u +%F))"
+            git push
+          else
+            echo "No price changes today."
+          fi

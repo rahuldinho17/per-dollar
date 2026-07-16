@@ -191,7 +191,7 @@
 
   <header class="mast">
     <div class="mark">Per<span>Dollar</span></div>
-    <div class="status">PRICES VERIFIED <b>7 JUL 2026</b> · 13 MODELS<br/>2 LISTINGS PENDING VERIFICATION</div>
+    <div class="status" id="statusline">PRICES VERIFIED <b>7 JUL 2026</b> · 13 MODELS<br/>2 LISTINGS PENDING VERIFICATION</div>
     <a class="fb" href="https://forms.gle/NKx36saGTsCPLe6n9" target="_blank" rel="noopener">Give feedback</a>
   </header>
 
@@ -458,7 +458,10 @@ function render() {
         <div class="mname">${esc(m.name)}</div>
         <div class="msub">${esc(m.provider.toUpperCase())} ·
           <a href="${esc(src)}" target="_blank" rel="noopener"
-             title="${esc(src)} — snapshot 7 Jul 2026">VERIFIED 7 JUL · SOURCE ↗</a></div>
+             title="${esc(src)} — ${m.verification === "auto-tracked" ? "auto-tracked via OpenRouter" : "snapshot 7 Jul 2026"}">${
+            m.verification === "auto-tracked"
+              ? "AUTO-TRACKED " + esc((m.tracked_at || "").toUpperCase())
+              : "VERIFIED 7 JUL"} · SOURCE ↗</a></div>
       </td>
       <td class="num c-in" data-label="IN $/M">${m.inP.toFixed(2)}</td>
       <td class="num c-out" data-label="OUT $/M">${m.outP.toFixed(2)}</td>
@@ -528,6 +531,31 @@ document.querySelectorAll("thead th.sort").forEach(th => {
 });
 render();
 renderStatic();
+
+// Live data: load the daily-refreshed prices file; hardcoded values above are the
+// fallback for file:// viewing or fetch failure. The GitHub Actions cron updates
+// data/prices.json every day and Vercel redeploys on commit.
+(async function loadData() {
+  try {
+    const r = await fetch("data/prices.json", { cache: "no-store" });
+    if (!r.ok) return;
+    const d = await r.json();
+    if (!Array.isArray(d.models)) return;
+    d.models.forEach(u => {
+      const m = MODELS.find(x => x.id === u.id);
+      if (m && Number.isFinite(u.inP) && Number.isFinite(u.outP)) {
+        m.inP = u.inP; m.outP = u.outP;
+        if (u.verification) m.verification = u.verification;
+        if (u.tracked_at) m.tracked_at = u.tracked_at;
+      }
+    });
+    const auto = d.models.filter(m => m.verification === "auto-tracked").length;
+    document.getElementById("statusline").innerHTML =
+      `PRICES AS OF <b>${esc(d.as_of_display || d.as_of)}</b> · ${d.models.length} MODELS<br/>` +
+      (auto ? `${auto} AUTO-TRACKED · DAILY REFRESH` : `DAILY AUTO-REFRESH ACTIVE`);
+    render();
+  } catch (e) { /* offline or file:// — fallback data already rendered */ }
+})();
 </script>
 </body>
 </html>
