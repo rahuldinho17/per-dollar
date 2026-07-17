@@ -3,18 +3,86 @@
   "as_of_display": "16 JUL 2026",
   "note": "Seed prices verified manually against first-party pricing pages and current published comparisons on 2026-07-16 (no changes vs 2026-07-07 seed). Subsequent updates are auto-tracked daily from the OpenRouter models API and marked as such until re-verified.",
   "models": [
-    { "id": "gpt55",   "inP": 5.0,  "outP": 30.0, "verification": "verified" },
-    { "id": "opus48",  "inP": 5.0,  "outP": 25.0, "verification": "verified" },
-    { "id": "gpt54",   "inP": 2.5,  "outP": 15.0, "verification": "verified" },
-    { "id": "son46",   "inP": 3.0,  "outP": 15.0, "verification": "verified" },
-    { "id": "gem31p",  "inP": 2.0,  "outP": 12.0, "verification": "verified" },
-    { "id": "glm52",   "inP": 1.4,  "outP": 4.4,  "verification": "verified" },
-    { "id": "haiku45", "inP": 1.0,  "outP": 5.0,  "verification": "verified" },
-    { "id": "mm3",     "inP": 0.6,  "outP": 2.4,  "verification": "verified" },
-    { "id": "gem3f",   "inP": 0.5,  "outP": 3.0,  "verification": "verified" },
-    { "id": "g41mini", "inP": 0.4,  "outP": 1.6,  "verification": "verified" },
-    { "id": "dsv4f",   "inP": 0.14, "outP": 0.28, "verification": "verified" },
-    { "id": "g41nano", "inP": 0.1,  "outP": 0.4,  "verification": "verified" },
-    { "id": "gem31fl", "inP": 0.1,  "outP": 0.4,  "verification": "verified" }
+    {
+      "id": "gpt55",
+      "inP": 5.0,
+      "outP": 30.0,
+      "verification": "verified"
+    },
+    {
+      "id": "opus48",
+      "inP": 5.0,
+      "outP": 25.0,
+      "verification": "verified"
+    },
+    {
+      "id": "gpt54",
+      "inP": 2.5,
+      "outP": 15.0,
+      "verification": "verified"
+    },
+    {
+      "id": "son46",
+      "inP": 3.0,
+      "outP": 15.0,
+      "verification": "verified"
+    },
+    {
+      "id": "gem31p",
+      "inP": 2.0,
+      "outP": 12.0,
+      "verification": "verified"
+    },
+    {
+      "id": "glm52",
+      "inP": 1.4,
+      "outP": 4.4,
+      "verification": "verified"
+    },
+    {
+      "id": "haiku45",
+      "inP": 1.0,
+      "outP": 5.0,
+      "verification": "verified"
+    },
+    {
+      "id": "mm3",
+      "inP": 0.6,
+      "outP": 2.4,
+      "verification": "verified",
+      "promoIn": 0.3,
+      "promoOut": 1.2,
+      "promoEnds": null
+    },
+    {
+      "id": "gem3f",
+      "inP": 0.5,
+      "outP": 3.0,
+      "verification": "verified"
+    },
+    {
+      "id": "g41mini",
+      "inP": 0.4,
+      "outP": 1.6,
+      "verification": "verified"
+    },
+    {
+      "id": "dsv4f",
+      "inP": 0.14,
+      "outP": 0.28,
+      "verification": "verified"
+    },
+    {
+      "id": "g41nano",
+      "inP": 0.1,
+      "outP": 0.4,
+      "verification": "verified"
+    },
+    {
+      "id": "gem31fl",
+      "inP": 0.1,
+      "outP": 0.4,
+      "verification": "verified"
+    }
   ]
 }

@@ -55,3 +55,13 @@ Action log) rather than published; auto-updated prices display as AUTO-TRACKED
 until re-verified against first-party pages. Check the slugs in
 `scripts/openrouter-map.json` against openrouter.ai/models after the first run.
 Manual run: Actions tab → "Refresh prices (daily)" → Run workflow.
+
+## Promo handling
+
+A promo is a price with a lifespan. The refresh script never records a
+below-standard fetched price as a permanent cut: it parks it in promoIn/promoOut
+(changelog kind promo_price), and a return to standard is logged as promo_end,
+not a hike. The site shows both prices side by side with a PROMO badge; rankings
+default to the effective price and the "plan with standard prices" toggle
+re-ranks at list price. If a provider makes a promo permanent, promote it by
+re-verifying the standard price manually.

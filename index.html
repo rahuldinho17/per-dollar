@@ -48,6 +48,7 @@
   .stand h1 b { font-weight: 600; color: var(--claret); }
   .stand h1 .ch { font-weight: 600; color: var(--teal); }
   .stand h1 .ex { color: var(--claret); }
+  .stand h1 .hlsub { font-size: 55%; color: var(--ink-2); font-style: italic; font-weight: 400; }
   .stand .deck { font-family: "Newsreader", serif; font-style: italic; font-size: 18px;
     color: var(--ink-2); margin: 0 0 30px; max-width: 58ch; line-height: 1.5; }
 
@@ -86,6 +87,14 @@
   .assume details { margin-top: 6px; color: var(--ink-2); }
   .assume summary { cursor: pointer; color: var(--teal); font-size: 12.5px; }
   .assume summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+  .pnote { border: 1px dashed var(--claret); background: var(--raised); padding: 10px 14px;
+    font-size: 12.5px; color: var(--ink-2); margin-top: 10px; max-width: 86ch; line-height: 1.55; }
+  .pnote b { font-family: "Spline Sans Mono", monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--claret); }
+  .pbadge { font: 600 9px "Spline Sans Mono", monospace; letter-spacing: 0.1em;
+    border: 1px solid var(--claret); color: var(--claret); padding: 1px 5px;
+    border-radius: 2px; margin-left: 8px; vertical-align: 2px; white-space: nowrap; }
+  .pbadge.off { border-color: var(--wheat-2); color: var(--ink-2); }
+  .stdsub { display: block; font: 400 10px "Spline Sans Mono", monospace; color: var(--ink-2); margin-top: 1px; }
 
   /* ledger */
   .ledger-wrap { margin-top: 26px; overflow-x: auto; }
@@ -219,10 +228,12 @@
       <label>Tokens out <input type="number" id="tout" value="800" min="1" step="100" /></label>
     </span>
     <label class="check"><input type="checkbox" id="norm" checked /> Adjust for answer length</label>
+    <label class="check" title="Rankings and costs use list prices, ignoring temporary promos — for budgeting and commitments"><input type="checkbox" id="std" /> Plan with standard prices</label>
     <label class="check"><input type="checkbox" id="wl" /> Watchlist only <span id="wlcount" class="num"></span></label>
   </div>
 
   <div class="assume" id="assume"></div>
+  <div class="pnote" id="pnote" hidden></div>
 
   <div class="ledger-wrap">
     <table aria-label="Model ledger">
@@ -270,7 +281,12 @@
     states its assumptions above the ledger, and token footprints are estimates until the
     benchmark suite replaces them with measured medians. Capability is not modeled: a cheap
     model that fails the job costs more than a dear one that succeeds. For custom tasks:
-    1 token ≈ ¾ of an English word; 100 lines of code ≈ 900 tokens.
+    1 token ≈ ¾ of an English word; 100 lines of code ≈ 900 tokens. Promotional
+    prices are shown alongside standard list prices, never in place of them;
+    rankings use the effective (promo) price by default because that is what
+    this month's invoice will say, and the "plan with standard prices" toggle
+    re-ranks everything at list price for budgeting and commitments. A promo
+    ending is recorded as a promo end, not a price hike.
   </footer>
 
 </div>
@@ -293,7 +309,7 @@ const MODELS = [
   { id:"gem31p",  name:"Gemini 3.1 Pro",        provider:"Google",    inP:2.0,  outP:12.0, verbosity:0.85, trend:[1.45,1.4,1.3,1.2,1.1,1.0,1.0] },
   { id:"glm52",   name:"GLM-5.2",               provider:"Z.AI",      inP:1.4,  outP:4.4,  verbosity:0.95, trend:[1.7,1.6,1.5,1.3,1.15,1.05,1.0] },
   { id:"haiku45", name:"Claude Haiku 4.5",      provider:"Anthropic", inP:1.0,  outP:5.0,  verbosity:1.0,  trend:[1.3,1.3,1.25,1.2,1.1,1.0,1.0] },
-  { id:"mm3",     name:"MiniMax M3",            provider:"MiniMax",   inP:0.6,  outP:2.4,  verbosity:0.95, trend:[2.1,2.1,2.05,2.0,2.0,2.0,1.0] },
+  { id:"mm3",     name:"MiniMax M3",            provider:"MiniMax",   inP:0.6,  outP:2.4,  verbosity:0.95, promoIn:0.3, promoOut:1.2, promoEnds:null, trend:[2.1,2.1,2.05,2.0,2.0,2.0,1.0] },
   { id:"gem3f",   name:"Gemini 3 Flash",        provider:"Google",    inP:0.5,  outP:3.0,  verbosity:0.8,  trend:[1.5,1.45,1.35,1.25,1.1,1.0,1.0] },
   { id:"g41mini", name:"GPT-4.1 Mini",          provider:"OpenAI",    inP:0.4,  outP:1.6,  verbosity:0.95, trend:[1.25,1.25,1.2,1.15,1.1,1.0,1.0] },
   { id:"dsv4f",   name:"DeepSeek V4 Flash",     provider:"DeepSeek",  inP:0.14, outP:0.28, verbosity:0.9,  trend:[2.6,2.3,2.0,1.7,1.4,1.15,1.0] },
@@ -349,7 +365,7 @@ const IDX = {
 const REPRICE = [
   { d:"JUL 1",  t:"Claude Sonnet 5 listed — output price pending verification", v:"NEW", dir:"nt" },
   { d:"JUL 1",  t:"Gemini 3.1 Flash-Lite Image listed at $0.10 / $0.40",        v:"NEW", dir:"dn" },
-  { d:"JUN 28", t:"MiniMax M3 launch promo halves list price",                  v:"−50.0%", dir:"dn" },
+  { d:"JUN 28", t:"MiniMax M3 launch promo: $0.30/$1.20 (temporary — standard remains $0.60/$2.40, end date unannounced)", v:"PROMO −50%", dir:"dn" },
   { d:"JUN 24", t:"Grok 4.3 listed — pending verification",                     v:"NEW", dir:"nt" },
   { d:"JUN 23", t:"Qwen3.5 family refresh",                                     v:"NEW", dir:"nt" },
   { d:"JUN",    t:"Gemini 3.1 Pro long-context tier above 200K input",          v:"+100%", dir:"up" },
@@ -357,6 +373,7 @@ const REPRICE = [
 ];
 
 let budget = 1, customBudget = false, taskId = "bugfix", normalize = true, wlOnly = false;
+let planStandard = false;
 let customIn = 5000, customOut = 800;
 let sortKey = "cpt", sortDir = 1;
 const watch = new Set(); // session-only watchlist
@@ -371,9 +388,19 @@ function currentTask() {
   const t = TASKS.find(t => t.id === taskId);
   return t.id === "custom" ? { ...t, inT: customIn, outT: customOut } : t;
 }
-function costPerTask(m, t) {
-  const v = normalize ? m.verbosity : 1;
-  return (t.inT * m.inP) / 1e6 + (t.outT * v * m.outP) / 1e6;
+function jobCost(t, inP, outP, verb) {
+  return (t.inT * inP + t.outT * (normalize ? verb : 1) * outP) / 1e6;
+}
+// A promo is a price with a lifespan: effective = what you pay today,
+// standard = what you plan around. planStandard flips which one drives everything.
+function priceView(m) {
+  const hasPromo = m.promoIn != null || m.promoOut != null;
+  const usePromo = hasPromo && !planStandard;
+  const inEff  = usePromo ? (m.promoIn  ?? m.inP)  : m.inP;
+  const outEff = usePromo ? (m.promoOut ?? m.outP) : m.outP;
+  const inAlt  = hasPromo ? (usePromo ? m.inP  : (m.promoIn  ?? m.inP))  : null;
+  const outAlt = hasPromo ? (usePromo ? m.outP : (m.promoOut ?? m.outP)) : null;
+  return { hasPromo, usePromo, inEff, outEff, inAlt, outAlt };
 }
 const kf = s => esc(s).replace(/≈[\d,]+ tokens (in|out)/g, x => '<span class="kf">' + x + "</span>");
 
@@ -416,15 +443,28 @@ function render() {
     ${kf(task.short)}
     <details><summary>Variance and sourcing</summary>${esc(task.detail)}</details>`;
 
-  // compute over all models; headline uses full set (S6)
+  // compute over all models; headline uses full set (S6, S10)
   const all = MODELS.map(m => {
-    const cpt = costPerTask(m, task);
-    return { ...m, cpt, count: Math.floor(budget / cpt) };
+    const pv = priceView(m);
+    const cpt = jobCost(task, pv.inEff, pv.outEff, m.verbosity);
+    const cptAlt = pv.hasPromo ? jobCost(task, pv.inAlt, pv.outAlt, m.verbosity) : null;
+    return { ...m, pv, cpt, cptAlt, count: Math.floor(budget / cpt) };
   });
   const cheap = all.reduce((a,b) => a.cpt <= b.cpt ? a : b);
   const dear  = all.reduce((a,b) => a.cpt >= b.cpt ? a : b);
+  const promoQualifier = (cheap.pv.usePromo && cheap.cptAlt)
+    ? ` <span class="hlsub">(launch promo — ${big(Math.floor(budget / cheap.cptAlt))} at standard price)</span>` : "";
   document.getElementById("headline").innerHTML =
-    `For ${esc(fmtBudget(budget))}, <span class="ch">${esc(cheap.name)}</span> completes <b>${big(cheap.count)} ${esc(task.unit)}</b>; <span class="ex">${esc(dear.name)}</span> completes ${big(dear.count)}.`;
+    `For ${esc(fmtBudget(budget))}, <span class="ch">${esc(cheap.name)}</span> completes <b>${big(cheap.count)} ${esc(task.unit)}</b>; <span class="ex">${esc(dear.name)}</span> completes ${big(dear.count)}.${promoQualifier}`;
+
+  // promo decision rule (S10) — shown only while a promo exists
+  const promos = all.filter(m => m.pv.hasPromo);
+  const pnote = document.getElementById("pnote");
+  pnote.hidden = !promos.length;
+  if (promos.length) pnote.innerHTML = `<b>PROMO RULE</b> — ` + promos.map(m =>
+    `${esc(m.name)} is running a promo ($${m.promoIn}/$${m.promoOut}; standard $${m.inP}/$${m.outP}, ` +
+    `${m.promoEnds ? "ends " + esc(m.promoEnds) : "end date unannounced"})`).join("; ") +
+    `. If you can switch models cheaply, take the promo. If you're committing a workload or a budget to a model, plan at the standard price and treat the promo as found money.`;
 
   // sort (S2)
   let rows = [...all].sort((a,b) => {
@@ -455,23 +495,26 @@ function render() {
   document.getElementById("tbody").innerHTML = rows.map(m => {
     const tc = trendChange(m);
     const src = SOURCES[m.provider];
+    const alt = m.pv.hasPromo
+      ? (lbl, val) => `<span class="stdsub">${m.pv.usePromo ? "STD" : "PROMO"} ${val}</span>` : () => "";
     return `
     <tr class="${m.id === cheap.id ? "best" : ""}">
       <td class="l c-model">
-        <div class="mname">${esc(m.name)}</div>
+        <div class="mname">${esc(m.name)}${m.pv.hasPromo ? `<span class="pbadge${m.pv.usePromo ? "" : " off"}">PROMO</span>` : ""}</div>
         <div class="msub">${esc(m.provider.toUpperCase())} ·
           <a href="${esc(src)}" target="_blank" rel="noopener"
              title="${esc(src)} — ${m.verification === "auto-tracked" ? "auto-tracked via OpenRouter" : "snapshot 16 Jul 2026"}">${
             m.verification === "auto-tracked"
               ? "AUTO-TRACKED " + esc((m.tracked_at || "").toUpperCase())
-              : "VERIFIED 16 JUL"} · SOURCE ↗</a></div>
+              : "VERIFIED 16 JUL"} · SOURCE ↗</a>${
+          m.pv.hasPromo ? ` · ${m.promoEnds ? "PROMO ENDS " + esc(String(m.promoEnds).toUpperCase()) : "PROMO END UNANNOUNCED"}` : ""}</div>
       </td>
-      <td class="num c-in" data-label="IN $/M">${m.inP.toFixed(2)}</td>
-      <td class="num c-out" data-label="OUT $/M">${m.outP.toFixed(2)}</td>
+      <td class="num c-in" data-label="IN $/M">${m.pv.inEff.toFixed(2)}${alt("in", m.pv.inAlt?.toFixed(2))}</td>
+      <td class="num c-out" data-label="OUT $/M">${m.pv.outEff.toFixed(2)}${alt("out", m.pv.outAlt?.toFixed(2))}</td>
       <td class="num c-verb" data-label="LENGTH ×">${normalize ? m.verbosity.toFixed(2) : "—"}</td>
-      <td class="num cpj c-cpj" data-label="COST / JOB">${money(m.cpt)}</td>
+      <td class="num cpj c-cpj" data-label="COST / JOB">${money(m.cpt)}${alt("cpj", money(m.cptAlt ?? 0))}</td>
       <td class="num jobs barcell c-jobs" data-label="${esc((task.unit + " per " + fmtBudget(budget)).toUpperCase())}">
-        <i class="bar" style="width:${Math.max(1.5, m.count / maxCount * 86)}%"></i><span>${big(m.count)}</span></td>
+        <i class="bar" style="width:${Math.max(1.5, m.count / maxCount * 86)}%"></i><span>${big(m.count)}${alt("jobs", big(Math.floor(budget / (m.cptAlt || 1))))}</span></td>
       <td class="c-spark">${spark(m.trend, m.cpt, m.id === cheap.id ? "#0D7680" : "#6b625b")}
         <span class="sparkchg ${tc.pct <= 0 ? "dn" : "up"}">${tc.pct <= 0 ? "▼" : "▲"} ${Math.abs(tc.pct).toFixed(0)}% · ${tc.months} MO</span></td>
       <td class="c-watch"><button class="watch ${watch.has(m.id)?"on":""}" data-w="${m.id}"
@@ -521,6 +564,7 @@ document.getElementById("cb").addEventListener("input", e => {
 document.getElementById("tin").addEventListener("input", e => { customIn = Math.max(1, +e.target.value || 1); render(); });
 document.getElementById("tout").addEventListener("input", e => { customOut = Math.max(1, +e.target.value || 1); render(); });
 document.getElementById("norm").addEventListener("change", e => { normalize = e.target.checked; render(); });
+document.getElementById("std").addEventListener("change", e => { planStandard = e.target.checked; render(); });
 document.getElementById("wl").addEventListener("change", e => { wlOnly = e.target.checked; render(); });
 document.querySelectorAll("thead th.sort").forEach(th => {
   const go = () => {
@@ -548,6 +592,8 @@ renderStatic();
       const m = MODELS.find(x => x.id === u.id);
       if (m && Number.isFinite(u.inP) && Number.isFinite(u.outP)) {
         m.inP = u.inP; m.outP = u.outP;
+        m.promoIn = u.promoIn ?? null; m.promoOut = u.promoOut ?? null;
+        m.promoEnds = u.promoEnds ?? null;
         if (u.verification) m.verification = u.verification;
         if (u.tracked_at) m.tracked_at = u.tracked_at;
       }
