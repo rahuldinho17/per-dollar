@@ -1,5 +1,10 @@
 # PerDollar
 
+## Pages
+
+- `index.html` — marketing landing page (hero, problem, worked commerce example, the audit offer). This is the homepage.
+- `app.html` — the live interactive price sheet / cost explorer (formerly the homepage), linked from the landing page as "Live price sheet". Loads `/data/prices.json`.
+
 **Understand what your AI budget actually buys.**
 
 PerDollar compares LLM APIs by cost per completed job, not cost per token. Pick a budget and a real task — fix a bug, review a PR, resolve a support ticket — and see how many jobs each model delivers, normalized for how verbose each model's answers actually run.
