@@ -1,8 +1,20 @@
 {
-  "as_of": "2026-07-16",
-  "as_of_display": "16 JUL 2026",
-  "note": "Seed prices verified manually against first-party pricing pages and current published comparisons on 2026-07-16 (no changes vs 2026-07-07 seed). Subsequent updates are auto-tracked daily from the OpenRouter models API and marked as such until re-verified.",
+  "as_of": "2026-07-22",
+  "as_of_display": "22 JUL 2026",
+  "note": "Prices verified 2026-07-22 against provider-linked sources. Nine listings added this round (GPT-5.6 family, Claude Sonnet 5, Kimi K3, Grok 4.5, Inkling, Gemini 3.6 Flash, Claude Fable 5) and GLM-5.2 corrected to z.ai list price. Spot-check against first-party pages before quoting to a client.",
   "models": [
+    {
+      "id": "gpt56sol",
+      "inP": 5.0,
+      "outP": 30.0,
+      "verification": "verified"
+    },
+    {
+      "id": "fable5",
+      "inP": 10.0,
+      "outP": 50.0,
+      "verification": "verified"
+    },
     {
       "id": "gpt55",
       "inP": 5.0,
@@ -16,13 +28,31 @@
       "verification": "verified"
     },
     {
+      "id": "gpt56ter",
+      "inP": 2.5,
+      "outP": 15.0,
+      "verification": "verified"
+    },
+    {
       "id": "gpt54",
       "inP": 2.5,
       "outP": 15.0,
       "verification": "verified"
     },
     {
+      "id": "son5",
+      "inP": 3.0,
+      "outP": 15.0,
+      "verification": "verified"
+    },
+    {
       "id": "son46",
+      "inP": 3.0,
+      "outP": 15.0,
+      "verification": "verified"
+    },
+    {
+      "id": "kimik3",
       "inP": 3.0,
       "outP": 15.0,
       "verification": "verified"
@@ -34,9 +64,33 @@
       "verification": "verified"
     },
     {
+      "id": "grok45",
+      "inP": 2.0,
+      "outP": 6.0,
+      "verification": "verified"
+    },
+    {
+      "id": "inkling",
+      "inP": 1.87,
+      "outP": 4.68,
+      "verification": "verified"
+    },
+    {
+      "id": "gpt56lun",
+      "inP": 1.0,
+      "outP": 6.0,
+      "verification": "verified"
+    },
+    {
+      "id": "gem36f",
+      "inP": 1.5,
+      "outP": 7.5,
+      "verification": "verified"
+    },
+    {
       "id": "glm52",
-      "inP": 1.4,
-      "outP": 4.4,
+      "inP": 0.94,
+      "outP": 3.0,
       "verification": "verified"
     },
     {

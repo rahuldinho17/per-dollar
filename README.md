@@ -70,3 +70,15 @@ not a hike. The site shows both prices side by side with a PROMO badge; rankings
 default to the effective price and the "plan with standard prices" toggle
 re-ranks at list price. If a provider makes a promo permanent, promote it by
 re-verifying the standard price manually.
+
+## Model discovery
+
+The daily refresh also *discovers*. Any model from a tracked vendor (OpenAI,
+Anthropic, Google, DeepSeek, MiniMax, Z.AI, xAI, Moonshot, Mistral, Qwen, Meta,
+Cohere) that appears on OpenRouter but isn't in `openrouter-map.json` is written
+to `data/discovered.json` with status `pending` and logged in the Action output.
+It is never auto-published: the API supplies a price but not a display name, an
+answer-length factor, or a human check. The site surfaces the queue as
+"N new listings awaiting verification". To publish one, add its slug to
+`openrouter-map.json` and an entry to `data/prices.json`, then re-verify against
+the provider's own pricing page.

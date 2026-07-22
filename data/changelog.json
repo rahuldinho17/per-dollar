@@ -1,1 +1,85 @@
-[]
+[
+  {
+    "date": "2026-07-22",
+    "model": "glm52",
+    "dimension": "inP",
+    "old": 1.4,
+    "new": 0.94,
+    "kind": "correction",
+    "source": "z.ai",
+    "note": "seed price was above z.ai list; corrected"
+  },
+  {
+    "date": "2026-07-22",
+    "model": "glm52",
+    "dimension": "outP",
+    "old": 4.4,
+    "new": 3.0,
+    "kind": "correction",
+    "source": "z.ai",
+    "note": "seed price was above z.ai list; corrected"
+  },
+  {
+    "date": "2026-07-22",
+    "model": "gpt56sol",
+    "kind": "new_model",
+    "source": "provider-pages",
+    "note": "listing added to ledger"
+  },
+  {
+    "date": "2026-07-22",
+    "model": "gpt56ter",
+    "kind": "new_model",
+    "source": "provider-pages",
+    "note": "listing added to ledger"
+  },
+  {
+    "date": "2026-07-22",
+    "model": "gpt56lun",
+    "kind": "new_model",
+    "source": "provider-pages",
+    "note": "listing added to ledger"
+  },
+  {
+    "date": "2026-07-22",
+    "model": "son5",
+    "kind": "new_model",
+    "source": "provider-pages",
+    "note": "listing added to ledger"
+  },
+  {
+    "date": "2026-07-22",
+    "model": "kimik3",
+    "kind": "new_model",
+    "source": "provider-pages",
+    "note": "listing added to ledger"
+  },
+  {
+    "date": "2026-07-22",
+    "model": "grok45",
+    "kind": "new_model",
+    "source": "provider-pages",
+    "note": "listing added to ledger"
+  },
+  {
+    "date": "2026-07-22",
+    "model": "inkling",
+    "kind": "new_model",
+    "source": "provider-pages",
+    "note": "listing added to ledger"
+  },
+  {
+    "date": "2026-07-22",
+    "model": "gem36f",
+    "kind": "new_model",
+    "source": "provider-pages",
+    "note": "listing added to ledger"
+  },
+  {
+    "date": "2026-07-22",
+    "model": "fable5",
+    "kind": "new_model",
+    "source": "provider-pages",
+    "note": "listing added to ledger"
+  }
+]
