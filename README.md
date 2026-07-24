@@ -82,3 +82,16 @@ answer-length factor, or a human check. The site surfaces the queue as
 "N new listings awaiting verification". To publish one, add its slug to
 `openrouter-map.json` and an entry to `data/prices.json`, then re-verify against
 the provider's own pricing page.
+
+## Same model, every host (`hosts.html`)
+
+Open-weight models have no single price: the same weights served by DeepInfra,
+Fireworks, Together, Groq etc. carry different rates, and prompt caching moves
+the ranking again. `hosts.html` compares hosts for one model on cost per
+finished job, with a cache-hit-rate slider that blends standard and cached input
+rates. Hosts publishing no cached rate are charged at standard (conservative),
+which is why the spread widens as the slider rises.
+
+Host prices are compiled from published provider comparisons (Jun–Jul 2026) and
+marked `tracked`, not `verified` — first-party confirmation is pending and no
+number should be quoted to a customer before that check.

@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PerDollar — same model, every host</title>
+<meta name="description" content="Open-weight models cost different amounts depending on who hosts them. Same weights, same model, different bill — compared per finished job, with cache-hit modelling." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #FFF1E5; --raised: #FFF9F3;
+    --ink: #33302E; --ink-2: #6b625b; --ink-3: #9c948b;
+    --claret: #990F3D; --teal: #0D7680;
+    --wheat: #F2DFCE; --wheat-2: #E9D5C1;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Source Sans 3", system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--teal); }
+  .num { font-family: "Spline Sans Mono", monospace; font-variant-numeric: tabular-nums; }
+
+  .mast { display: flex; align-items: center; gap: 18px; padding: 14px 0 12px;
+    border-bottom: 3px double var(--ink); }
+  .mark { font-family: "Newsreader", serif; font-weight: 600; font-size: 24px;
+    letter-spacing: 0.01em; margin-right: auto; text-decoration: none; color: inherit; }
+  .mark span { color: var(--claret); }
+  .mnav { display: flex; gap: 18px; font-size: 13.5px; }
+  .mnav a { color: var(--ink-2); text-decoration: none; }
+  .mnav a:hover { color: var(--ink); }
+  .mnav a.on { color: var(--ink); font-weight: 600; border-bottom: 2px solid var(--claret); }
+
+  .stand { padding: 40px 0 8px; }
+  .stand h1 { font-family: "Newsreader", serif; font-weight: 500;
+    font-size: clamp(28px, 4.4vw, 46px); line-height: 1.12; letter-spacing: -0.01em;
+    margin: 0 0 12px; max-width: 26ch; }
+  .stand h1 b { font-weight: 600; color: var(--claret); }
+  .stand h1 .ch { font-weight: 600; color: var(--teal); }
+  .stand .deck { font-family: "Newsreader", serif; font-style: italic; font-size: 17px;
+    color: var(--ink-2); margin: 0 0 28px; max-width: 62ch; line-height: 1.5; }
+
+  .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px;
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--wheat-2); padding: 12px 0; }
+  .flabel { font-family: "Spline Sans Mono", monospace; font-size: 10px;
+    letter-spacing: 0.12em; color: var(--ink-2); }
+  select { font: 500 14px "Source Sans 3", sans-serif; color: var(--ink);
+    background: var(--raised); border: 1px solid var(--ink); border-radius: 2px; padding: 7px 10px; }
+  .slider { display: inline-flex; align-items: center; gap: 10px; }
+  .slider input[type=range] { width: 150px; accent-color: var(--teal); }
+  .slider .v { font-family: "Spline Sans Mono", monospace; font-size: 13px; font-weight: 600;
+    min-width: 42px; text-align: right; }
+
+  .assume { border: 1px solid var(--wheat-2); border-left: 3px solid var(--claret);
+    background: var(--raised); padding: 12px 14px; font-size: 13.5px; margin-top: 14px;
+    max-width: 88ch; line-height: 1.55; }
+  .assume .t { font-family: "Spline Sans Mono", monospace; font-size: 10px;
+    letter-spacing: 0.1em; color: var(--claret); margin-bottom: 5px; }
+  .assume .kf { font-family: "Spline Sans Mono", monospace; font-weight: 600; font-size: 12.5px; }
+
+  /* spread bar */
+  .spreadbox { margin-top: 26px; border: 1px solid var(--wheat-2); background: var(--raised);
+    border-radius: 4px; padding: 18px 20px; }
+  .spreadbox .lbl { font-family: "Spline Sans Mono", monospace; font-size: 10px;
+    letter-spacing: 0.12em; color: var(--ink-2); margin-bottom: 10px; }
+  .track { position: relative; height: 34px; }
+  .track .rail { position: absolute; left: 0; right: 0; top: 15px; height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--claret)); border-radius: 2px; }
+  .track .pip { position: absolute; top: 9px; width: 15px; height: 15px; margin-left: -7px;
+    border-radius: 50%; background: var(--raised); border: 2.5px solid var(--ink-2); }
+  .track .pip.min { border-color: var(--teal); }
+  .track .pip.max { border-color: var(--claret); }
+  .track .cap { position: absolute; top: -4px; font-family: "Spline Sans Mono", monospace;
+    font-size: 11px; white-space: nowrap; }
+  .track .cap.l { left: 0; color: var(--teal); }
+  .track .cap.r { right: 0; color: var(--claret); }
+  .spreadbox .concl { margin-top: 12px; font-size: 14.5px; }
+  .spreadbox .concl b { color: var(--claret); }
+
+  .ledger-wrap { margin-top: 26px; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 880px; }
+  thead th { font-family: "Spline Sans Mono", monospace; font-weight: 500; font-size: 10px;
+    letter-spacing: 0.1em; color: var(--ink-2); text-align: right; padding: 0 12px 8px;
+    border-bottom: 1.5px solid var(--ink); white-space: nowrap; }
+  thead th.l { text-align: left; }
+  tbody td { padding: 11px 12px; border-bottom: 1px solid var(--wheat-2);
+    text-align: right; vertical-align: middle; }
+  tbody td.l { text-align: left; }
+  tbody tr:hover { background: var(--raised); }
+  .hname { font-weight: 600; font-size: 14.5px; }
+  .hsub { font-family: "Spline Sans Mono", monospace; font-size: 10px; letter-spacing: 0.08em;
+    color: var(--ink-2); margin-top: 1px; }
+  .hsub a { color: var(--teal); text-decoration: underline dotted; text-underline-offset: 2px; }
+  td.num { font-family: "Spline Sans Mono", monospace; font-size: 13px; }
+  td.cpj { font-size: 15px; font-weight: 600; }
+  td.delta { font-family: "Spline Sans Mono", monospace; font-size: 13px; }
+  td.delta.up { color: var(--claret); }
+  td.delta.base { color: var(--teal); font-weight: 600; }
+  tr.best .hname::after { content: "CHEAPEST HOST"; font: 600 9px "Spline Sans Mono", monospace;
+    letter-spacing: 0.1em; color: var(--paper); background: var(--teal);
+    padding: 2px 6px; margin-left: 8px; vertical-align: 2px; border-radius: 2px; }
+  td.barcell { position: relative; }
+  td.barcell .bar { position: absolute; right: 8px; top: 8px; bottom: 8px;
+    background: var(--wheat); border-radius: 1px; z-index: 0; }
+  td.barcell span { position: relative; z-index: 1; }
+  .nocache { color: var(--ink-3); }
+
+  .sect { margin-top: 52px; }
+  .sect h2 { font-family: "Newsreader", serif; font-weight: 600; font-size: 23px;
+    margin: 0 0 4px; border-top: 1px solid var(--ink); padding-top: 12px; }
+  .sect .cap2 { color: var(--ink-2); font-size: 13.5px; margin: 0 0 16px; max-width: 74ch; }
+
+  .caveats { list-style: none; margin: 0; padding: 0; max-width: 80ch; }
+  .caveats li { padding: 9px 0 9px 24px; border-bottom: 1px solid var(--wheat-2);
+    font-size: 14px; color: var(--ink-2); position: relative; line-height: 1.55; }
+  .caveats li::before { content: "!"; position: absolute; left: 0; top: 9px;
+    font-family: "Spline Sans Mono", monospace; font-size: 12px; font-weight: 600; color: var(--claret); }
+  .caveats li b { color: var(--ink); }
+
+  .method { margin-top: 48px; border-top: 3px double var(--ink); padding: 16px 0 60px;
+    font-size: 13px; color: var(--ink-2); line-height: 1.7; max-width: 84ch; }
+  .method b { color: var(--ink); }
+
+  @media (max-width: 640px) {
+    .stand { padding-top: 26px; }
+    .mnav { font-size: 12.5px; gap: 12px; }
+    .ledger-wrap { overflow-x: visible; }
+    table { min-width: 0; }
+    thead { display: none; }
+    tbody, tr, td { display: block; }
+    tr { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px 10px;
+      padding: 13px 0; border-bottom: 1px solid var(--wheat-2); }
+    tbody td { border: none; padding: 0; text-align: left; }
+    td.c-host { grid-column: 1 / 3; grid-row: 1; }
+    td.c-jobs { grid-column: 3 / 4; grid-row: 1; text-align: right; }
+    td.c-in::before, td.c-out::before, td.c-cache::before, td.c-cpj::before,
+    td.c-jobs::before, td.c-delta::before {
+      content: attr(data-label); display: block; font: 500 9px "Spline Sans Mono", monospace;
+      letter-spacing: 0.1em; color: var(--ink-2); }
+    td.c-in, td.c-out, td.c-cache { grid-row: 2; }
+    td.c-cpj, td.c-delta { grid-row: 3; }
+    td.barcell .bar { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <a href="/" class="mark">Per<span>Dollar</span></a>
+    <nav class="mnav">
+      <a href="/app.html">Price sheet</a>
+      <a href="/hosts.html" class="on">Same model, every host</a>
+    </nav>
+  </header>
+
+  <section class="stand">
+    <h1 id="headline"></h1>
+    <p class="deck">Open-weight models have no single price. The same weights, served by a
+      different vendor, can cost several times more — and prompt caching moves the ranking
+      again. Pick a model, a job, and your cache-hit rate.</p>
+  </section>
+
+  <div class="filters">
+    <span class="flabel">MODEL</span>
+    <select id="model" aria-label="Open-weight model"></select>
+    <span class="flabel">JOB</span>
+    <select id="task" aria-label="Task"></select>
+    <span class="flabel">CACHE HIT RATE</span>
+    <span class="slider">
+      <input type="range" id="cache" min="0" max="100" step="5" value="0" aria-label="Cache hit rate" />
+      <span class="v" id="cacheval">0%</span>
+    </span>
+  </div>
+
+  <div class="assume" id="assume"></div>
+
+  <div class="spreadbox">
+    <div class="lbl">COST PER JOB — RANGE ACROSS HOSTS</div>
+    <div class="track" id="track"></div>
+    <div class="concl" id="concl"></div>
+  </div>
+
+  <div class="ledger-wrap">
+    <table aria-label="Hosts for this model">
+      <thead><tr>
+        <th class="l">HOST</th>
+        <th>IN $/M</th>
+        <th>OUT $/M</th>
+        <th>CACHED IN $/M</th>
+        <th>COST / JOB</th>
+        <th id="jobsHead">JOBS PER $100</th>
+        <th>VS CHEAPEST</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <section class="sect">
+    <h2>What this comparison does not tell you</h2>
+    <p class="cap2">A price table that hides its own limits is worse than no table. Four things
+      to check before moving a workload on the strength of this page.</p>
+    <ul class="caveats">
+      <li><b>These are list prices.</b> Any committed-spend or negotiated rate you hold directly
+        with a vendor won't appear here, and it can beat every number in the table.</li>
+      <li><b>Dedicated and self-hosted deployments aren't included.</b> Above a certain sustained
+        volume, renting GPUs by the hour beats per-token pricing entirely — a different calculation.</li>
+      <li><b>Throughput and latency differ enormously between hosts</b> for the same weights.
+        Speed specialists charge more per token and may still be the right answer for interactive
+        traffic; the cheapest host is not automatically the best host.</li>
+      <li><b>Quantisation, context limits and rate limits vary by host.</b> Same model name does
+        not always mean an identical serving configuration — worth confirming before you switch.</li>
+    </ul>
+  </section>
+
+  <footer class="method">
+    <b>Methodology.</b> Cost per job = (input tokens × effective input price) + (output tokens ×
+    output price), where effective input price blends the standard and cached input rates at your
+    chosen hit rate: a 70% hit rate prices 70% of input tokens at the cached rate. Where a host
+    publishes no cached rate, cached tokens are charged at the standard rate, which is the
+    conservative assumption. Job token counts are the same profiles used on the main price sheet,
+    and remain estimates until measured per model. <b>Provenance:</b> these host prices are
+    compiled from published provider comparisons dated June–July 2026 and are marked
+    <i>tracked</i> rather than <i>verified</i> — first-party confirmation against each vendor's
+    own pricing page is pending, and no number here should be quoted to a customer before that
+    check. Prices in this segment move fast: one tracked model's cheapest input price fell 22%
+    in ninety days.
+  </footer>
+
+</div>
+
+<script>
+// ---------------------------------------------------------------------------
+// Host prices compiled from published provider comparisons, June–July 2026.
+// status "tracked" = from a published comparison; "verified" = checked first-party.
+// cachedIn: null means the host publishes no cached-input rate.
+// ---------------------------------------------------------------------------
+const MODELS = [
+  { id:"dsv4pro", name:"DeepSeek V4 Pro", vendor:"DeepSeek", note:"Reasoning flagship, open weights.",
+    hosts:[
+      { host:"DeepInfra", inP:1.30, outP:2.60, cachedIn:0.10,  status:"tracked", asof:"9 Jun 2026" },
+      { host:"Fireworks", inP:1.74, outP:3.48, cachedIn:0.145, status:"tracked", asof:"9 Jun 2026" },
+      { host:"Together",  inP:2.10, outP:4.40, cachedIn:null,  status:"tracked", asof:"18 Jul 2026" },
+    ]},
+  { id:"kimik26", name:"Kimi K2.6", vendor:"Moonshot AI", note:"Long-context agentic model; 9+ hosts tracked.",
+    hosts:[
+      { host:"DeepInfra", inP:0.75, outP:3.50, cachedIn:null, status:"tracked", asof:"9 Jun 2026" },
+      { host:"Fireworks", inP:0.95, outP:4.00, cachedIn:0.16, status:"tracked", asof:"9 Jun 2026" },
+      { host:"Together",  inP:1.20, outP:4.50, cachedIn:null, status:"tracked", asof:"18 Jul 2026" },
+    ]},
+  { id:"kimik27c", name:"Kimi K2.7 Code", vendor:"Moonshot AI", note:"12 hosts tracked; cheapest input fell 22% in 90 days.",
+    hosts:[
+      { host:"DeepInfra", inP:0.74, outP:3.50, cachedIn:null, status:"tracked", asof:"Jul 2026" },
+      { host:"Fireworks", inP:0.95, outP:3.50, cachedIn:null, status:"tracked", asof:"Jul 2026" },
+    ]},
+  { id:"gptoss120", name:"gpt-oss 120B", vendor:"OpenAI (open weights)", note:"Cheap workhorse; speed specialists charge a premium.",
+    hosts:[
+      { host:"DeepInfra", inP:0.039, outP:0.19, cachedIn:null, status:"tracked", asof:"Jun 2026" },
+      { host:"Groq",      inP:0.15,  outP:0.60, cachedIn:0.075, status:"tracked", asof:"Jun 2026" },
+      { host:"Together",  inP:0.15,  outP:0.60, cachedIn:null, status:"tracked", asof:"18 Jul 2026" },
+    ]},
+  { id:"gptoss20", name:"gpt-oss 20B", vendor:"OpenAI (open weights)", note:"Smallest tracked open model.",
+    hosts:[
+      { host:"Together",  inP:0.05, outP:0.20, cachedIn:null, status:"tracked", asof:"18 Jul 2026" },
+    ]},
+  { id:"glm51", name:"GLM 5.1", vendor:"Z.AI", note:"Together lists $1.40/$4.40; DeepInfra reported lowest.",
+    hosts:[
+      { host:"Together",  inP:1.40, outP:4.40, cachedIn:null, status:"tracked", asof:"18 Jul 2026" },
+      { host:"OpenModels feed", inP:1.18, outP:4.14, cachedIn:null, status:"tracked", asof:"18 Jun 2026" },
+    ]},
+  { id:"llama33", name:"Llama 3.3 70B", vendor:"Meta", note:"Flat in/out pricing; Groq far faster on same weights.",
+    hosts:[
+      { host:"Together",  inP:0.88, outP:0.88, cachedIn:null, status:"tracked", asof:"18 Jul 2026" },
+      { host:"Fireworks", inP:0.90, outP:0.90, cachedIn:0.45, status:"tracked", asof:"Jul 2026" },
+    ]},
+];
+
+const TASKS = [
+  { id:"agent",   label:"One coding-agent step", unit:"agent steps", inT:12000, outT:700,
+    spec:"A single step of an agent loop: accumulated files, history and tool results (≈12,000 tokens in); a short plan plus one diff (≈700 tokens out). The context re-read on every step is what makes cache hit rate decisive here." },
+  { id:"support", label:"Resolve a support ticket", unit:"resolutions", inT:2500, outT:450,
+    spec:"The ticket, recent customer history and policy snippets (≈2,500 tokens in); one resolution reply (≈450 tokens out). Policy text is usually identical across tickets — prime caching territory." },
+  { id:"bugfix",  label:"Fix a bug in existing code", unit:"bug fixes", inT:9000, outT:1100,
+    spec:"~20 files plus a failing test log (≈9,000 tokens in); a ~50-line patch with explanation (≈1,100 tokens out)." },
+  { id:"catalog", label:"Write a product description", unit:"descriptions", inT:900, outT:350,
+    spec:"Product attributes, category rules and brand tone guide (≈900 tokens in); one description (≈350 tokens out). The tone guide is constant across a catalogue run." },
+  { id:"pdf",     label:"Summarize a 10-page document", unit:"summaries", inT:7000, outT:600,
+    spec:"About ten pages of prose (≈7,000 tokens in); a one-page executive summary (≈600 tokens out)." },
+];
+
+const BUDGET = 100;
+
+let modelId = "dsv4pro", taskId = "agent", cacheRate = 0;
+
+const money = v => v >= 0.01 ? "$" + v.toFixed(v >= 1 ? 2 : 3) : "$" + v.toFixed(5);
+const big = n => n.toLocaleString("en-US");
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const kf = s => esc(s).replace(/≈[\d,]+ tokens (in|out)/g, x => '<span class="kf">' + x + "</span>");
+
+function effIn(h) {
+  const cached = h.cachedIn == null ? h.inP : h.cachedIn;   // conservative
+  const r = cacheRate / 100;
+  return h.inP * (1 - r) + cached * r;
+}
+function jobCost(h, t) {
+  return (t.inT * effIn(h) + t.outT * h.outP) / 1e6;
+}
+
+function render() {
+  const model = MODELS.find(m => m.id === modelId);
+  const task = TASKS.find(t => t.id === taskId);
+
+  document.getElementById("cacheval").textContent = cacheRate + "%";
+  document.getElementById("jobsHead").textContent =
+    (task.unit + " per $" + BUDGET).toUpperCase();
+
+  document.getElementById("assume").innerHTML =
+    `<div class="t">JOB ASSUMPTIONS — ${esc(task.label).toUpperCase()}</div>${kf(task.spec)}`;
+
+  const rows = model.hosts
+    .map(h => ({ ...h, cpj: jobCost(h, task) }))
+    .sort((a, b) => a.cpj - b.cpj);
+
+  const min = rows[0], max = rows[rows.length - 1];
+  const single = rows.length === 1;
+  const mult = min.cpj > 0 ? max.cpj / min.cpj : 1;
+
+  // headline
+  document.getElementById("headline").innerHTML = single
+    ? `${esc(model.name)} is tracked on <b>one host</b> so far — ${money(min.cpj)} per ${esc(task.unit.replace(/s$/, ""))}.`
+    : `The same ${esc(model.name)} costs <b>${mult.toFixed(1)}× more</b> on ${esc(max.host)} than on <span class="ch">${esc(min.host)}</span>.`;
+
+  // spread bar
+  const track = document.getElementById("track");
+  if (single) {
+    track.innerHTML = `<div class="rail" style="background:var(--wheat-2)"></div>
+      <div class="pip min" style="left:50%"></div>`;
+  } else {
+    track.innerHTML = `<div class="rail"></div>` + rows.map(r => {
+      const pct = ((r.cpj - min.cpj) / (max.cpj - min.cpj || 1)) * 100;
+      const cls = r === min ? "min" : r === max ? "max" : "";
+      return `<div class="pip ${cls}" style="left:${pct}%" title="${esc(r.host)} — ${money(r.cpj)}"></div>`;
+    }).join("") +
+    `<div class="cap l">${esc(min.host)} ${money(min.cpj)}</div>
+     <div class="cap r">${esc(max.host)} ${money(max.cpj)}</div>`;
+  }
+
+  const perMonth = (h) => h.cpj * 100000;
+  document.getElementById("concl").innerHTML = single
+    ? `Only one tracked host for this model — the spread view needs at least two.`
+    : `At 100,000 ${esc(task.unit)} a month that is <b>${money(perMonth(max) - perMonth(min))}</b> a month of difference, for identical weights.` +
+      (cacheRate > 0 ? ` Priced at a ${cacheRate}% cache hit rate.` : ` Move the cache slider — the ranking can change.`);
+
+  // table
+  const maxJobs = Math.floor(BUDGET / min.cpj);
+  document.getElementById("tbody").innerHTML = rows.map(r => {
+    const jobs = Math.floor(BUDGET / r.cpj);
+    const delta = r === min ? "—" : "+" + ((r.cpj / min.cpj - 1) * 100).toFixed(0) + "%";
+    return `
+    <tr class="${r === min && !single ? "best" : ""}">
+      <td class="l c-host">
+        <div class="hname">${esc(r.host)}</div>
+        <div class="hsub">${esc(r.status.toUpperCase())} · ${esc(r.asof.toUpperCase())}</div>
+      </td>
+      <td class="num c-in" data-label="IN $/M">${r.inP.toFixed(3)}</td>
+      <td class="num c-out" data-label="OUT $/M">${r.outP.toFixed(2)}</td>
+      <td class="num c-cache" data-label="CACHED IN $/M">${
+        r.cachedIn == null ? '<span class="nocache">not published</span>' : r.cachedIn.toFixed(3)}</td>
+      <td class="num cpj c-cpj" data-label="COST / JOB">${money(r.cpj)}</td>
+      <td class="num barcell c-jobs" data-label="${esc((task.unit + " per $" + BUDGET).toUpperCase())}">
+        <i class="bar" style="width:${Math.max(1.5, jobs / maxJobs * 86)}%"></i><span>${big(jobs)}</span></td>
+      <td class="delta c-delta ${r === min ? "base" : "up"}" data-label="VS CHEAPEST">${delta}</td>
+    </tr>`;
+  }).join("");
+}
+
+const msel = document.getElementById("model");
+msel.innerHTML = MODELS.map(m =>
+  `<option value="${m.id}">${esc(m.name)} — ${esc(m.vendor)}</option>`).join("");
+msel.value = modelId;
+msel.addEventListener("change", e => { modelId = e.target.value; render(); });
+
+const tsel = document.getElementById("task");
+tsel.innerHTML = TASKS.map(t => `<option value="${t.id}">${esc(t.label)}</option>`).join("");
+tsel.value = taskId;
+tsel.addEventListener("change", e => { taskId = e.target.value; render(); });
+
+document.getElementById("cache").addEventListener("input", e => {
+  cacheRate = +e.target.value; render();
+});
+
+render();
+</script>
+</body>
+</html>

@@ -27,8 +27,12 @@
   .mast { display: flex; align-items: center; gap: 18px; padding: 14px 0 12px;
     border-bottom: 3px double var(--ink); }
   .mark { font-family: "Newsreader", serif; font-weight: 600; font-size: 24px;
-    letter-spacing: 0.01em; margin-right: auto; }
+    letter-spacing: 0.01em; }
   .mark span { color: var(--claret); }
+  .mnav { display: flex; gap: 18px; font-size: 13.5px; margin-right: auto; }
+  .mnav a { color: var(--ink-2); text-decoration: none; }
+  .mnav a:hover { color: var(--ink); }
+  .mnav a.on { color: var(--ink); font-weight: 600; border-bottom: 2px solid var(--claret); }
   .status { font-family: "Spline Sans Mono", monospace; font-size: 10.5px;
     letter-spacing: 0.05em; color: var(--ink-2); text-align: right; line-height: 1.6; }
   .status b { color: var(--teal); font-weight: 600; }
@@ -203,6 +207,10 @@
 
   <header class="mast">
     <a href="/" class="mark" style="text-decoration:none;color:inherit">Per<span>Dollar</span></a>
+    <nav class="mnav">
+      <a href="/app.html" class="on">Price sheet</a>
+      <a href="/hosts.html">Same model, every host</a>
+    </nav>
     <div class="status" id="statusline">PRICES VERIFIED <b>22 JUL 2026</b> · 22 MODELS<br/>DAILY AUTO-REFRESH ACTIVE</div>
   </header>
 
