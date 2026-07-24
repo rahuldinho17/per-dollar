@@ -1,103 +1,145 @@
 {
   "as_of": "2026-07-22",
   "as_of_display": "22 JUL 2026",
-  "note": "Prices verified 2026-07-22 against provider-linked sources. Nine listings added this round (GPT-5.6 family, Claude Sonnet 5, Kimi K3, Grok 4.5, Inkling, Gemini 3.6 Flash, Claude Fable 5) and GLM-5.2 corrected to z.ai list price. Spot-check against first-party pages before quoting to a client.",
+  "note": "Twelve models verified against first-party pricing pages on 2026-07-22. Ten (the GPT-5.6 family, Claude Fable 5, Claude Sonnet 5, Kimi K3, Grok 4.5, Inkling, Gemini 3.6 Flash, and the GLM-5.2 correction) are compiled from published provider comparisons and marked 'tracked' pending first-party confirmation. Do not quote a tracked price to a client before checking the provider's own page.",
   "models": [
     {
       "id": "gpt56sol",
       "inP": 5.0,
       "outP": 30.0,
-      "verification": "verified"
+      "verification": "tracked",
+      "source": "published provider comparison",
+      "verified_at": null,
+      "tracked_at": "2026-07-22"
     },
     {
       "id": "fable5",
       "inP": 10.0,
       "outP": 50.0,
-      "verification": "verified"
+      "verification": "tracked",
+      "source": "published provider comparison",
+      "verified_at": null,
+      "tracked_at": "2026-07-22"
     },
     {
       "id": "gpt55",
       "inP": 5.0,
       "outP": 30.0,
-      "verification": "verified"
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     },
     {
       "id": "opus48",
       "inP": 5.0,
       "outP": 25.0,
-      "verification": "verified"
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     },
     {
       "id": "gpt56ter",
       "inP": 2.5,
       "outP": 15.0,
-      "verification": "verified"
+      "verification": "tracked",
+      "source": "published provider comparison",
+      "verified_at": null,
+      "tracked_at": "2026-07-22"
     },
     {
       "id": "gpt54",
       "inP": 2.5,
       "outP": 15.0,
-      "verification": "verified"
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     },
     {
       "id": "son5",
       "inP": 3.0,
       "outP": 15.0,
-      "verification": "verified"
+      "verification": "tracked",
+      "source": "published provider comparison",
+      "verified_at": null,
+      "tracked_at": "2026-07-22"
     },
     {
       "id": "son46",
       "inP": 3.0,
       "outP": 15.0,
-      "verification": "verified"
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     },
     {
       "id": "kimik3",
       "inP": 3.0,
       "outP": 15.0,
-      "verification": "verified"
+      "verification": "tracked",
+      "source": "published provider comparison",
+      "verified_at": null,
+      "tracked_at": "2026-07-22"
     },
     {
       "id": "gem31p",
       "inP": 2.0,
       "outP": 12.0,
-      "verification": "verified"
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     },
     {
       "id": "grok45",
       "inP": 2.0,
       "outP": 6.0,
-      "verification": "verified"
+      "verification": "tracked",
+      "source": "published provider comparison",
+      "verified_at": null,
+      "tracked_at": "2026-07-22"
     },
     {
       "id": "inkling",
       "inP": 1.87,
       "outP": 4.68,
-      "verification": "verified"
+      "verification": "tracked",
+      "source": "published provider comparison",
+      "verified_at": null,
+      "tracked_at": "2026-07-22"
     },
     {
       "id": "gpt56lun",
       "inP": 1.0,
       "outP": 6.0,
-      "verification": "verified"
+      "verification": "tracked",
+      "source": "published provider comparison",
+      "verified_at": null,
+      "tracked_at": "2026-07-22"
     },
     {
       "id": "gem36f",
       "inP": 1.5,
       "outP": 7.5,
-      "verification": "verified"
+      "verification": "tracked",
+      "source": "published provider comparison",
+      "verified_at": null,
+      "tracked_at": "2026-07-22"
     },
     {
       "id": "glm52",
       "inP": 0.94,
       "outP": 3.0,
-      "verification": "verified"
+      "verification": "tracked",
+      "source": "published provider comparison",
+      "verified_at": null,
+      "tracked_at": "2026-07-22"
     },
     {
       "id": "haiku45",
       "inP": 1.0,
       "outP": 5.0,
-      "verification": "verified"
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     },
     {
       "id": "mm3",
@@ -106,37 +148,49 @@
       "verification": "verified",
       "promoIn": 0.3,
       "promoOut": 1.2,
-      "promoEnds": null
+      "promoEnds": null,
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     },
     {
       "id": "gem3f",
       "inP": 0.5,
       "outP": 3.0,
-      "verification": "verified"
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     },
     {
       "id": "g41mini",
       "inP": 0.4,
       "outP": 1.6,
-      "verification": "verified"
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     },
     {
       "id": "dsv4f",
       "inP": 0.14,
       "outP": 0.28,
-      "verification": "verified"
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     },
     {
       "id": "g41nano",
       "inP": 0.1,
       "outP": 0.4,
-      "verification": "verified"
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     },
     {
       "id": "gem31fl",
       "inP": 0.1,
       "outP": 0.4,
-      "verification": "verified"
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-22"
     }
   ]
 }

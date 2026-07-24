@@ -243,7 +243,7 @@
       <div class="foot">Same tickets, same quality bar — an <b>11× cost difference</b> that never shows up on a per-token price chart. Most teams picked their model once and never revisited it.</div>
     </div>
 
-    <div class="trust reveal">
+    <div class="trust reveal" id="trustline">
       <span>Prices verified <span class="mono">22 Jul 2026</span></span>
       <span>·</span><span><span class="mono">22</span> models tracked daily</span>
       <span>·</span><span>Commerce workloads: <span class="mono">support · catalog · search · reviews</span></span>
@@ -393,6 +393,27 @@
 </footer>
 
 <script>
+  // Trust line reads the live data file so the marketing page can never
+  // claim a freshness date the data doesn't support.
+  (async function syncTrust() {
+    try {
+      const r = await fetch("/data/prices.json", { cache: "no-store" });
+      if (!r.ok) return;
+      const d = await r.json();
+      const n = Array.isArray(d.models) ? d.models.length : 0;
+      const ageDays = (Date.now() - new Date(d.as_of)) / 864e5;
+      const el = document.getElementById("trustline");
+      if (!el || !n) return;
+      const freshness = ageDays > 2
+        ? `Prices last refreshed <span class="mono">${d.as_of_display || d.as_of}</span>`
+        : `Prices verified <span class="mono">${d.as_of_display || d.as_of}</span>`;
+      el.innerHTML =
+        `<span>${freshness}</span><span>·</span>` +
+        `<span><span class="mono">${n}</span> models tracked daily</span><span>·</span>` +
+        `<span>Commerce workloads: <span class="mono">support · catalog · search · reviews</span></span>`;
+    } catch (e) { /* keep the static line */ }
+  })();
+
   // scroll reveal
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });

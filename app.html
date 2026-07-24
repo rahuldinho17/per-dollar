@@ -36,6 +36,9 @@
   .status { font-family: "Spline Sans Mono", monospace; font-size: 10.5px;
     letter-spacing: 0.05em; color: var(--ink-2); text-align: right; line-height: 1.6; }
   .status b { color: var(--teal); font-weight: 600; }
+  .status.stale { color: var(--claret); }
+  .status.stale b { color: var(--claret); }
+  .msub .tracked { color: var(--claret); }
   .fb { font: 600 13px "Source Sans 3", sans-serif; color: var(--paper);
     background: var(--ink); border: 1px solid var(--ink); border-radius: 2px;
     padding: 8px 14px; text-decoration: none; white-space: nowrap; }
@@ -391,6 +394,7 @@ const REPRICE = [
   { d:"MAR",    t:"GPT-5.4 family repriced downward",                           v:"−17%", dir:"dn" },
 ];
 
+let DATA_AS_OF = "2026-07-22";
 let budget = 1, customBudget = false, taskId = "bugfix", normalize = true, wlOnly = false;
 let planStandard = false;
 let customIn = 5000, customOut = 800;
@@ -422,6 +426,18 @@ function priceView(m) {
   return { hasPromo, usePromo, inEff, outEff, inAlt, outAlt };
 }
 const kf = s => esc(s).replace(/≈[\d,]+ tokens (in|out)/g, x => '<span class="kf">' + x + "</span>");
+
+function shortDate(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return isNaN(d) ? String(iso).toUpperCase()
+    : d.toLocaleDateString("en-GB", { day: "numeric", month: "short" }).toUpperCase();
+}
+function badgeText(m) {
+  if (m.verification === "auto-tracked") return "AUTO-TRACKED " + shortDate(m.tracked_at);
+  if (m.verification === "tracked")      return "TRACKED " + shortDate(m.tracked_at) + " · UNVERIFIED";
+  return "VERIFIED " + shortDate(m.verified_at || DATA_AS_OF);
+}
 
 function trendChange(m) {
   const first = m.trend[0], last = m.trend[m.trend.length - 1];
@@ -521,11 +537,8 @@ function render() {
       <td class="l c-model">
         <div class="mname">${esc(m.name)}${m.pv.hasPromo ? `<span class="pbadge${m.pv.usePromo ? "" : " off"}">PROMO</span>` : ""}</div>
         <div class="msub">${esc(m.provider.toUpperCase())} ·
-          <a href="${esc(src)}" target="_blank" rel="noopener"
-             title="${esc(src)} — ${m.verification === "auto-tracked" ? "auto-tracked via OpenRouter" : "snapshot 22 Jul 2026"}">${
-            m.verification === "auto-tracked"
-              ? "AUTO-TRACKED " + esc((m.tracked_at || "").toUpperCase())
-              : "VERIFIED 22 JUL"} · SOURCE ↗</a>${
+          <a class="${m.verification === "verified" ? "" : "tracked"}" href="${esc(src)}" target="_blank" rel="noopener"
+             title="${esc(src)} — ${esc(m.source || "provider pricing page")}">${esc(badgeText(m))} · SOURCE ↗</a>${
           m.pv.hasPromo ? ` · ${m.promoEnds ? "PROMO ENDS " + esc(String(m.promoEnds).toUpperCase()) : "PROMO END UNANNOUNCED"}` : ""}</div>
       </td>
       <td class="num c-in" data-label="IN $/M">${m.pv.inEff.toFixed(2)}${alt("in", m.pv.inAlt?.toFixed(2))}</td>
@@ -617,10 +630,25 @@ renderStatic();
         m.promoEnds = u.promoEnds ?? null;
         if (u.verification) m.verification = u.verification;
         if (u.tracked_at) m.tracked_at = u.tracked_at;
+        if (u.verified_at) m.verified_at = u.verified_at;
+        if (u.source) m.source = u.source;
       }
     });
+    DATA_AS_OF = d.as_of || DATA_AS_OF;
     const auto = d.models.filter(m => m.verification === "auto-tracked").length;
-    let tail = auto ? `${auto} AUTO-TRACKED · DAILY REFRESH` : `DAILY AUTO-REFRESH ACTIVE`;
+    const trk  = d.models.filter(m => m.verification === "tracked").length;
+    const ageDays = (Date.now() - new Date(d.as_of)) / 864e5;
+    const el = document.getElementById("statusline");
+    let tail;
+    if (ageDays > 2) {                       // silent staleness is the worst failure mode
+      el.className = "status stale";
+      tail = `⚠ DATA MAY BE STALE — LAST REFRESH ${Math.floor(ageDays)} DAYS AGO`;
+    } else {
+      el.className = "status";
+      tail = auto ? `${auto} AUTO-TRACKED · DAILY REFRESH`
+           : trk  ? `${trk} TRACKED, AWAITING VERIFICATION`
+           : `DAILY AUTO-REFRESH ACTIVE`;
+    }
     // discovery queue: models the cron found but a human hasn't verified yet
     try {
       const dr = await fetch("/data/discovered.json", { cache: "no-store" });
