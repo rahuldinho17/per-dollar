@@ -38,6 +38,7 @@ const DISCOVERY_CAP = 40;           // a queue nobody can read is not a queue
 const TRACKED_VENDORS = [
   "openai", "anthropic", "google", "deepseek", "minimax", "z-ai",
   "x-ai", "moonshotai", "mistralai", "qwen", "meta-llama", "cohere",
+  "thinkingmachines", "thinking-machines", "nvidia", "microsoft",
 ];
 
 const today = new Date().toISOString().slice(0, 10);
@@ -178,7 +179,29 @@ async function main() {
   // ---- 4. report -----------------------------------------------------------
   console.log(`refresh ${today}: ${changes} change(s) applied`);
   console.log(`matched ${prices.models.length - missing.length}/${prices.models.length} tracked models`);
-  if (missing.length) console.log(`not found on OpenRouter (left untouched): ${missing.join(", ")}`);
+  if (missing.length) {
+    console.log(`not found on OpenRouter (left untouched): ${missing.join(", ")}`);
+    console.log("SLUG SUGGESTIONS — the mapped slug did not match. Candidates from the same vendor:");
+    for (const id of missing) {
+      const wrong = map[id] || "";
+      const vendor = wrong.split("/")[0];
+      const stem = (wrong.split("/")[1] || "").split(/[-.]/)[0];   // e.g. "gemini"
+      const candidates = body.data
+        .map((m) => m.id)
+        .filter((slug) => slug.startsWith(vendor + "/") && !knownSlugs.has(slug))
+        .filter((slug) => !stem || slug.includes(stem))
+        .slice(0, 8);
+      // vendor prefix itself may be wrong (thinking-machines vs thinkingmachines)
+      const fallback = candidates.length ? [] : body.data
+        .map((m) => m.id)
+        .filter((slug) => !knownSlugs.has(slug) && stem && slug.split("/")[1]?.includes(stem))
+        .slice(0, 5);
+      console.log(`  ${id}  (mapped to "${wrong}")`);
+      const out = candidates.length ? candidates : fallback;
+      if (out.length) out.forEach((c) => console.log(`      → ${c}`));
+      else console.log("      → no candidate slugs found");
+    }
+  }
   console.log(`discovery: ${newFinds} new listing(s) in the last ${DISCOVERY_MAX_AGE_DAYS} days, ` +
     `${discovered.length} awaiting review${dropped ? `, ${dropped} stale dropped` : ""}` +
     ` (skipped ${skippedOld} older, ${skippedUndated} undated)`);
