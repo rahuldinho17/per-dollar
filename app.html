@@ -655,7 +655,7 @@ renderStatic();
       if (dr.ok) {
         const q = await dr.json();
         const pending = Array.isArray(q) ? q.filter(x => x.status === "pending").length : 0;
-        if (pending) tail = `${pending} NEW LISTING${pending > 1 ? "S" : ""} AWAITING VERIFICATION`;
+        if (pending) tail = `${Math.min(pending, 99)} NEW LISTING${pending > 1 ? "S" : ""} AWAITING VERIFICATION`;
       }
     } catch (e) { /* discovery file optional */ }
     document.getElementById("statusline").innerHTML =

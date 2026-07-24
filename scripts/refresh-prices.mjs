@@ -29,7 +29,9 @@ const API = "https://openrouter.ai/api/v1/models";
 const EPSILON = 1e-6;      // ignore float noise
 const PROMO_BAND = 0.95;   // fetched < 95% of standard => promo, not a permanent cut
 const MAX_JUMP = 5;        // anomaly gate on standard-price changes
-const DISCOVERY_TTL_DAYS = 60; // drop stale unreviewed discoveries
+const DISCOVERY_TTL_DAYS = 60;      // drop stale unreviewed discoveries
+const DISCOVERY_MAX_AGE_DAYS = 45;  // only queue genuinely NEW listings
+const DISCOVERY_CAP = 40;           // a queue nobody can read is not a queue
 
 // Only surface discoveries from labs we actually cover. OpenRouter lists
 // hundreds of models; an unfiltered queue would be noise, not signal.
@@ -118,11 +120,20 @@ async function main() {
   const seenNow = new Set();
   let newFinds = 0;
 
+  let skippedOld = 0, skippedUndated = 0;
   for (const remote of body.data) {
     const slug = remote.id || "";
     const vendor = slug.split("/")[0];
     if (!TRACKED_VENDORS.includes(vendor)) continue;
     if (knownSlugs.has(slug)) continue;
+
+    // Only surface genuinely new listings. Without this, every model a tracked
+    // lab has ever published lands in the queue and the queue becomes noise.
+    const created = remote.created ? new Date(remote.created * 1000) : null;
+    if (!created || isNaN(created)) { skippedUndated++; continue; }
+    if (daysBetween(today, created.toISOString().slice(0, 10)) > DISCOVERY_MAX_AGE_DAYS) {
+      skippedOld++; continue;
+    }
     seenNow.add(slug);
 
     const existing = discovered.find((d) => d.slug === slug);
@@ -137,6 +148,7 @@ async function main() {
         name: remote.name || slug,
         inP, outP,
         context_length: remote.context_length ?? null,
+        released: created.toISOString().slice(0, 10),
         first_seen: today, last_seen: today,
         status: "pending",                       // never auto-published
       });
@@ -151,7 +163,8 @@ async function main() {
   discovered = discovered.filter((d) =>
     seenNow.has(d.slug) || daysBetween(today, d.last_seen) < DISCOVERY_TTL_DAYS);
   const dropped = before - discovered.length;
-  discovered.sort((a, b) => (b.first_seen || "").localeCompare(a.first_seen || ""));
+  discovered.sort((a, b) => (b.released || b.first_seen || "").localeCompare(a.released || a.first_seen || ""));
+  if (discovered.length > DISCOVERY_CAP) discovered = discovered.slice(0, DISCOVERY_CAP);
 
   // ---- 3. write ------------------------------------------------------------
   prices.as_of = today;
@@ -166,7 +179,9 @@ async function main() {
   console.log(`refresh ${today}: ${changes} change(s) applied`);
   console.log(`matched ${prices.models.length - missing.length}/${prices.models.length} tracked models`);
   if (missing.length) console.log(`not found on OpenRouter (left untouched): ${missing.join(", ")}`);
-  console.log(`discovery: ${newFinds} new listing(s), ${discovered.length} awaiting review${dropped ? `, ${dropped} stale dropped` : ""}`);
+  console.log(`discovery: ${newFinds} new listing(s) in the last ${DISCOVERY_MAX_AGE_DAYS} days, ` +
+    `${discovered.length} awaiting review${dropped ? `, ${dropped} stale dropped` : ""}` +
+    ` (skipped ${skippedOld} older, ${skippedUndated} undated)`);
   if (newFinds) {
     console.log("NEW LISTINGS — add to scripts/openrouter-map.json + data/prices.json to publish:");
     for (const d of discovered.filter((x) => x.first_seen === today)) {

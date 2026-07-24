@@ -95,3 +95,11 @@ which is why the spread widens as the slider rises.
 Host prices are compiled from published provider comparisons (Jun–Jul 2026) and
 marked `tracked`, not `verified` — first-party confirmation is pending and no
 number should be quoted to a customer before that check.
+
+### Discovery tuning
+
+Discovery queues only models released in the last 45 days (`DISCOVERY_MAX_AGE_DAYS`),
+capped at 40 entries. Without the recency filter every model a tracked lab has ever
+published lands in the queue — the first run produced 215 entries, which is noise, not
+a review queue. Models with no `created` timestamp are skipped and counted in the log.
+If you widen the vendor list, re-check the queue size on the next run.
