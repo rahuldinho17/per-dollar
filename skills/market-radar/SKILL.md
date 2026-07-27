@@ -157,3 +157,12 @@ carried-over defers — so the loop is visible, not hidden}
   move. A radar that only finds good news is broken.
 - The founder decides. This skill proposes and remembers; it does not act.
 - Keep it tight. A weekly brief that takes 15 minutes to read won't be read.
+
+## Weekly cadence (automated reminder)
+
+A GitHub Action (`.github/workflows/market-radar.yml`) runs every Monday 07:00 UTC
+and opens a GitHub issue titled "Run Market Radar — week of <date>". GitHub emails
+that issue to the repo owner, so Monday never slips without any calendar to maintain.
+The review itself needs web search and judgement, so it runs in a Claude session:
+open Claude, say "run the market radar", work through the accept/reject/defer, and
+close the issue. The reminder is automatic; the thinking stays human by design.

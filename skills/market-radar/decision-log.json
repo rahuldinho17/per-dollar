@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "date": "2026-07-27",
+    "id": "MR-2026-W30-01",
+    "theme": "positioning",
+    "decision": "accept",
+    "reason": "Own the workflow; hero reframed to 'system of record for commerce AI spend'."
+  },
+  {
+    "date": "2026-07-27",
+    "id": "MR-2026-W30-02",
+    "theme": "defensibility",
+    "decision": "accept",
+    "reason": "Named why-not-Ramp/CloudZero contrast added; visibility-vs-decisions is the wedge."
+  },
+  {
+    "date": "2026-07-27",
+    "id": "MR-2026-W30-03",
+    "theme": "data-feed",
+    "decision": "accept",
+    "reason": "Public /api/prices.json feed shipped; the one asset incumbents can't backfill."
+  },
+  {
+    "date": "2026-07-27",
+    "id": "MR-2026-W30-04",
+    "theme": "vertical-depth",
+    "decision": "accept",
+    "reason": "Catalogue enrichment + on-site search task profiles added."
+  },
+  {
+    "date": "2026-07-27",
+    "id": "MR-2026-W30-05",
+    "theme": "gtm-copy",
+    "decision": "accept",
+    "reason": "Lead outreach with validated switches, not visibility. Messaging principle, applied in calls."
+  }
+]

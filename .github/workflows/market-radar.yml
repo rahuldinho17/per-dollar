@@ -1,0 +1,52 @@
+name: Market Radar reminder (weekly)
+
+# The market-radar review needs web search + judgement, so it runs in a Claude
+# session, not a plain script. This workflow's job is to make sure Monday never
+# slips: every Monday it opens (or bumps) a GitHub issue titled "Run Market Radar
+# — week of <date>", which emails you via GitHub's notifications. You click it,
+# open Claude, and say "run the market radar". Zero calendars to maintain.
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"    # 07:00 UTC every Monday
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open the weekly Market Radar issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const monday = new Date();
+            const iso = monday.toISOString().slice(0,10);
+            const title = `Run Market Radar — week of ${iso}`;
+            const body = [
+              "It's Monday — time for the weekly PerDollar market review.",
+              "",
+              "**To run it:** open Claude and say *\"run the market radar\"*.",
+              "It will search the last 7 days, produce this week's brief, and ask you",
+              "to accept / reject / defer each suggestion. Your verdicts get logged so",
+              "next week's proposals are tuned to your decisions.",
+              "",
+              "Close this issue once you've run it.",
+              "",
+              "_Opened automatically by .github/workflows/market-radar.yml_"
+            ].join("\n");
+            // avoid duplicates if it re-runs
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: "open", labels: "market-radar"
+            });
+            if (existing.data.some(i => i.title === title)) {
+              core.info("Issue already open for this week.");
+              return;
+            }
+            await github.rest.issues.create({
+              owner: context.repo.owner, repo: context.repo.repo,
+              title, body, labels: ["market-radar"]
+            });

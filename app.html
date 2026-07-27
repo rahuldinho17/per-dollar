@@ -297,6 +297,9 @@
     this month's invoice will say, and the "plan with standard prices" toggle
     re-ranks everything at list price for budgeting and commitments. A promo
     ending is recorded as a promo end, not a price hike.
+    <br/><br/><b>Public data feed.</b> These verified prices are available as a free
+    JSON feed at <a href="/api/prices.json">/api/prices.json</a> — the same numbers,
+    updated daily, for use in your own tooling. Free with attribution.
   </footer>
 
 </div>
@@ -358,6 +361,12 @@ const TASKS = [
   { id:"support", label:"Resolve a support ticket",     unit:"resolutions", inT:2500,  outT:450,
     short:"The ticket, recent customer history and policy snippets (≈2,500 tokens in); one resolution reply (≈450 tokens out).",
     detail:"Assumes a single-pass resolution with no escalation — multi-turn tickets cost proportionally more." },
+  { id:"catalog", label:"Enrich a product description", unit:"descriptions", inT:900,   outT:350,
+    short:"Product attributes, category rules and a brand tone guide (≈900 tokens in); one polished description (≈350 tokens out).",
+    detail:"A high-volume commerce workload: the tone guide is identical across a catalogue run, so it is prime caching territory. Cost scales directly with SKU count." },
+  { id:"search",  label:"Answer an on-site search query", unit:"queries",   inT:1200,  outT:200,
+    short:"The shopper's query plus retrieved product candidates and ranking rules (≈1,200 tokens in); a short ranked answer or reformulation (≈200 tokens out).",
+    detail:"Runs on every search, so volume scales with traffic not catalogue size — latency-sensitive, which is where a cheaper-but-slower host can be the wrong call." },
   { id:"pdf",     label:"Summarize a 10-page document", unit:"summaries",   inT:7000,  outT:600,
     short:"About ten pages of prose (≈7,000 tokens in); a one-page executive summary (≈600 tokens out).",
     detail:"Document processing is a staple business API workload." },

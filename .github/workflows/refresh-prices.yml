@@ -23,7 +23,7 @@ jobs:
           git config user.name "perdollar-bot"
           git config user.email "bot@users.noreply.github.com"
           if ! git diff --quiet -- data/; then
-            git add data/
+            git add data/ api/
             git commit -m "chore: daily price refresh ($(date -u +%F))"
             git push
           else

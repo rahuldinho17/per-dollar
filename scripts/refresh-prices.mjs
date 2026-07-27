@@ -42,6 +42,41 @@ const TRACKED_VENDORS = [
 ];
 
 const today = new Date().toISOString().slice(0, 10);
+
+const DISPLAY = {
+  gpt56sol:["GPT-5.6 Sol","OpenAI"], fable5:["Claude Fable 5","Anthropic"],
+  gpt55:["GPT-5.5","OpenAI"], opus48:["Claude Opus 4.8","Anthropic"],
+  gpt56ter:["GPT-5.6 Terra","OpenAI"], gpt54:["GPT-5.4","OpenAI"],
+  son5:["Claude Sonnet 5","Anthropic"], son46:["Claude Sonnet 4.6","Anthropic"],
+  kimik3:["Kimi K3","Moonshot AI"], gem31p:["Gemini 3.1 Pro","Google"],
+  grok45:["Grok 4.5","xAI"], inkling:["Inkling","Thinking Machines"],
+  gpt56lun:["GPT-5.6 Luna","OpenAI"], gem36f:["Gemini 3.6 Flash","Google"],
+  glm52:["GLM-5.2","Z.AI"], haiku45:["Claude Haiku 4.5","Anthropic"],
+  mm3:["MiniMax M3","MiniMax"], gem3f:["Gemini 3 Flash","Google"],
+  g41mini:["GPT-4.1 Mini","OpenAI"], dsv4f:["DeepSeek V4 Flash","DeepSeek"],
+  g41nano:["GPT-4.1 Nano","OpenAI"], gem31fl:["Gemini 3.1 Flash-Lite","Google"],
+};
+
+function writePublicFeed(prices, ROOT) {
+  const feed = {
+    "$schema": "https://per-dollar.vercel.app/api/schema.json",
+    feed: "perdollar-prices", version: "1.0",
+    as_of: prices.as_of, currency: "USD", unit: "per_million_tokens",
+    license: "Free to use with attribution to PerDollar (per-dollar.vercel.app).",
+    disclaimer: "Standard-tier first-party API list prices. 'verified' = checked against the provider's own pricing page; 'tracked' = from a published comparison, pending first-party confirmation. Promotional prices are separate from standard. Not financial advice.",
+    models: prices.models.map((m) => {
+      const [name, provider] = DISPLAY[m.id] || [m.id, "?"];
+      const e = { id: m.id, name, provider,
+        input_per_mtok: m.inP, output_per_mtok: m.outP,
+        verification: m.verification || "verified",
+        verified_at: m.verified_at ?? null, source: m.source ?? null };
+      if (m.promoIn != null) e.promo = { input_per_mtok: m.promoIn, output_per_mtok: m.promoOut, ends: m.promoEnds ?? null };
+      return e;
+    }),
+  };
+  writeFileSync(join(ROOT, "api", "prices.json"), JSON.stringify(feed, null, 2) + "\n");
+}
+
 const daysBetween = (a, b) => Math.abs(new Date(a) - new Date(b)) / 864e5;
 
 function perMillion(perTokenStr) {
@@ -175,6 +210,7 @@ async function main() {
   writeFileSync(PRICES_PATH, JSON.stringify(prices, null, 2) + "\n");
   writeFileSync(CHANGELOG_PATH, JSON.stringify(changelog, null, 2) + "\n");
   writeFileSync(DISCOVERED_PATH, JSON.stringify(discovered, null, 2) + "\n");
+  writePublicFeed(prices, ROOT);   // MR-03: keep the public feed in sync
 
   // ---- 4. report -----------------------------------------------------------
   console.log(`refresh ${today}: ${changes} change(s) applied`);
