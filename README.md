@@ -103,3 +103,16 @@ capped at 40 entries. Without the recency filter every model a tracked lab has e
 published lands in the queue — the first run produced 215 entries, which is noise, not
 a review queue. Models with no `created` timestamp are skipped and counted in the log.
 If you widen the vendor list, re-check the queue size on the next run.
+
+## Market Radar skill (skills/market-radar/)
+
+A weekly competitive/market review that feeds product decisions. Run it by asking
+"run the market radar" or by pasting an article and asking what it means for PerDollar.
+It searches the last 7 days across model launches, competitors (Ramp, CloudZero,
+Vantage, OpenRouter, BenchmarkList...), the commerce buyer's world, and category
+narrative; then produces a brief with what happened, why it matters, and 3–6 ranked,
+buildable suggestions. Each suggestion is accepted/rejected/deferred with a reason,
+logged to decision-log.json. That log is the reinforcement loop: accepted themes get
+weighted up next week, rejected reasons become constraints checked against future
+suggestions. Accepting queues an item to backlog.md; it never auto-builds. First brief:
+skills/market-radar/briefs/2026-07-27.md.
