@@ -116,3 +116,16 @@ logged to decision-log.json. That log is the reinforcement loop: accepted themes
 weighted up next week, rejected reasons become constraints checked against future
 suggestions. Accepting queues an item to backlog.md; it never auto-builds. First brief:
 skills/market-radar/briefs/2026-07-27.md.
+
+## Feedback Loop skill (skills/feedback-loop/)
+
+The product learning flywheel that wraps around market-radar. Three input streams:
+market news (from market-radar), field notes (log every customer call the moment it
+happens — "field note: <who> — <what they said>"), and product signals. A monthly
+review clusters field notes into patterns, grades what shipped last month against real
+outcomes (worked / no-effect / too-early / backfired), and proposes ranked next builds
+weighted by both your past decisions AND whether prior bets actually worked. Governance
+is fixed: the loop proposes, you decide, shipped work gets graded honestly. A monthly
+GitHub-issue reminder (product-review.yml) keeps it turning. First review:
+skills/feedback-loop/reviews/2026-07.md. Seeded with the real field notes and shipped
+items from the project so far.

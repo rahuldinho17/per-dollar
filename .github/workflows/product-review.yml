@@ -1,0 +1,48 @@
+name: Product review reminder (monthly)
+
+# The feedback-loop monthly review needs judgement + the field notes you've logged,
+# so it runs in a Claude session. This just guarantees the 1st-of-month never slips:
+# it opens a GitHub issue that GitHub emails to you. Same pattern as the weekly
+# market-radar reminder.
+
+on:
+  schedule:
+    - cron: "0 8 1 * *"    # 08:00 UTC on the 1st of each month
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const iso = new Date().toISOString().slice(0,10);
+            const title = `Run monthly product review — ${iso}`;
+            const body = [
+              "First of the month — time for the PerDollar product review.",
+              "",
+              "**To run it:** open Claude and say *\"run the monthly product review\"*.",
+              "It ingests your field notes, the latest market-radar brief, and product",
+              "signals; grades what shipped last month against outcomes; and proposes",
+              "what to build next. You accept / reject / defer each.",
+              "",
+              "Between reviews, log every customer call the moment it happens:",
+              "just tell Claude *\"field note: <who> — <what they said>\"*.",
+              "",
+              "Close this issue once you've run the review.",
+              "",
+              "_Opened automatically by .github/workflows/product-review.yml_"
+            ].join("\n");
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: "open", labels: "product-review"
+            });
+            if (existing.data.some(i => i.title === title)) { core.info("Already open."); return; }
+            await github.rest.issues.create({
+              owner: context.repo.owner, repo: context.repo.repo,
+              title, body, labels: ["product-review"]
+            });

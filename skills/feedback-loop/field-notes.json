@@ -1,0 +1,14 @@
+[
+  { "date": "2026-07-XX", "who": "Daniel (technical founder, feedback round 1)", "type": "feedback",
+    "signal": "design read as AI-generated; task definitions too vague to trust; value is for non-technical managers not engineers",
+    "theme": "objection", "raw_quote": "" },
+  { "date": "2026-07-XX", "who": "Ale (GTM founder, feedback round 1)", "type": "feedback",
+    "signal": "buyer is the invoice approver (VP/CFO), not the practitioner; wants free-form task input; picked budget forecasting as retention feature",
+    "theme": "gtm", "raw_quote": "" },
+  { "date": "2026-07-XX", "who": "Kai-Thomas Krause (CPTO, ShopAgentic)", "type": "call",
+    "signal": "already solved internal cost-per-run; real pain is trustworthy PRICE DATA and multi-vendor OSS hosting; asked where prices come from",
+    "theme": "feature-request", "raw_quote": "token cost and model choice is at the heart of our platform" },
+  { "date": "2026-07-XX", "who": "Mike Stevenson (Aries, commerce practice lead)", "type": "intro",
+    "signal": "introducing Ryan, their AI lead who scopes customer AI use cases — agency channel is live",
+    "theme": "vertical-depth", "raw_quote": "" }
+]
