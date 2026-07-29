@@ -129,3 +129,17 @@ is fixed: the loop proposes, you decide, shipped work gets graded honestly. A mo
 GitHub-issue reminder (product-review.yml) keeps it turning. First review:
 skills/feedback-loop/reviews/2026-07.md. Seeded with the real field notes and shipped
 items from the project so far.
+
+## Impact view & re-verification
+
+- `impact.html` — what the feedback loop changed, week by week, with loop velocity
+  (median days signal→ship), hit rate, and every change traced to its trigger. Built from
+  `data/loop.json` via `node scripts/build-loop-view.mjs`.
+- `scripts/verify.mjs` — the re-verification pass. `node scripts/verify.mjs` prints a
+  provider-grouped checklist (one pricing page per visit); `node scripts/verify.mjs --stamp all`
+  marks them verified today. Run weekly, and before customer calls: the cron keeps prices
+  current, but only a human makes them *verified*.
+- Capability data: the ledger now carries Artificial Analysis Intelligence Index (v4.1)
+  scores where published, a VALUE column (capability per euro of job cost), and a minimum
+  capability filter answering "cheapest model that clears the bar". Models with no published
+  score show "no score" and are excluded when a floor is set — never given an invented number.

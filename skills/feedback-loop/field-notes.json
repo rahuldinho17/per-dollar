@@ -4,7 +4,7 @@
     "who": "Daniel (technical founder, feedback round 1)",
     "type": "feedback",
     "signal": "design read as AI-generated; task definitions too vague to trust; value is for non-technical managers not engineers",
-    "theme": "objection",
+    "theme": "data-trust",
     "raw_quote": ""
   },
   {
@@ -20,7 +20,7 @@
     "who": "Kai-Thomas Krause (CPTO, ShopAgentic)",
     "type": "call",
     "signal": "already solved internal cost-per-run; real pain is trustworthy PRICE DATA and multi-vendor OSS hosting; asked where prices come from",
-    "theme": "feature-request",
+    "theme": "data-trust",
     "raw_quote": "token cost and model choice is at the heart of our platform"
   },
   {

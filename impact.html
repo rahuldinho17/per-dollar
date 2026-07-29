@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PerDollar — what the feedback loop changed</title>
+<meta name="description" content="Every product change traced back to the signal that caused it, with loop velocity, hit rate, and open bets." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper:#FFF1E5; --raised:#FFF9F3; --ink:#33302E; --ink-2:#6b625b; --ink-3:#9c948b;
+    --claret:#990F3D; --teal:#0D7680; --wheat:#F2DFCE; --wheat-2:#E9D5C1; --amber:#8a6d1f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Source Sans 3",system-ui,sans-serif;font-size:15px;line-height:1.5}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  a{color:var(--teal)}
+  .num{font-family:"Spline Sans Mono",monospace;font-variant-numeric:tabular-nums}
+
+  .mast{display:flex;align-items:center;gap:18px;padding:14px 0 12px;border-bottom:3px double var(--ink)}
+  .mark{font-family:"Newsreader",serif;font-weight:600;font-size:24px;text-decoration:none;color:inherit}
+  .mark span{color:var(--claret)}
+  .mnav{display:flex;gap:18px;font-size:13.5px;margin-right:auto}
+  .mnav a{color:var(--ink-2);text-decoration:none}
+  .mnav a:hover{color:var(--ink)}
+  .mnav a.on{color:var(--ink);font-weight:600;border-bottom:2px solid var(--claret)}
+  .built{font-family:"Spline Sans Mono",monospace;font-size:10.5px;color:var(--ink-2);letter-spacing:.05em}
+
+  .stand{padding:38px 0 6px}
+  .stand h1{font-family:"Newsreader",serif;font-weight:500;font-size:clamp(28px,4.4vw,44px);
+    line-height:1.12;letter-spacing:-.01em;margin:0 0 12px;max-width:24ch}
+  .stand h1 b{font-weight:600;color:var(--claret)}
+  .stand h1 .t{font-weight:600;color:var(--teal)}
+  .stand .deck{font-family:"Newsreader",serif;font-style:italic;font-size:17px;color:var(--ink-2);
+    margin:0 0 26px;max-width:64ch;line-height:1.5}
+
+  /* headline metric */
+  .hero-metric{border:1px solid var(--wheat-2);background:var(--raised);border-radius:4px;
+    padding:22px 24px;display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
+  @media(max-width:640px){.hero-metric{grid-template-columns:1fr}}
+  .hero-metric .big{font-family:"Newsreader",serif;font-weight:600;font-size:64px;line-height:1;
+    letter-spacing:-.02em;color:var(--teal)}
+  .hero-metric .big small{font-size:22px;color:var(--ink-2);font-weight:500}
+  .hero-metric .lbl{font-family:"Spline Sans Mono",monospace;font-size:10px;letter-spacing:.12em;
+    color:var(--ink-2);margin-bottom:4px}
+  .hero-metric p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.55;max-width:62ch}
+  .hero-metric p b{color:var(--ink)}
+
+  /* metric strip */
+  .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:1px;
+    background:var(--wheat-2);border:1px solid var(--wheat-2);border-radius:4px;margin-top:16px;overflow:hidden}
+  .cell{background:var(--raised);padding:14px 16px}
+  .cell .k{font-family:"Spline Sans Mono",monospace;font-size:9.5px;letter-spacing:.1em;
+    color:var(--ink-2);text-transform:uppercase}
+  .cell .v{font-family:"Spline Sans Mono",monospace;font-size:22px;font-weight:600;margin-top:3px}
+  .cell .v.teal{color:var(--teal)} .cell .v.amber{color:var(--amber)} .cell .v.grey{color:var(--ink-3)}
+  .cell .s{font-size:11.5px;color:var(--ink-2);margin-top:2px}
+
+  .sect{margin-top:48px}
+  .sect h2{font-family:"Newsreader",serif;font-weight:600;font-size:23px;margin:0 0 4px;
+    border-top:1px solid var(--ink);padding-top:12px}
+  .sect .cap{color:var(--ink-2);font-size:13.5px;margin:0 0 18px;max-width:76ch}
+
+  /* honesty panel */
+  .honest{border:1px dashed var(--claret);background:var(--raised);padding:14px 16px;
+    font-size:13.5px;color:var(--ink-2);line-height:1.6;max-width:82ch}
+  .honest b{font-family:"Spline Sans Mono",monospace;font-size:10px;letter-spacing:.1em;color:var(--claret)}
+
+  /* week timeline */
+  .week{border-left:2px solid var(--wheat-2);padding:0 0 6px 20px;margin-left:6px;position:relative}
+  .week::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;
+    border-radius:50%;background:var(--paper);border:2.5px solid var(--teal)}
+  .week h3{font-family:"Spline Sans Mono",monospace;font-size:11px;letter-spacing:.12em;
+    color:var(--ink-2);margin:0 0 2px}
+  .week .wsum{font-size:13px;color:var(--ink-3);margin-bottom:12px}
+  .chg{background:var(--raised);border:1px solid var(--wheat-2);border-radius:4px;
+    padding:13px 15px;margin-bottom:10px}
+  .chg .top{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+  .chg .cid{font-family:"Spline Sans Mono",monospace;font-size:10px;color:var(--ink-3)}
+  .chg .theme{font-family:"Spline Sans Mono",monospace;font-size:9px;letter-spacing:.1em;
+    border:1px solid var(--wheat-2);border-radius:2px;padding:1px 5px;color:var(--ink-2)}
+  .chg .grade{margin-left:auto;font-family:"Spline Sans Mono",monospace;font-size:9px;
+    letter-spacing:.1em;padding:2px 6px;border-radius:2px}
+  .grade.worked{background:var(--teal);color:var(--paper)}
+  .grade.too-early{border:1px solid var(--amber);color:var(--amber)}
+  .grade.no-effect{border:1px solid var(--ink-3);color:var(--ink-3)}
+  .grade.backfired{background:var(--claret);color:var(--paper)}
+  .chg .what{font-weight:600;font-size:14.5px;margin:6px 0 6px}
+  .chg .trace{font-size:12.5px;color:var(--ink-2);border-left:2px solid var(--wheat);padding-left:10px;margin-bottom:6px}
+  .chg .trace .src{font-family:"Spline Sans Mono",monospace;font-size:9px;letter-spacing:.1em;
+    color:var(--claret);display:block}
+  .chg .hyp{font-size:12.5px;color:var(--ink-2)}
+  .chg .hyp em{color:var(--ink);font-style:normal;font-weight:600}
+  .chg .lead{font-family:"Spline Sans Mono",monospace;font-size:11px;color:var(--teal)}
+
+  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  th{font-family:"Spline Sans Mono",monospace;font-weight:500;font-size:10px;letter-spacing:.1em;
+    color:var(--ink-2);text-align:left;padding:0 12px 8px;border-bottom:1.5px solid var(--ink)}
+  td{padding:10px 12px;border-bottom:1px solid var(--wheat-2);vertical-align:top}
+  td.r{text-align:right;font-family:"Spline Sans Mono",monospace}
+  .tablewrap{overflow-x:auto}
+  table.open{min-width:640px}
+
+  .method{margin-top:46px;border-top:3px double var(--ink);padding:16px 0 60px;
+    font-size:12.5px;color:var(--ink-2);line-height:1.7;max-width:84ch}
+  .method b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <a href="/" class="mark">Per<span>Dollar</span></a>
+    <nav class="mnav">
+      <a href="/app.html">Price sheet</a>
+      <a href="/hosts.html">Same model, every host</a>
+      <a href="/impact.html" class="on">Loop impact</a>
+    </nav>
+    <span class="built" id="built"></span>
+  </header>
+
+  <section class="stand">
+    <h1 id="headline">What the feedback loop changed</h1>
+    <p class="deck">Every product change traced back to the signal that caused it — a customer
+      sentence or a market move — with how long it took to get from hearing it to shipping it,
+      and whether it actually worked.</p>
+  </section>
+
+  <div class="hero-metric">
+    <div>
+      <div class="lbl">LOOP VELOCITY · MEDIAN</div>
+      <div class="big" id="velocity">—<small> days</small></div>
+    </div>
+    <p><b>Signal heard → change shipped.</b> This is the number that compounds. A loop that turns
+      in days rather than quarters means more turns per month, and each turn makes the next one
+      better-aimed. It is the one metric worth defending as the product scales.</p>
+  </div>
+
+  <div class="strip" id="strip"></div>
+
+  <section class="sect">
+    <h2>What this can and can't prove yet</h2>
+    <div class="honest" id="honesty"></div>
+  </section>
+
+  <section class="sect">
+    <h2>Week by week</h2>
+    <p class="cap">Newest first. Each change shows the signal that triggered it, the hypothesis it
+      tests, the metric that will settle it, and its current grade.</p>
+    <div id="weeks"></div>
+  </section>
+
+  <section class="sect">
+    <h2>Open bets awaiting a verdict</h2>
+    <p class="cap">Shipped but not yet gradeable. Each will be graded <span class="num">worked</span> /
+      <span class="num">no-effect</span> / <span class="num">backfired</span> at the next monthly
+      review, against the metric named here — not on how good the idea felt.</p>
+    <div class="tablewrap">
+      <table class="open">
+        <thead><tr><th>Change</th><th>Hypothesis</th><th>Settled by</th><th style="text-align:right">Shipped</th></tr></thead>
+        <tbody id="open"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="method">
+    <b>How these numbers are computed.</b> Loop velocity is the median days between the date a
+    signal was first heard (a logged field note, or the market-radar brief that surfaced it) and
+    the date the resulting change shipped. Hit rate is <i>worked ÷ graded</i> — items still marked
+    <i>too-early</i> are excluded rather than counted as wins, so the rate stays honest and will
+    look worse before it looks better. A change counts as loop-driven only when a specific input
+    can be named; anything else is counted as founder-initiated. Grades are assigned at the monthly
+    review against the metric recorded at ship time, never retrofitted to match the outcome.
+    <b>What is deliberately not here:</b> revenue. With no paying customer yet, any ROI figure in
+    euros would be invented. These are the leading indicators that precede it — input volume, cycle
+    time, and hit rate — and revenue joins this page the day a first audit is paid.
+  </footer>
+</div>
+
+<script>
+const FALLBACK = {"built":"2026-07-29","metrics":{"notes_logged":5,"patterns":1,"decisions_made":10,"accepted":9,"rejected":0,"deferred":1,"changes_shipped":9,"loop_driven":9,"from_field":4,"from_market":5,"median_lead_days":0,"fastest_lead_days":0,"graded":0,"worked":0,"awaiting_grade":9,"hit_rate":null},"product":{"models_tracked":23,"verified":12,"price_events":11},"weeks":[],"events":[],"open_notes":1};
+
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const GRADE_LABEL = { "worked":"WORKED", "too-early":"TOO EARLY", "no-effect":"NO EFFECT", "backfired":"BACKFIRED" };
+
+function render(L) {
+  const m = L.metrics, p = L.product || {};
+  document.getElementById("built").textContent = "BUILT " + String(L.built || "").toUpperCase();
+
+  document.getElementById("velocity").innerHTML =
+    (m.median_lead_days == null ? "—" : m.median_lead_days) + '<small> days</small>';
+
+  document.getElementById("headline").innerHTML =
+    `<b>${m.changes_shipped}</b> product changes shipped, <span class="t">${m.loop_driven}</span> of them traceable to a signal.`;
+
+  const cells = [
+    ["Field notes logged", m.notes_logged, "", `${m.patterns} pattern${m.patterns===1?"":"s"} (≥2 sources)`],
+    ["Decisions made", m.decisions_made, "", `${m.accepted} accepted · ${m.deferred} deferred · ${m.rejected} rejected`],
+    ["Changes shipped", m.changes_shipped, "teal", `${m.from_field} from customers · ${m.from_market} from market`],
+    ["Fastest turn", m.fastest_lead_days == null ? "—" : m.fastest_lead_days + "d", "teal", "signal → shipped"],
+    ["Hit rate", m.hit_rate == null ? "n/a" : m.hit_rate + "%", m.hit_rate == null ? "grey" : "teal",
+      m.graded ? `${m.worked}/${m.graded} graded` : "nothing graded yet"],
+    ["Awaiting verdict", m.awaiting_grade, "amber", "graded at next review"],
+    ["Models tracked", p.models_tracked ?? "—", "", `${p.verified ?? 0} human-verified`],
+    ["Price events captured", p.price_events ?? "—", "", "append-only history"],
+  ];
+  document.getElementById("strip").innerHTML = cells.map(([k,v,cls,s]) => `
+    <div class="cell"><div class="k">${esc(k)}</div>
+      <div class="v ${cls||""}">${esc(v)}</div><div class="s">${esc(s)}</div></div>`).join("");
+
+  document.getElementById("honesty").innerHTML = `
+    <b>MEASURABLE TODAY</b><br/>
+    ${m.notes_logged} signals in, ${m.decisions_made} decisions out, ${m.changes_shipped} changes shipped,
+    median ${m.median_lead_days ?? "—"} days from hearing something to shipping it.
+    ${m.loop_driven}/${m.changes_shipped} changes name the input that caused them.<br/><br/>
+    <b>NOT MEASURABLE YET</b><br/>
+    Whether those changes worked — ${m.awaiting_grade} are too recent to grade, so the hit rate is
+    <i>n/a</i> rather than a flattering guess. And revenue: there is no paying customer yet, so
+    there is no euro ROI to report. Both appear here the moment they exist.`;
+
+  document.getElementById("weeks").innerHTML = (L.weeks || []).map(w => `
+    <div class="week">
+      <h3>${esc(w.week)}</h3>
+      <div class="wsum">${w.shipped.length} change${w.shipped.length===1?"":"s"} shipped ·
+        ${w.notes} note${w.notes===1?"":"s"} logged · ${w.decisions} decision${w.decisions===1?"":"s"}</div>
+      ${w.shipped.map(e => `
+        <div class="chg">
+          <div class="top">
+            <span class="cid">${esc(e.id)}</span>
+            <span class="theme">${esc(String(e.theme).toUpperCase())}</span>
+            <span class="grade ${esc(e.grade)}">${esc(GRADE_LABEL[e.grade] || e.grade)}</span>
+          </div>
+          <div class="what">${esc(e.change)}</div>
+          <div class="trace"><span class="src">TRIGGERED BY · ${esc(String(e.source).toUpperCase())}</span>
+            ${esc(e.trigger)}${e.lead_days != null ? ` <span class="lead">— shipped in ${e.lead_days}d</span>` : ""}</div>
+          <div class="hyp"><em>Bet:</em> ${esc(e.hypothesis)}</div>
+        </div>`).join("")}
+    </div>`).join("") || "<p class='cap'>No changes recorded yet.</p>";
+
+  const open = (L.events || []).filter(e => e.grade === "too-early");
+  document.getElementById("open").innerHTML = open.map(e => `
+    <tr>
+      <td><b>${esc(e.change)}</b><br/><span class="cid num" style="font-size:10px;color:var(--ink-3)">${esc(e.id)}</span></td>
+      <td>${esc(e.hypothesis)}</td>
+      <td>${esc(e.metric || "—")}</td>
+      <td class="r">${esc(e.shipped)}</td>
+    </tr>`).join("") || "<tr><td colspan='4'>Nothing open — everything shipped has been graded.</td></tr>";
+}
+
+render(FALLBACK);
+(async () => {
+  try {
+    const r = await fetch("/data/loop.json", { cache: "no-store" });
+    if (r.ok) render(await r.json());
+  } catch (e) { /* fallback already rendered */ }
+})();
+</script>
+</body>
+</html>

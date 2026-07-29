@@ -5,5 +5,33 @@
     "theme": "pricing",
     "decision": "accept",
     "reason": "Daniel Royo (deal-desk): guarantee is enterprise red flag. Reworked offer to free-teaser (savings estimate, method withheld) -> paid audit; guarantee scoped to individuals/SMB only. Price unchanged pending real-buyer signal."
+  },
+  {
+    "date": "2026-07-29",
+    "id": "FL-2026-M07-01",
+    "theme": "data-trust",
+    "decision": "accept",
+    "reason": "Capability-per-dollar closes the market's cost-performance gap."
+  },
+  {
+    "date": "2026-07-29",
+    "id": "FL-2026-M07-02",
+    "theme": "data-trust",
+    "decision": "accept",
+    "reason": "Cheapest way to strengthen the #1 field pattern (trust)."
+  },
+  {
+    "date": "2026-07-29",
+    "id": "FL-2026-M07-03",
+    "theme": "field-capture",
+    "decision": "accept",
+    "reason": "Enables the whole loop; near-zero effort."
+  },
+  {
+    "date": "2026-07-29",
+    "id": "FL-2026-M07-04",
+    "theme": "data-feed",
+    "decision": "defer",
+    "reason": "Feed v2 (history + MCP) deferred until a real feed consumer exists."
   }
 ]

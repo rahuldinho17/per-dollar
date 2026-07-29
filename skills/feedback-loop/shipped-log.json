@@ -64,5 +64,38 @@
     "grade": "too-early",
     "outcome": "",
     "lesson": ""
+  },
+  {
+    "id": "FL-2026-M07-01",
+    "shipped": "2026-07-29",
+    "theme": "data-trust",
+    "change": "Capability-per-dollar: AA Intelligence Index scores + VALUE column + 'cheapest model clearing a capability bar' filter",
+    "hypothesis": "Buyers pick on value not price; answering 'cheapest model good enough for my task' closes the gap incumbents can't",
+    "success_metric": "a prospect uses the capability floor on a call; audit recommendations cite it",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  },
+  {
+    "id": "FL-2026-M07-02",
+    "shipped": "2026-07-29",
+    "theme": "data-trust",
+    "change": "Re-verification pass (scripts/verify.mjs): provider-grouped checklist + stamp command",
+    "hypothesis": "Turning stale 'VERIFIED 22 JUL' badges into 'verified this week' removes the freshness objection",
+    "success_metric": "no prospect questions data freshness on a call; sweep run weekly",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  },
+  {
+    "id": "FL-2026-M07-03",
+    "shipped": "2026-07-29",
+    "theme": "field-capture",
+    "change": "Field-note capture in Drive (structured sheet) + impact view wiring",
+    "hypothesis": "Logged calls compound: month-2 review gets real outcome data instead of recollection",
+    "success_metric": ">=8 notes logged by next review",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
   }
 ]
