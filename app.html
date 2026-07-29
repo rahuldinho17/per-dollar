@@ -36,8 +36,12 @@
   .status { font-family: "Spline Sans Mono", monospace; font-size: 10.5px;
     letter-spacing: 0.05em; color: var(--ink-2); text-align: right; line-height: 1.6; }
   .status b { color: var(--teal); font-weight: 600; }
-  .status.stale { color: var(--claret); }
-  .status.stale b { color: var(--claret); }
+  .status .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--teal); margin-right: 5px; vertical-align: 1px; }
+  .status.aging .dot { background: #b8912f; }
+  .status.paused .dot { background: var(--claret); }
+  .status.paused { color: var(--claret); }
+  .status.paused b { color: var(--claret); }
   .msub .tracked { color: var(--claret); }
   .fb { font: 600 13px "Source Sans 3", sans-serif; color: var(--paper);
     background: var(--ink); border: 1px solid var(--ink); border-radius: 2px;
@@ -747,20 +751,38 @@ renderStatic();
       }
     });
     DATA_AS_OF = d.as_of || DATA_AS_OF;
-    const auto = d.models.filter(m => m.verification === "auto-tracked").length;
-    const trk  = d.models.filter(m => m.verification === "tracked").length;
-    const ageDays = (Date.now() - new Date(d.as_of)) / 864e5;
+    const ver = d.models.filter(m => m.verification === "verified").length;
+    const ageDays = Math.floor((Date.now() - new Date(d.as_of)) / 864e5);
     const el = document.getElementById("statusline");
-    let tail;
-    if (ageDays > 2) {                       // silent staleness is the worst failure mode
-      el.className = "status stale";
-      tail = `⚠ DATA MAY BE STALE — LAST REFRESH ${Math.floor(ageDays)} DAYS AGO`;
+
+    // Two different questions, previously conflated into one alarming line:
+    //   "when did we last CHECK?"  -> the trust signal
+    //   "when did a price last CHANGE?" -> a quiet market is good news, not decay
+    // Checking daily and finding nothing changed is the system working. Only a
+    // genuinely paused pipeline is a problem, and then we say so plainly rather
+    // than hedging with "may be".
+    const checked = ageDays <= 0 ? "CHECKED TODAY"
+                  : ageDays === 1 ? "CHECKED YESTERDAY"
+                  : `CHECKED ${ageDays} DAYS AGO`;
+    let cls = "status", head, tail;
+    if (ageDays <= 3) {
+      head = `<span class="dot"></span>${checked} · ${d.models.length} MODELS`;
+      tail = `${ver} CONFIRMED AGAINST PROVIDER PAGES`;
+    } else if (ageDays <= 7) {
+      cls = "status aging";
+      head = `<span class="dot"></span>${checked} · ${d.models.length} MODELS`;
+      tail = `${ver} CONFIRMED AGAINST PROVIDER PAGES`;
     } else {
-      el.className = "status";
-      tail = auto ? `${auto} AUTO-TRACKED · DAILY REFRESH`
-           : trk  ? `${trk} TRACKED, AWAITING VERIFICATION`
-           : `DAILY AUTO-REFRESH ACTIVE`;
+      cls = "status paused";
+      head = `<span class="dot"></span>AUTOMATIC REFRESH PAUSED`;
+      tail = `LAST CHECKED <b>${esc(d.as_of_display || d.as_of)}</b>`;
     }
+    // A quiet market is reassurance, not decay — say it out loud.
+    if (d.last_change && ageDays <= 7) {
+      const cd = Math.floor((Date.now() - new Date(d.last_change)) / 864e5);
+      if (cd > 0) tail += ` · NO PRICE CHANGES IN ${cd} DAY${cd === 1 ? "" : "S"}`;
+    }
+    el.className = cls;
     // discovery queue: models the cron found but a human hasn't verified yet
     try {
       const dr = await fetch("/data/discovered.json", { cache: "no-store" });
@@ -770,8 +792,7 @@ renderStatic();
         if (pending) tail = `${Math.min(pending, 99)} NEW LISTING${pending > 1 ? "S" : ""} AWAITING VERIFICATION`;
       }
     } catch (e) { /* discovery file optional */ }
-    document.getElementById("statusline").innerHTML =
-      `PRICES AS OF <b>${esc(d.as_of_display || d.as_of)}</b> · ${d.models.length} MODELS<br/>` + tail;
+    el.innerHTML = head + "<br/>" + tail;
     render();
   } catch (e) { /* offline or file:// — fallback data already rendered */ }
 })();

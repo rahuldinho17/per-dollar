@@ -1,7 +1,7 @@
 {
-  "as_of": "2026-07-22",
-  "as_of_display": "22 JUL 2026",
-  "note": "Twelve models verified against first-party pricing pages on 2026-07-22. Ten (the GPT-5.6 family, Claude Fable 5, Claude Sonnet 5, Kimi K3, Grok 4.5, Inkling, Gemini 3.6 Flash, and the GLM-5.2 correction) are compiled from published provider comparisons and marked 'tracked' pending first-party confirmation. Do not quote a tracked price to a client before checking the provider's own page.",
+  "as_of": "2026-07-29",
+  "as_of_display": "29 JUL 2026",
+  "note": "Checked 2026-07-29. Twelve models confirmed against first-party pricing pages; eleven compiled from published provider comparisons and marked 'tracked' pending first-party confirmation. Run scripts/verify.mjs to re-confirm and stamp.",
   "models": [
     {
       "id": "opus5",
@@ -201,5 +201,6 @@
       "source": "first-party pricing page",
       "verified_at": "2026-07-22"
     }
-  ]
+  ],
+  "last_change": "2026-07-22"
 }

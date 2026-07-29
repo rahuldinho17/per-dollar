@@ -442,9 +442,9 @@
       const ageDays = (Date.now() - new Date(d.as_of)) / 864e5;
       const el = document.getElementById("trustline");
       if (!el || !n) return;
-      const freshness = ageDays > 2
-        ? `Prices last refreshed <span class="mono">${d.as_of_display || d.as_of}</span>`
-        : `Prices verified <span class="mono">${d.as_of_display || d.as_of}</span>`;
+      const freshness = ageDays > 7
+        ? `Prices last checked <span class="mono">${d.as_of_display || d.as_of}</span>`
+        : `Prices checked <span class="mono">${ageDays <= 0 ? "today" : ageDays === 1 ? "yesterday" : ageDays + " days ago"}</span>`;
       el.innerHTML =
         `<span>${freshness}</span><span>·</span>` +
         `<span><span class="mono">${n}</span> models tracked daily</span><span>·</span>` +
