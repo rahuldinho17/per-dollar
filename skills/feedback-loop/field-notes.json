@@ -1,14 +1,42 @@
 [
-  { "date": "2026-07-XX", "who": "Daniel (technical founder, feedback round 1)", "type": "feedback",
+  {
+    "date": "2026-07-XX",
+    "who": "Daniel (technical founder, feedback round 1)",
+    "type": "feedback",
     "signal": "design read as AI-generated; task definitions too vague to trust; value is for non-technical managers not engineers",
-    "theme": "objection", "raw_quote": "" },
-  { "date": "2026-07-XX", "who": "Ale (GTM founder, feedback round 1)", "type": "feedback",
+    "theme": "objection",
+    "raw_quote": ""
+  },
+  {
+    "date": "2026-07-XX",
+    "who": "Ale (GTM founder, feedback round 1)",
+    "type": "feedback",
     "signal": "buyer is the invoice approver (VP/CFO), not the practitioner; wants free-form task input; picked budget forecasting as retention feature",
-    "theme": "gtm", "raw_quote": "" },
-  { "date": "2026-07-XX", "who": "Kai-Thomas Krause (CPTO, ShopAgentic)", "type": "call",
+    "theme": "gtm",
+    "raw_quote": ""
+  },
+  {
+    "date": "2026-07-XX",
+    "who": "Kai-Thomas Krause (CPTO, ShopAgentic)",
+    "type": "call",
     "signal": "already solved internal cost-per-run; real pain is trustworthy PRICE DATA and multi-vendor OSS hosting; asked where prices come from",
-    "theme": "feature-request", "raw_quote": "token cost and model choice is at the heart of our platform" },
-  { "date": "2026-07-XX", "who": "Mike Stevenson (Aries, commerce practice lead)", "type": "intro",
-    "signal": "introducing Ryan, their AI lead who scopes customer AI use cases — agency channel is live",
-    "theme": "vertical-depth", "raw_quote": "" }
+    "theme": "feature-request",
+    "raw_quote": "token cost and model choice is at the heart of our platform"
+  },
+  {
+    "date": "2026-07-XX",
+    "who": "Mike Stevenson (Aries, commerce practice lead)",
+    "type": "intro",
+    "signal": "introducing Ryan, their AI lead who scopes customer AI use cases \u2014 agency channel is live",
+    "theme": "vertical-depth",
+    "raw_quote": ""
+  },
+  {
+    "date": "2026-07-29",
+    "who": "Daniel Royo (VP Global Deal Desk & Pricing, commercetools)",
+    "type": "advisor",
+    "signal": "Fee-waived guarantee works for individuals/SMB but is a red flag in enterprise \u2014 not done there. Better: gate the audit as a teaser \u2014 show the savings figure and limited proof the work is real, withhold the how. Preview-over-guarantee.",
+    "theme": "pricing",
+    "raw_quote": "The guarantee is more marketing than anything else"
+  }
 ]

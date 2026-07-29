@@ -166,6 +166,9 @@
   .offer .price .guar { display: inline-block; margin-top: 14px; font-family: "Spline Sans Mono", monospace;
     font-size: 12px; letter-spacing: 0.06em; color: var(--teal); border: 1px solid var(--teal);
     border-radius: 3px; padding: 6px 10px; }
+  .offer .price .tier { font-family: "Spline Sans Mono", monospace; font-size: 11px;
+    letter-spacing: 0.14em; color: var(--claret); margin-bottom: 2px; }
+  .offer .price .tierline { border-top: 1px solid var(--wheat-2); margin: 18px 0; }
 
   /* how it works */
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 40px; }
@@ -371,37 +374,44 @@
   <div class="wrap">
     <div class="offer reveal">
       <div>
-        <h2>The audit <em>pays for itself,</em> or it's free.</h2>
-        <p>Fifteen minutes of your time and one usage export from your provider console — no prompt contents, nothing sensitive. You get the full one-page breakdown back within a week.</p>
-        <p style="color:var(--ink-3);font-size:14.5px">For commerce teams spending $500+/month on LLM APIs. First cohort of merchants, priced to be a trivial yes.</p>
+        <h2>See the savings <em>before</em> you pay.</h2>
+        <p>Start with a free estimate: from what's public about your store, we'll show you roughly
+          what your AI runs cost today and how much looks addressable — a real number, with the
+          workloads named. The full audit, with your data and the exact switches, is the paid step.</p>
+        <p style="color:var(--ink-3);font-size:14.5px">For commerce teams spending $500+/month on LLM APIs. The free estimate proves the work is real before any commitment.</p>
       </div>
       <div class="price">
-        <div class="amt"><s>€990</s>€490</div>
-        <div class="terms">Fixed-fee cost audit. One workload or your whole bill.</div>
-        <span class="guar">If we find no savings, the fee is waived.</span>
+        <div class="tier">FREE</div>
+        <div class="amt" style="font-size:30px">Savings estimate</div>
+        <div class="terms">An outside read of your likely AI spend and where it's addressable. Yours to keep, no data required.</div>
+        <div class="tierline"></div>
+        <div class="tier">THEN</div>
+        <div class="amt">€490</div>
+        <div class="terms">The full audit: your real usage mapped to verified prices, the exact model switches, the caching plan, and the eval to run before you change anything.</div>
+        <span class="guar">Individuals &amp; small teams: fee waived if we find no savings.</span>
         <div style="margin-top:22px">
-          <a class="btn primary" style="padding:13px 22px;font-size:15.5px" href="https://calendly.com/rahul-product-atelier/30min" target="_blank" rel="noopener">Book a 30-min audit call →</a>
-          <div style="margin-top:12px;font-size:13.5px"><a href="mailto:rahul@product-atelier.com?subject=PerDollar%20cost%20audit&body=Company%3A%0ARole%3A%0AMonthly%20LLM%20spend%20(approx.)%3A%0AProviders%20in%20use%3A%0AMain%20AI%20workloads%20(support%2C%20catalog%2C%20search%2C%20reviews...)%3A%0A%0AWhat%20I'd%20most%20want%20to%20cut%3A">or send details by email →</a></div>
+          <a class="btn primary" style="padding:13px 22px;font-size:15.5px" href="https://calendly.com/rahul-product-atelier/30min" target="_blank" rel="noopener">Get your free estimate →</a>
+          <div style="margin-top:12px;font-size:13.5px"><a href="mailto:rahul@product-atelier.com?subject=PerDollar%20savings%20estimate&body=Company%3A%0ARole%3A%0AMonthly%20LLM%20spend%20(approx.)%3A%0AProviders%20in%20use%3A%0AMain%20AI%20workloads%20(support%2C%20catalog%2C%20search%2C%20reviews...)%3A%0A%0AWhat%20I'd%20most%20want%20to%20cut%3A">or send details by email →</a></div>
         </div>
       </div>
     </div>
 
     <div class="steps">
-      <div class="step reveal"><div class="sn">1<small>~15 MIN</small></div><h3>Send one usage export</h3>
-        <p>Export last month's usage CSV from your OpenAI / Anthropic / Google console. A rough map of keys to workloads helps but isn't required.</p></div>
-      <div class="step reveal"><div class="sn">2<small>WE DO THE WORK</small></div><h3>We map it to verified prices</h3>
-        <p>Your real token volumes land on our verified price sheet and commerce task profiles. We find the gaps and size them in dollars.</p></div>
-      <div class="step reveal"><div class="sn">3<small>WITHIN A WEEK</small></div><h3>You get a decision, not a dashboard</h3>
-        <p>A one-page audit: what to switch, what it saves, and the eval to run first. Keep it whether or not we work together after.</p></div>
+      <div class="step reveal"><div class="sn">1<small>FREE</small></div><h3>Get your savings estimate</h3>
+        <p>From what's public about your store, we show you roughly what your AI runs cost today and how much looks addressable — workloads named, no data or commitment required.</p></div>
+      <div class="step reveal"><div class="sn">2<small>~15 MIN</small></div><h3>Confirm it with one export</h3>
+        <p>If the estimate looks worth chasing, send one usage CSV from your provider console — no prompt contents, nothing sensitive — and we turn the estimate into your real number.</p></div>
+      <div class="step reveal"><div class="sn">3<small>THE AUDIT</small></div><h3>You get a decision, not a dashboard</h3>
+        <p>A one-page audit: the exact switches, what each saves, and the eval to run first. This is the paid step — the estimate already showed you it's real.</p></div>
     </div>
   </div>
 </section>
 
 <section class="final">
   <div class="wrap">
-    <h2>Find out what your AI actually costs <b>per order.</b></h2>
-    <p>One export, one week, one number that could reshape a line item. The first cohort of commerce merchants is open now.</p>
-    <a class="btn primary" href="https://calendly.com/rahul-product-atelier/30min" target="_blank" rel="noopener">Book your cost audit</a>
+    <h2>See what your AI actually costs <b>per order</b> — free.</h2>
+    <p>Start with a savings estimate built from what's already public. See the number before you commit a minute of your team's time.</p>
+    <a class="btn primary" href="https://calendly.com/rahul-product-atelier/30min" target="_blank" rel="noopener">Get your free estimate</a>
     <div style="margin-top:20px"><a href="/app.html" style="font-size:14.5px">or explore the live price sheet first →</a></div>
   </div>
 </section>

@@ -1,27 +1,68 @@
 [
-  { "id": "MR-2026-W30-01", "shipped": "2026-07-27", "theme": "positioning",
+  {
+    "id": "MR-2026-W30-01",
+    "shipped": "2026-07-27",
+    "theme": "positioning",
     "change": "Hero reframed to 'system of record for commerce AI spend'",
     "hypothesis": "Owning a workflow (not 'AI cost tool') sharpens positioning vs horizontal incumbents",
     "success_metric": "prospects echo the framing back; higher reply rate on outreach",
-    "grade": "too-early", "outcome": "", "lesson": "" },
-  { "id": "MR-2026-W30-02", "shipped": "2026-07-27", "theme": "defensibility",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  },
+  {
+    "id": "MR-2026-W30-02",
+    "shipped": "2026-07-27",
+    "theme": "defensibility",
     "change": "Named 'why not Ramp/CloudZero' contrast block",
     "hypothesis": "Turning incumbents' visibility-not-decisions weakness into our line wins the comparison",
     "success_metric": "objection 'why not Ramp' handled without founder scrambling on calls",
-    "grade": "too-early", "outcome": "", "lesson": "" },
-  { "id": "MR-2026-W30-03", "shipped": "2026-07-27", "theme": "data-feed",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  },
+  {
+    "id": "MR-2026-W30-03",
+    "shipped": "2026-07-27",
+    "theme": "data-feed",
     "change": "Public /api/prices.json feed",
     "hypothesis": "An independent verified price record is the asset incumbents can't backfill; also what Kai asked for",
     "success_metric": "a feed consumer (esp. ShopAgentic) integrates or references it",
-    "grade": "too-early", "outcome": "", "lesson": "" },
-  { "id": "MR-2026-W30-04", "shipped": "2026-07-27", "theme": "vertical-depth",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  },
+  {
+    "id": "MR-2026-W30-04",
+    "shipped": "2026-07-27",
+    "theme": "vertical-depth",
     "change": "Catalogue enrichment + on-site search task profiles",
     "hypothesis": "Speaking exact commerce workloads beats any horizontal tool's generic view",
     "success_metric": "used in a real audit; resonates on a merchant call",
-    "grade": "too-early", "outcome": "", "lesson": "" },
-  { "id": "MR-2026-W30-05", "shipped": "2026-07-27", "theme": "gtm-copy",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  },
+  {
+    "id": "MR-2026-W30-05",
+    "shipped": "2026-07-27",
+    "theme": "gtm-copy",
     "change": "Outreach principle: lead with validated switches, not visibility",
     "hypothesis": "Competing on 'decisions' not 'visibility' avoids the lost fight with CloudZero",
     "success_metric": "higher call-booking rate from outreach",
-    "grade": "too-early", "outcome": "", "lesson": "" }
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  },
+  {
+    "id": "FL-2026-M07-05",
+    "shipped": "2026-07-29",
+    "theme": "pricing",
+    "change": "Offer reworked to free-estimate teaser -> paid audit; guarantee scoped to individuals only",
+    "hypothesis": "Preview-over-guarantee removes risk before payment and fits enterprise positioning better than a money-back guarantee",
+    "success_metric": "enterprise prospects (Ryan/agency) engage with the free estimate; no 'guarantee = small vendor' reaction",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  }
 ]
