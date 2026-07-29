@@ -145,13 +145,18 @@
   /* ledger */
   .ledger-wrap { margin-top: 26px; overflow-x: auto; }
   table { border-collapse: collapse; width: 100%; min-width: 940px; table-layout: fixed; }
-  col.c-model-w { width: 27%; }
-  col.c-num-w   { width: 8.5%; }
-  col.c-cap-w   { width: 11%; }
-  col.c-jobs-w  { width: 13%; }
-  col.c-val-w   { width: 12%; }
-  col.c-trend-w { width: 12%; }
-  col.c-watch-w { width: 8%; }
+  /* must total exactly 100% — a colgroup that overflows makes the browser rescale
+     columns unpredictably, which is what pushed the trend text into its neighbour */
+  col.c-model-w { width: 25%; }
+  col.c-in-w    { width: 7%; }
+  col.c-out-w   { width: 7%; }
+  col.c-len-w   { width: 6%; }
+  col.c-cap-w   { width: 10%; }
+  col.c-cpj-w   { width: 9.5%; }
+  col.c-jobs-w  { width: 11.5%; }
+  col.c-val-w   { width: 10%; }
+  col.c-trend-w { width: 9%; }
+  col.c-watch-w { width: 5%; }
   thead th { font-family: "Spline Sans Mono", monospace; font-weight: 500; font-size: 10px;
     letter-spacing: 0.1em; color: var(--ink-2); text-align: right; padding: 8px 10px;
     border-bottom: 1.5px solid var(--ink); white-space: nowrap;
@@ -188,9 +193,9 @@
   .watch:hover { border-color: var(--ink); color: var(--ink); }
   .watch:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   .watch.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-  .spark { display: inline-block; width: 74px; height: 20px; vertical-align: middle; }
-  .sparkchg { font-family: "Spline Sans Mono", monospace; font-size: 9.5px; margin-left: 6px; white-space: nowrap; }
-  td.c-spark { white-space: nowrap; }
+  .spark { display: inline-block; width: 54px; height: 18px; vertical-align: middle; }
+  .sparkchg { font-family: "Spline Sans Mono", monospace; font-size: 9.5px; margin-left: 5px; }
+  td.c-spark { white-space: nowrap; overflow: hidden; }
   .sparkchg.dn { color: var(--teal); } .sparkchg.up { color: var(--claret); }
   .sparkchg.new { color: var(--ink-3, #9c948b); letter-spacing: 0.06em; }
   .empty { border: 1px dashed #C9B7A5; background: var(--raised); padding: 26px;
@@ -314,8 +319,8 @@
    <div class="ledger-inner">
     <table aria-label="Model ledger">
       <colgroup>
-        <col class="c-model-w" /><col class="c-num-w" /><col class="c-num-w" />
-        <col class="c-num-w" /><col class="c-cap-w" /><col class="c-num-w" />
+        <col class="c-model-w" /><col class="c-in-w" /><col class="c-out-w" />
+        <col class="c-len-w" /><col class="c-cap-w" /><col class="c-cpj-w" />
         <col class="c-jobs-w" /><col class="c-val-w" /><col class="c-trend-w" /><col class="c-watch-w" />
       </colgroup>
       <thead><tr>
@@ -686,9 +691,9 @@ function render() {
       <td class="num jobs barcell c-jobs" data-label="${esc((task.unit + " per " + fmtBudget(budget)).toUpperCase())}">
         <i class="bar" style="width:${Math.max(1.5, m.count / maxCount * 86)}%"></i><span>${big(m.count)}${alt("jobs", big(Math.floor(budget / (m.cptAlt || 1))))}</span></td>
       <td class="c-spark">${m.trend.length < 3
-        ? '<span class="sparkchg new">NEW LISTING · NO HISTORY YET</span>'
+        ? '<span class="sparkchg new" title="No price history yet">NEW</span>'
         : spark(m.trend, m.cpt, m.id === cheap.id ? "#0D7680" : "#6b625b") +
-          `<span class="sparkchg ${tc.pct <= 0 ? "dn" : "up"}">${tc.pct <= 0 ? "▼" : "▲"} ${Math.abs(tc.pct).toFixed(0)}% · ${tc.months} MO</span>`}</td>
+          `<span class="sparkchg ${tc.pct <= 0 ? "dn" : "up"}" title="${tc.months} months">${tc.pct <= 0 ? "▼" : "▲"}${Math.abs(tc.pct).toFixed(0)}%</span>`}</td>
       <td class="c-watch"><button class="watch ${watch.has(m.id)?"on":""}" data-w="${m.id}"
         aria-pressed="${watch.has(m.id)}">${watch.has(m.id)?"WATCHING":"WATCH"}</button></td>
     </tr>`;
