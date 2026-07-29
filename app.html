@@ -84,11 +84,28 @@
   .slider .v { font-family: "Spline Sans Mono", monospace; font-size: 12px; font-weight: 600;
     min-width: 30px; text-align: right; }
   td.iq .noscore { color: var(--ink-3); font-size: 11px; }
-  td.val { font-family: "Spline Sans Mono", monospace; font-size: 14px; font-weight: 600; }
+  td.iq .score { font-family: "Spline Sans Mono", monospace; font-size: 15px; font-weight: 600; }
+  td.iq .of { color: var(--ink-3); font-size: 10px; }
+  td.iq .tier { display: block; font-family: "Spline Sans Mono", monospace; font-size: 9px;
+    letter-spacing: 0.08em; color: var(--ink-2); margin-top: 1px; }
+  td.val { font-family: "Source Sans 3", sans-serif; }
+  td.val .vbar { display: block; height: 5px; background: var(--wheat-2); border-radius: 99px;
+    overflow: hidden; margin-bottom: 3px; }
+  td.val .vbar i { display: block; height: 100%; background: var(--teal); }
+  td.val .vword { font-family: "Spline Sans Mono", monospace; font-size: 9.5px;
+    letter-spacing: 0.08em; color: var(--ink-2); }
+  td.val .vnone { color: var(--ink-3); font-size: 11px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-top: 20px; padding: 12px 14px;
+    background: var(--raised); border: 1px solid var(--wheat-2); border-radius: 4px;
+    font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+  .legend div { max-width: 46ch; }
+  .legend b { font-family: "Spline Sans Mono", monospace; font-size: 10px; letter-spacing: 0.1em;
+    color: var(--ink); display: block; margin-bottom: 2px; }
   tr.bestval td.val { color: var(--teal); }
   tr.bestval .mname::after { content: "BEST VALUE"; font: 600 9px "Spline Sans Mono", monospace;
     letter-spacing: 0.1em; color: var(--paper); background: var(--teal);
     padding: 2px 6px; margin-left: 8px; vertical-align: 2px; border-radius: 2px; }
+  tr.best.bestval .mname::after { content: "CHEAPEST + BEST VALUE"; }
   .cutline { font-family: "Spline Sans Mono", monospace; font-size: 11px; color: var(--claret);
     margin-top: 10px; }
   .tok { display: none; gap: 10px; align-items: center; }
@@ -144,8 +161,8 @@
     background: var(--wheat); border-radius: 1px; z-index: 0; }
   td.barcell span { position: relative; z-index: 1; }
   tr.best td.jobs { color: var(--teal); }
-  tr.best .mname::after { content: "BEST VALUE"; font: 600 9px "Spline Sans Mono", monospace;
-    letter-spacing: 0.1em; color: var(--paper); background: var(--teal);
+  tr.best .mname::after { content: "CHEAPEST"; font: 600 9px "Spline Sans Mono", monospace;
+    letter-spacing: 0.1em; color: var(--ink); background: var(--wheat);
     padding: 2px 6px; margin-left: 8px; vertical-align: 2px; border-radius: 2px; }
   .watch { background: none; border: 1px solid var(--wheat-2); border-radius: 2px;
     font: 500 10px "Spline Sans Mono", monospace; letter-spacing: 0.08em;
@@ -225,7 +242,6 @@
     <nav class="mnav">
       <a href="/app.html" class="on">Price sheet</a>
       <a href="/hosts.html">Same model, every host</a>
-      <a href="/impact.html">Loop impact</a>
     </nav>
     <div class="status" id="statusline">PRICES VERIFIED <b>22 JUL 2026</b> · 22 MODELS<br/>DAILY AUTO-REFRESH ACTIVE</div>
   </header>
@@ -262,6 +278,16 @@
 
   <div class="assume" id="assume"></div>
   <div class="pnote" id="pnote" hidden></div>
+
+  <div class="legend">
+    <div><b>CAPABILITY</b>Artificial Analysis Intelligence Index — an independent third-party
+      score out of ~61, tracked 28 Jul. Higher is more generally capable. It rates the model,
+      not your task.</div>
+    <div><b>VALUE</b>Capability per euro of job cost, rated against the best option currently
+      shown. A long bar means you get more capability per euro — not that it is cheapest.</div>
+    <div><b>CHEAPEST vs BEST VALUE</b>Different answers. Cheapest is the lowest cost per job.
+      Best value is the most capability per euro, among models that have a published score.</div>
+  </div>
 
   <div class="ledger-wrap">
     <table aria-label="Model ledger">
@@ -310,8 +336,9 @@
     (Anthropic Economic Index, OpenRouter State of AI, OpenAI usage report); each task
     states its assumptions above the ledger, and token footprints are estimates until the
     benchmark suite replaces them with measured medians. <b>Capability.</b> The CAPABILITY column is the Artificial Analysis Intelligence
-    Index (v4.1), tracked 28 Jul 2026 — an independent third-party score, not ours. VALUE is
-    that score divided by the cost of one job, so higher is more capability per euro. Models
+    Index (v4.1), tracked 28 Jul 2026 — an independent third-party score, not ours. VALUE is capability
+    per euro of job cost, shown as a rating against the best option currently in view rather
+    than a raw ratio — the underlying figure (capability points per $1) is on hover. Models
     with no published score show "no score" and are excluded when a capability floor is set;
     we never invent a number to fill a gap. The index is general intelligence, not your task:
     a model that clears the bar overall can still fail your specific workload, which is why
@@ -463,6 +490,25 @@ function priceView(m) {
 }
 const kf = s => esc(s).replace(/≈[\d,]+ tokens (in|out)/g, x => '<span class="kf">' + x + "</span>");
 
+// Capability tiers: the AA index is meaningless without its scale, so the interface
+// carries the scale rather than expecting the reader to remember it (Norman: knowledge
+// in the world). Bands are stated in the legend, not hidden in a footnote.
+const IQ_MAX = 61;
+function iqTier(s) {
+  if (s >= 57) return "FRONTIER";
+  if (s >= 50) return "NEAR-FRONTIER";
+  if (s >= 40) return "MID";
+  return "BASIC";
+}
+// Value is shown as a rating relative to the best option in view, not as a raw ratio.
+// A number like "0.7" is not actionable; "Strong, 3rd best value here" is.
+function valueWord(r) {
+  if (r >= 0.75) return "EXCELLENT";
+  if (r >= 0.40) return "STRONG";
+  if (r >= 0.15) return "FAIR";
+  return "WEAK";
+}
+
 function shortDate(iso) {
   if (!iso) return "";
   const d = new Date(iso);
@@ -602,9 +648,13 @@ function render() {
       <td class="num c-in" data-label="IN $/M">${m.pv.inEff.toFixed(2)}${alt("in", m.pv.inAlt?.toFixed(2))}</td>
       <td class="num c-out" data-label="OUT $/M">${m.pv.outEff.toFixed(2)}${alt("out", m.pv.outAlt?.toFixed(2))}</td>
       <td class="num c-verb" data-label="LENGTH ×">${normalize ? m.verbosity.toFixed(2) : "—"}</td>
-      <td class="num iq c-iq" data-label="CAPABILITY">${m.iq != null ? m.iq : '<span class="noscore">no score</span>'}</td>
+      <td class="num iq c-iq" data-label="CAPABILITY">${m.iq != null
+        ? `<span class="score">${m.iq}</span><span class="of">/${IQ_MAX}</span><span class="tier">${iqTier(m.iq)}</span>`
+        : '<span class="noscore">not scored</span>'}</td>
       <td class="num cpj c-cpj" data-label="COST / JOB">${money(m.cpt)}${alt("cpj", money(m.cptAlt ?? 0))}</td>
-      <td class="num val c-val" data-label="VALUE">${m.value != null ? m.value.toFixed(1) : "—"}</td>
+      <td class="val c-val" data-label="VALUE">${m.value != null && bestVal
+        ? `<span class="vbar" title="${(m.iq / m.cpt).toFixed(0)} capability points per $1 of job cost"><i style="width:${Math.max(3, (m.value / bestVal.value) * 100).toFixed(0)}%"></i></span><span class="vword">${valueWord(m.value / bestVal.value)}</span>`
+        : '<span class="vnone">—</span>'}</td>
       <td class="num jobs barcell c-jobs" data-label="${esc((task.unit + " per " + fmtBudget(budget)).toUpperCase())}">
         <i class="bar" style="width:${Math.max(1.5, m.count / maxCount * 86)}%"></i><span>${big(m.count)}${alt("jobs", big(Math.floor(budget / (m.cptAlt || 1))))}</span></td>
       <td class="c-spark">${m.trend.length < 3
