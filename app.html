@@ -19,7 +19,12 @@
   html { -webkit-text-size-adjust: 100%; }
   body { margin: 0; background: var(--paper); color: var(--ink);
     font-family: "Source Sans 3", system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  /* the ledger is the workhorse: let it break out of the prose column.
+     px break-out rather than 100vw — vw includes the scrollbar and causes jitter. */
+  .ledger-wrap { margin-left: -70px; margin-right: -70px; }
+  .ledger-inner { margin: 0 auto; }
+  @media (max-width: 1400px) { .ledger-wrap { margin-left: 0; margin-right: 0; } }
   a { color: var(--teal); }
   .num { font-family: "Spline Sans Mono", monospace; font-variant-numeric: tabular-nums; }
 
@@ -90,14 +95,15 @@
   td.iq .noscore { color: var(--ink-3); font-size: 11px; }
   td.iq .score { font-family: "Spline Sans Mono", monospace; font-size: 15px; font-weight: 600; }
   td.iq .of { color: var(--ink-3); font-size: 10px; }
-  td.iq .tier { display: block; font-family: "Spline Sans Mono", monospace; font-size: 9px;
-    letter-spacing: 0.08em; color: var(--ink-2); margin-top: 1px; }
+  td.iq .tier { font-family: "Spline Sans Mono", monospace; font-size: 8.5px;
+    letter-spacing: 0.06em; color: var(--ink-3); margin-left: 5px; }
   td.val { font-family: "Source Sans 3", sans-serif; }
-  td.val .vbar { display: block; height: 5px; background: var(--wheat-2); border-radius: 99px;
-    overflow: hidden; margin-bottom: 3px; }
+  td.val { white-space: nowrap; }
+  td.val .vbar { display: inline-block; width: 46px; height: 5px; background: var(--wheat-2);
+    border-radius: 99px; overflow: hidden; vertical-align: 1px; }
   td.val .vbar i { display: block; height: 100%; background: var(--teal); }
-  td.val .vword { font-family: "Spline Sans Mono", monospace; font-size: 9.5px;
-    letter-spacing: 0.08em; color: var(--ink-2); }
+  td.val .vword { font-family: "Spline Sans Mono", monospace; font-size: 9px;
+    letter-spacing: 0.06em; color: var(--ink-2); margin-left: 6px; }
   td.val .vnone { color: var(--ink-3); font-size: 11px; }
   .legend { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-top: 20px; padding: 12px 14px;
     background: var(--raised); border: 1px solid var(--wheat-2); border-radius: 4px;
@@ -138,10 +144,18 @@
 
   /* ledger */
   .ledger-wrap { margin-top: 26px; overflow-x: auto; }
-  table { border-collapse: collapse; width: 100%; min-width: 900px; }
+  table { border-collapse: collapse; width: 100%; min-width: 940px; table-layout: fixed; }
+  col.c-model-w { width: 27%; }
+  col.c-num-w   { width: 8.5%; }
+  col.c-cap-w   { width: 11%; }
+  col.c-jobs-w  { width: 13%; }
+  col.c-val-w   { width: 12%; }
+  col.c-trend-w { width: 12%; }
+  col.c-watch-w { width: 8%; }
   thead th { font-family: "Spline Sans Mono", monospace; font-weight: 500; font-size: 10px;
-    letter-spacing: 0.1em; color: var(--ink-2); text-align: right; padding: 0 12px 8px;
-    border-bottom: 1.5px solid var(--ink); white-space: nowrap; }
+    letter-spacing: 0.1em; color: var(--ink-2); text-align: right; padding: 8px 10px;
+    border-bottom: 1.5px solid var(--ink); white-space: nowrap;
+    position: sticky; top: 0; background: var(--paper); z-index: 5; }
   thead th.l { text-align: left; }
   thead th.sort { cursor: pointer; }
   thead th.sort:hover { color: var(--ink); }
@@ -149,13 +163,13 @@
   thead th.sort.active { color: var(--ink); border-bottom: 2.5px solid var(--teal); }
   thead th.sort.active .dir { color: var(--teal); }
   thead th.sort:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
-  tbody td { padding: 10px 12px; border-bottom: 1px solid var(--wheat-2);
+  tbody td { padding: 6px 10px; border-bottom: 1px solid var(--wheat-2);
     text-align: right; vertical-align: middle; }
   tbody td.l { text-align: left; }
   tbody tr:hover { background: var(--raised); }
-  .mname { font-weight: 600; font-size: 14.5px; }
-  .msub { font-family: "Spline Sans Mono", monospace; font-size: 10px; letter-spacing: 0.08em;
-    color: var(--ink-2); margin-top: 1px; }
+  .mname { font-weight: 600; font-size: 14px; line-height: 1.25; }
+  .msub { font-family: "Spline Sans Mono", monospace; font-size: 9.5px; letter-spacing: 0.05em;
+    color: var(--ink-2); margin-top: 0; line-height: 1.3; }
   .msub a { color: var(--teal); text-decoration: underline dotted; text-underline-offset: 2px; }
   td.num { font-family: "Spline Sans Mono", monospace; font-size: 13px; }
   td.cpj { font-size: 15px; font-weight: 600; }
@@ -174,8 +188,9 @@
   .watch:hover { border-color: var(--ink); color: var(--ink); }
   .watch:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
   .watch.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-  .spark { display: block; width: 110px; height: 26px; margin-left: auto; }
-  .sparkchg { font-family: "Spline Sans Mono", monospace; font-size: 10px; display: block; text-align: right; }
+  .spark { display: inline-block; width: 74px; height: 20px; vertical-align: middle; }
+  .sparkchg { font-family: "Spline Sans Mono", monospace; font-size: 9.5px; margin-left: 6px; white-space: nowrap; }
+  td.c-spark { white-space: nowrap; }
   .sparkchg.dn { color: var(--teal); } .sparkchg.up { color: var(--claret); }
   .sparkchg.new { color: var(--ink-3, #9c948b); letter-spacing: 0.06em; }
   .empty { border: 1px dashed #C9B7A5; background: var(--raised); padding: 26px;
@@ -216,8 +231,10 @@
     .stand { padding-top: 28px; }
     .status { display: none; }
     .filters { gap: 10px 14px; }
-    .ledger-wrap { overflow-x: visible; }
-    table { min-width: 0; }
+    .ledger-wrap { overflow-x: visible; margin-left: 0; margin-right: 0; }
+    table { min-width: 0; table-layout: auto; }
+    colgroup { display: none; }
+    thead th { position: static; }
     thead { display: none; }
     tbody, tr, td { display: block; }
     tr { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px 10px;
@@ -294,7 +311,13 @@
   </div>
 
   <div class="ledger-wrap">
+   <div class="ledger-inner">
     <table aria-label="Model ledger">
+      <colgroup>
+        <col class="c-model-w" /><col class="c-num-w" /><col class="c-num-w" />
+        <col class="c-num-w" /><col class="c-cap-w" /><col class="c-num-w" />
+        <col class="c-jobs-w" /><col class="c-val-w" /><col class="c-trend-w" /><col class="c-watch-w" />
+      </colgroup>
       <thead><tr>
         <th class="l sort" data-key="name" tabindex="0">MODEL <span class="dir">↕</span></th>
         <th class="sort" data-key="inP" tabindex="0">IN $/M <span class="dir">↕</span></th>
@@ -309,6 +332,7 @@
       </tr></thead>
       <tbody id="tbody"></tbody>
     </table>
+   </div>
   </div>
 
   <section class="sect">
