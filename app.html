@@ -124,6 +124,9 @@
   .tok label { font-size: 12px; color: var(--ink-2); }
 
   /* assumptions callout */
+  .hint { font-size: 12.5px; color: var(--ink-2); margin: 10px 0 0; }
+  .hint b { color: var(--ink); font-weight: 600; }
+  .hint .off { color: var(--ink-3); }
   .assume { border: 1px solid var(--wheat-2); border-left: 3px solid var(--claret);
     background: var(--raised); padding: 12px 14px; font-size: 13.5px; margin-top: 14px;
     max-width: 86ch; line-height: 1.55; }
@@ -176,10 +179,12 @@
   .msub { font-family: "Spline Sans Mono", monospace; font-size: 9.5px; letter-spacing: 0.05em;
     color: var(--ink-2); margin-top: 0; line-height: 1.3; }
   .msub a { color: var(--teal); text-decoration: underline dotted; text-underline-offset: 2px; }
-  .legacy { font: 600 8.5px "Spline Sans Mono", monospace; letter-spacing: 0.1em;
-    border: 1px solid var(--ink-3); color: var(--ink-2); border-radius: 2px;
-    padding: 1px 4px; margin-left: 6px; vertical-align: 1px; white-space: nowrap; }
+  .legacy { font: 600 9px "Spline Sans Mono", monospace; letter-spacing: 0.08em;
+    background: #F0E4E9; color: var(--claret); border-radius: 2px;
+    padding: 2px 6px; margin-left: 7px; vertical-align: 1px; white-space: nowrap; }
+  tr.is-legacy { background: #FDFAF7; }
   tr.is-legacy .mname { color: var(--ink-2); }
+  tr.is-legacy:hover { background: var(--raised); }
   td.num { font-family: "Spline Sans Mono", monospace; font-size: 13px; }
   td.cpj { font-size: 15px; font-weight: 600; }
   td.jobs { font-size: 17px; font-weight: 600; }
@@ -298,13 +303,19 @@
     </span>
     <label class="check"><input type="checkbox" id="norm" checked /> Adjust for answer length</label>
     <label class="check" title="Rankings and costs use list prices, ignoring temporary promos — for budgeting and commitments"><input type="checkbox" id="std" /> Plan with standard prices</label>
-    <span class="flabel">MIN CAPABILITY</span>
+    <span class="flabel" title="Hide models scoring below this on the independent capability index">MIN QUALITY</span>
     <span class="slider">
       <input type="range" id="minIQ" min="0" max="61" step="1" value="0" aria-label="Minimum capability score" />
-      <span class="v" id="minIQval">any</span>
+      <span class="v" id="minIQval">off</span>
+    </span>
+    <span class="flabel">STATUS</span>
+    <span class="bgroup" id="statusFilter" role="group" aria-label="Model status">
+      <button data-s="all" class="on">All</button><button data-s="current">Current</button><button data-s="legacy">Legacy</button>
     </span>
     <label class="check"><input type="checkbox" id="wl" /> Watchlist only <span id="wlcount" class="num"></span></label>
   </div>
+
+  <p class="hint" id="hint"></p>
 
   <div class="assume" id="assume"></div>
   <div class="pnote" id="pnote" hidden></div>
@@ -317,6 +328,8 @@
       shown. A long bar means you get more capability per euro — not that it is cheapest.</div>
     <div><b>CHEAPEST vs BEST VALUE</b>Different answers. Cheapest is the lowest cost per job.
       Best value is the most capability per euro, among models that have a published score.</div>
+    <div><b>LEGACY</b>The provider has marked the model legacy and will retire it — the date is on the
+      badge where published. Fine for today, risky to build on. Use the STATUS filter to hide them.</div>
   </div>
 
   <div class="ledger-wrap">
@@ -415,7 +428,7 @@ const MODELS = [
   { id:"gpt56ter", name:"GPT-5.6 Terra",         provider:"OpenAI",    inP:2.0,  outP:12.0, verbosity:1.05, iq:55, trend:[1.0] },
   { id:"gpt54",    name:"GPT-5.4",               provider:"OpenAI",    inP:2.5,  outP:15.0, verbosity:1.05, iq:null, trend:[1.6,1.6,1.2,1.2,1.1,1.0,1.0] },
   { id:"son5",     name:"Claude Sonnet 5",       provider:"Anthropic", inP:3.0,  outP:15.0, verbosity:1.1, iq:null,  trend:[1.0,1.0] },
-  { id:"son46",    name:"Claude Sonnet 4.6",     provider:"Anthropic", inP:3.0,  outP:15.0, verbosity:1.1, legacy:true, iq:null,  trend:[1.4,1.35,1.3,1.2,1.1,1.05,1.0] },
+  { id:"son46",    name:"Claude Sonnet 4.6",     provider:"Anthropic", inP:3.0,  outP:15.0, verbosity:1.1, legacy:true, retires:null, iq:null,  trend:[1.4,1.35,1.3,1.2,1.1,1.05,1.0] },
   { id:"kimik3",   name:"Kimi K3",               provider:"Moonshot AI", inP:3.0, outP:15.0, verbosity:1.0, iq:57, trend:[1.0] },
   { id:"gem31p",   name:"Gemini 3.1 Pro",        provider:"Google",    inP:2.0,  outP:12.0, verbosity:0.85, iq:null, trend:[1.45,1.4,1.3,1.2,1.1,1.0,1.0] },
   { id:"grok45",   name:"Grok 4.5",              provider:"xAI",       inP:2.0,  outP:6.0,  verbosity:1.0, iq:54,  trend:[1.0] },
@@ -426,10 +439,10 @@ const MODELS = [
   { id:"haiku45",  name:"Claude Haiku 4.5",      provider:"Anthropic", inP:1.0,  outP:5.0,  verbosity:1.0, iq:null,  trend:[1.3,1.3,1.25,1.2,1.1,1.0,1.0] },
   { id:"mm3",      name:"MiniMax M3",            provider:"MiniMax",   inP:0.6,  outP:2.4,  verbosity:0.95, promoIn:0.3, promoOut:1.2, promoEnds:null, iq:null, trend:[2.1,2.1,2.05,2.0,2.0,2.0,1.0] },
   { id:"gem3f",    name:"Gemini 3 Flash",        provider:"Google",    inP:0.5,  outP:3.0,  verbosity:0.8, iq:null,  trend:[1.5,1.45,1.35,1.25,1.1,1.0,1.0] },
-  { id:"g41mini",  name:"GPT-4.1 Mini",          provider:"OpenAI",    inP:0.4,  outP:1.6,  verbosity:0.95, iq:null, trend:[1.25,1.25,1.2,1.15,1.1,1.0,1.0] },
+  { id:"g41mini",  name:"GPT-4.1 Mini",          provider:"OpenAI",    inP:0.4,  outP:1.6,  verbosity:0.95, legacy:true, retires:"2026-10-23", iq:null, trend:[1.25,1.25,1.2,1.15,1.1,1.0,1.0] },
   { id:"dsv4pro",  name:"DeepSeek V4 Pro",        provider:"DeepSeek",  inP:0.435, outP:0.87, verbosity:0.95, iq:null, trend:[1.0] },
   { id:"dsv4f",    name:"DeepSeek V4 Flash",     provider:"DeepSeek",  inP:0.14, outP:0.28, verbosity:0.9, iq:null,  trend:[2.6,2.3,2.0,1.7,1.4,1.15,1.0] },
-  { id:"g41nano",  name:"GPT-4.1 Nano",          provider:"OpenAI",    inP:0.1,  outP:0.4,  verbosity:0.9, iq:null,  trend:[1.2,1.2,1.15,1.1,1.05,1.0,1.0] },
+  { id:"g41nano",  name:"GPT-4.1 Nano",          provider:"OpenAI",    inP:0.1,  outP:0.4,  verbosity:0.9, legacy:true, retires:"2026-10-23", iq:null,  trend:[1.2,1.2,1.15,1.1,1.05,1.0,1.0] },
   { id:"gem31fl",  name:"Gemini 3.1 Flash-Lite", provider:"Google",    inP:0.1,  outP:0.4,  verbosity:0.75, iq:null, trend:[1.1,1.05,1.0] },
 ];
 
@@ -498,6 +511,7 @@ let DATA_AS_OF = "2026-08-03";
 let budget = 1, customBudget = false, taskId = "bugfix", normalize = true, wlOnly = false;
 let planStandard = false;
 let minIQ = 0;
+let statusFilter = "all";   // all | current | legacy
 let customIn = 5000, customOut = 800;
 let sortKey = "cpt", sortDir = 1;
 const watch = new Set(); // session-only watchlist
@@ -612,7 +626,8 @@ function render() {
   const dear  = all.reduce((a,b) => a.cpt >= b.cpt ? a : b);
   const promoQualifier = (cheap.pv.usePromo && cheap.cptAlt)
     ? ` <span class="hlsub">(launch promo — ${big(Math.floor(budget / cheap.cptAlt))} at standard price)</span>` : "";
-  const qualified = all.filter(m => m.iq != null && m.iq >= minIQ);
+  const scored = all.filter(m => m.iq != null);
+  const qualified = scored.filter(m => m.iq >= minIQ);
   if (minIQ > 0 && qualified.length) {
     const best = qualified.reduce((a,b) => a.cpt <= b.cpt ? a : b);
     document.getElementById("headline").innerHTML =
@@ -646,9 +661,22 @@ function render() {
   });
 
   // FL-01 capability floor: "cheapest model that clears the quality bar"
-  const scored = all.filter(m => m.iq != null);
   if (minIQ > 0) rows = rows.filter(m => m.iq != null && m.iq >= minIQ);
-  document.getElementById("minIQval").textContent = minIQ > 0 ? String(minIQ) : "any";
+  if (statusFilter === "current") rows = rows.filter(m => !m.legacy);
+  if (statusFilter === "legacy")  rows = rows.filter(m => m.legacy);
+  document.getElementById("minIQval").textContent = minIQ > 0 ? String(minIQ) : "off";
+
+  // Tell the user what the controls are doing — an inactive filter should say so,
+  // and an active one should show its effect rather than leaving them to count rows.
+  const legacyCount = all.filter(m => m.legacy).length;
+  const hint = [];
+  hint.push(minIQ > 0
+    ? `<b>Min quality ${minIQ}</b> — showing the ${qualified.length} of ${scored.length} scored models that clear the bar; ${all.length - scored.length} unscored models hidden.`
+    : `<span class="off">Min quality is off.</span> Drag it to hide models below a quality score and answer “what’s the cheapest model good enough for this job?”`);
+  if (statusFilter === "current") hint.push(`Legacy models hidden (${legacyCount}).`);
+  else if (statusFilter === "legacy") hint.push(`Showing only the ${legacyCount} models their provider has marked legacy.`);
+  else if (legacyCount) hint.push(`<b>${legacyCount}</b> models are marked legacy by their provider.`);
+  document.getElementById("hint").innerHTML = hint.join(" ");
 
   // watchlist filter + empty state (S8)
   if (wlOnly) rows = rows.filter(m => watch.has(m.id));
@@ -656,9 +684,10 @@ function render() {
 
   if (!rows.length) {
     document.getElementById("tbody").innerHTML = `
-      <tr style="display:block"><td colspan="8" style="display:block">
-        <div class="empty">Your watchlist is empty.<br/>
-        Untick <b>WATCHLIST ONLY</b>, then press <b>WATCH</b> on any row to pin it here.</div>
+      <tr style="display:block"><td colspan="10" style="display:block">
+        <div class="empty">${wlOnly && !watch.size
+          ? 'Your watchlist is empty.<br/>Untick <b>WATCHLIST ONLY</b>, then press <b>WATCH</b> on any row to pin it here.'
+          : 'No models match these filters.<br/>Lower <b>MIN QUALITY</b> or set <b>STATUS</b> back to <b>All</b>.'}</div>
       </td></tr>`;
     return;
   }
@@ -677,7 +706,7 @@ function render() {
     return `
     <tr class="${m.id === cheap.id ? "best" : ""}${bestVal && m.id === bestVal.id ? " bestval" : ""}${m.legacy ? " is-legacy" : ""}">
       <td class="l c-model">
-        <div class="mname">${esc(m.name)}${m.legacy ? '<span class="legacy" title="Superseded by a newer model — provider may retire it">LEGACY</span>' : ""}${m.pv.hasPromo ? `<span class="pbadge${m.pv.usePromo ? "" : " off"}">PROMO</span>` : ""}</div>
+        <div class="mname">${esc(m.name)}${m.legacy ? `<span class="legacy" title="The provider has marked this model legacy — plan a migration before it is retired">LEGACY${m.retires ? " · RETIRES " + shortDate(m.retires).toUpperCase() : ""}</span>` : ""}${m.pv.hasPromo ? `<span class="pbadge${m.pv.usePromo ? "" : " off"}">PROMO</span>` : ""}</div>
         <div class="msub">${esc(m.provider.toUpperCase())} ·
           <a class="${m.verification === "verified" ? "" : "tracked"}" href="${esc(src)}" target="_blank" rel="noopener"
              title="${esc(src)} — ${esc(m.source || "provider pricing page")}">${esc(badgeText(m))} · SOURCE ↗</a>${
@@ -748,6 +777,13 @@ document.getElementById("tout").addEventListener("input", e => { customOut = Mat
 document.getElementById("norm").addEventListener("change", e => { normalize = e.target.checked; render(); });
 document.getElementById("std").addEventListener("change", e => { planStandard = e.target.checked; render(); });
 document.getElementById("minIQ").addEventListener("input", e => { minIQ = +e.target.value; render(); });
+document.querySelectorAll("#statusFilter button").forEach(b => {
+  b.addEventListener("click", () => {
+    statusFilter = b.dataset.s;
+    document.querySelectorAll("#statusFilter button").forEach(x => x.classList.toggle("on", x === b));
+    render();
+  });
+});
 document.getElementById("wl").addEventListener("change", e => { wlOnly = e.target.checked; render(); });
 document.querySelectorAll("thead th.sort").forEach(th => {
   const go = () => {
@@ -783,6 +819,8 @@ renderStatic();
         if (u.source) m.source = u.source;
         if (u.iq !== undefined) m.iq = u.iq;
         if (u.legacy !== undefined) m.legacy = u.legacy;
+        if (u.retires !== undefined) m.retires = u.retires;
+        if (u.active_until !== undefined) m.active_until = u.active_until;
         if (u.cachedIn !== undefined) m.cachedIn = u.cachedIn;
       }
     });

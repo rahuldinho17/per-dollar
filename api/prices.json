@@ -46,7 +46,8 @@
       "output_per_mtok": 25.0,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "active_until": "2027-05-28"
     },
     {
       "id": "gpt56ter",
@@ -86,7 +87,8 @@
       "output_per_mtok": 15.0,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "legacy": true
     },
     {
       "id": "kimik3",
@@ -201,7 +203,9 @@
       "output_per_mtok": 1.6,
       "verification": "verified",
       "verified_at": "2026-07-22",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "legacy": true,
+      "retires": "2026-10-23"
     },
     {
       "id": "dsv4f",
@@ -221,7 +225,9 @@
       "output_per_mtok": 0.4,
       "verification": "verified",
       "verified_at": "2026-07-22",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "legacy": true,
+      "retires": "2026-10-23"
     },
     {
       "id": "gem31fl",

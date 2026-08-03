@@ -44,7 +44,9 @@
       "outP": 25.0,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-08-03"
+      "verified_at": "2026-08-03",
+      "legacy": false,
+      "active_until": "2027-05-28"
     },
     {
       "id": "gpt56ter",
@@ -178,7 +180,9 @@
       "outP": 1.6,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-22",
+      "legacy": true,
+      "retires": "2026-10-23"
     },
     {
       "id": "dsv4f",
@@ -195,7 +199,9 @@
       "outP": 0.4,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-22",
+      "legacy": true,
+      "retires": "2026-10-23"
     },
     {
       "id": "gem31fl",
