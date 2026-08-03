@@ -54,7 +54,7 @@ const DISPLAY = {
   glm52:["GLM-5.2","Z.AI"], haiku45:["Claude Haiku 4.5","Anthropic"],
   mm3:["MiniMax M3","MiniMax"], gem3f:["Gemini 3 Flash","Google"],
   g41mini:["GPT-4.1 Mini","OpenAI"], dsv4f:["DeepSeek V4 Flash","DeepSeek"],
-  g41nano:["GPT-4.1 Nano","OpenAI"], gem31fl:["Gemini 3.1 Flash-Lite","Google"],
+  g41nano:["GPT-4.1 Nano","OpenAI"], dsv4pro:["DeepSeek V4 Pro","DeepSeek"], opus5:["Claude Opus 5","Anthropic"], gem31fl:["Gemini 3.1 Flash-Lite","Google"],
 };
 
 function writePublicFeed(prices, ROOT) {

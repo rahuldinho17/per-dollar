@@ -20,5 +20,6 @@
   "inkling": "thinkingmachines/inkling",
   "glm52": "z-ai/glm-5.2",
   "mm3": "minimax/minimax-m3",
-  "dsv4f": "deepseek/deepseek-v4-flash"
+  "dsv4f": "deepseek/deepseek-v4-flash",
+  "dsv4pro": "deepseek/deepseek-v4-pro"
 }

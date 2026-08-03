@@ -1,24 +1,24 @@
 {
   "as_of": "2026-07-29",
   "as_of_display": "29 JUL 2026",
-  "note": "Checked 2026-07-29. Twelve models confirmed against first-party pricing pages; eleven compiled from published provider comparisons and marked 'tracked' pending first-party confirmation. Run scripts/verify.mjs to re-confirm and stamp.",
+  "note": "Verification sweep 2026-07-29: 13 models confirmed directly against provider pricing pages. GPT-5.6 Terra and Luna corrected (Luna was 5x too high). DeepSeek V4 Pro added. Remaining models still marked 'tracked' pending first-party confirmation.",
   "models": [
     {
       "id": "opus5",
       "inP": 5.0,
       "outP": 25.0,
-      "verification": "tracked",
-      "source": "published provider comparison",
-      "verified_at": null,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-29",
       "tracked_at": "2026-07-29"
     },
     {
       "id": "gpt56sol",
       "inP": 5.0,
       "outP": 30.0,
-      "verification": "tracked",
-      "source": "published provider comparison",
-      "verified_at": null,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-29",
       "tracked_at": "2026-07-22"
     },
     {
@@ -44,16 +44,17 @@
       "outP": 25.0,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-29"
     },
     {
       "id": "gpt56ter",
-      "inP": 2.5,
-      "outP": 15.0,
-      "verification": "tracked",
-      "source": "published provider comparison",
-      "verified_at": null,
-      "tracked_at": "2026-07-22"
+      "inP": 2.0,
+      "outP": 12.0,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-29",
+      "tracked_at": "2026-07-22",
+      "cachedIn": 0.2
     },
     {
       "id": "gpt54",
@@ -67,9 +68,9 @@
       "id": "son5",
       "inP": 3.0,
       "outP": 15.0,
-      "verification": "tracked",
-      "source": "published provider comparison",
-      "verified_at": null,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-29",
       "tracked_at": "2026-07-22"
     },
     {
@@ -78,7 +79,8 @@
       "outP": 15.0,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-29",
+      "legacy": true
     },
     {
       "id": "kimik3",
@@ -95,15 +97,15 @@
       "outP": 12.0,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-29"
     },
     {
       "id": "grok45",
       "inP": 2.0,
       "outP": 6.0,
-      "verification": "tracked",
-      "source": "published provider comparison",
-      "verified_at": null,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-29",
       "tracked_at": "2026-07-22"
     },
     {
@@ -117,20 +119,21 @@
     },
     {
       "id": "gpt56lun",
-      "inP": 1.0,
-      "outP": 6.0,
-      "verification": "tracked",
-      "source": "published provider comparison",
-      "verified_at": null,
-      "tracked_at": "2026-07-22"
+      "inP": 0.2,
+      "outP": 1.2,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-29",
+      "tracked_at": "2026-07-22",
+      "cachedIn": 0.02
     },
     {
       "id": "gem36f",
       "inP": 1.5,
       "outP": 7.5,
-      "verification": "tracked",
-      "source": "published provider comparison",
-      "verified_at": null,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-29",
       "tracked_at": "2026-07-22"
     },
     {
@@ -148,7 +151,7 @@
       "outP": 5.0,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-29"
     },
     {
       "id": "mm3",
@@ -183,7 +186,8 @@
       "outP": 0.28,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-29",
+      "cachedIn": 0.0028
     },
     {
       "id": "g41nano",
@@ -200,7 +204,17 @@
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-07-22"
+    },
+    {
+      "id": "dsv4pro",
+      "inP": 0.435,
+      "outP": 0.87,
+      "cachedIn": 0.003625,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-07-29"
     }
   ],
-  "last_change": "2026-07-22"
+  "last_change": "2026-07-29",
+  "verified_sweep": "2026-07-29"
 }

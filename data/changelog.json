@@ -81,5 +81,108 @@
     "kind": "new_model",
     "source": "provider-pages",
     "note": "listing added to ledger"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "gpt56ter",
+    "dimension": "inP",
+    "old": 2.5,
+    "new": 2.0,
+    "kind": "correction",
+    "source": "first-party pricing page",
+    "note": "first-party check: was 2.50"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "gpt56ter",
+    "dimension": "outP",
+    "old": 15.0,
+    "new": 12.0,
+    "kind": "correction",
+    "source": "first-party pricing page",
+    "note": "first-party check: was 15.00"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "gpt56lun",
+    "dimension": "inP",
+    "old": 1.0,
+    "new": 0.2,
+    "kind": "correction",
+    "source": "first-party pricing page",
+    "note": "first-party check: was 1.00 (5x too high)"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "gpt56lun",
+    "dimension": "outP",
+    "old": 6.0,
+    "new": 1.2,
+    "kind": "correction",
+    "source": "first-party pricing page",
+    "note": "first-party check: was 6.00 (5x too high)"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "son46",
+    "kind": "status",
+    "source": "first-party pricing page",
+    "note": "marked legacy by provider"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "dsv4pro",
+    "kind": "new_model",
+    "source": "first-party pricing page",
+    "note": "DeepSeek V4 Pro added during verification sweep"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "gpt56sol",
+    "kind": "verified",
+    "source": "human re-verification",
+    "note": "promoted from tracked to verified"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "gpt56ter",
+    "kind": "verified",
+    "source": "human re-verification",
+    "note": "promoted from tracked to verified"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "gpt56lun",
+    "kind": "verified",
+    "source": "human re-verification",
+    "note": "promoted from tracked to verified"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "gem36f",
+    "kind": "verified",
+    "source": "human re-verification",
+    "note": "promoted from tracked to verified"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "grok45",
+    "kind": "verified",
+    "source": "human re-verification",
+    "note": "promoted from tracked to verified"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "son5",
+    "kind": "verified",
+    "source": "human re-verification",
+    "note": "promoted from tracked to verified"
+  },
+  {
+    "date": "2026-07-29",
+    "model": "opus5",
+    "kind": "verified",
+    "source": "human re-verification",
+    "note": "promoted from tracked to verified"
   }
 ]
