@@ -143,3 +143,10 @@ items from the project so far.
   scores where published, a VALUE column (capability per euro of job cost), and a minimum
   capability filter answering "cheapest model that clears the bar". Models with no published
   score show "no score" and are excluded when a floor is set — never given an invented number.
+
+### Date discipline
+
+`verified_at` must always be the date a human actually checked the price. Use
+`node scripts/verify.mjs --stamp ...`, which reads the system date — never write a
+date by hand into `data/prices.json`. A mis-stamped verification date is worse than
+a stale one: it asserts a check that did not happen on that day.

@@ -2,7 +2,7 @@
   "$schema": "https://per-dollar.vercel.app/api/schema.json",
   "feed": "perdollar-prices",
   "version": "1.0",
-  "as_of": "2026-07-29",
+  "as_of": "2026-08-03",
   "currency": "USD",
   "unit": "per_million_tokens",
   "license": "Free to use with attribution to PerDollar (per-dollar.vercel.app).",
@@ -12,18 +12,18 @@
       "id": "gpt56sol",
       "name": "GPT-5.6 Sol",
       "provider": "OpenAI",
-      "input_per_mtok": 5,
-      "output_per_mtok": 30,
-      "verification": "tracked",
-      "verified_at": null,
-      "source": "published provider comparison"
+      "input_per_mtok": 5.0,
+      "output_per_mtok": 30.0,
+      "verification": "verified",
+      "verified_at": "2026-08-03",
+      "source": "first-party pricing page"
     },
     {
       "id": "fable5",
       "name": "Claude Fable 5",
       "provider": "Anthropic",
-      "input_per_mtok": 10,
-      "output_per_mtok": 50,
+      "input_per_mtok": 10.0,
+      "output_per_mtok": 50.0,
       "verification": "tracked",
       "verified_at": null,
       "source": "published provider comparison"
@@ -32,8 +32,8 @@
       "id": "gpt55",
       "name": "GPT-5.5",
       "provider": "OpenAI",
-      "input_per_mtok": 5,
-      "output_per_mtok": 30,
+      "input_per_mtok": 5.0,
+      "output_per_mtok": 30.0,
       "verification": "verified",
       "verified_at": "2026-07-22",
       "source": "first-party pricing page"
@@ -42,28 +42,28 @@
       "id": "opus48",
       "name": "Claude Opus 4.8",
       "provider": "Anthropic",
-      "input_per_mtok": 5,
-      "output_per_mtok": 25,
+      "input_per_mtok": 5.0,
+      "output_per_mtok": 25.0,
       "verification": "verified",
-      "verified_at": "2026-07-22",
+      "verified_at": "2026-08-03",
       "source": "first-party pricing page"
     },
     {
       "id": "gpt56ter",
       "name": "GPT-5.6 Terra",
       "provider": "OpenAI",
-      "input_per_mtok": 2.5,
-      "output_per_mtok": 15,
-      "verification": "tracked",
-      "verified_at": null,
-      "source": "published provider comparison"
+      "input_per_mtok": 2.0,
+      "output_per_mtok": 12.0,
+      "verification": "verified",
+      "verified_at": "2026-08-03",
+      "source": "first-party pricing page"
     },
     {
       "id": "gpt54",
       "name": "GPT-5.4",
       "provider": "OpenAI",
       "input_per_mtok": 2.5,
-      "output_per_mtok": 15,
+      "output_per_mtok": 15.0,
       "verification": "verified",
       "verified_at": "2026-07-22",
       "source": "first-party pricing page"
@@ -72,28 +72,28 @@
       "id": "son5",
       "name": "Claude Sonnet 5",
       "provider": "Anthropic",
-      "input_per_mtok": 3,
-      "output_per_mtok": 15,
-      "verification": "tracked",
-      "verified_at": null,
-      "source": "published provider comparison"
+      "input_per_mtok": 3.0,
+      "output_per_mtok": 15.0,
+      "verification": "verified",
+      "verified_at": "2026-08-03",
+      "source": "first-party pricing page"
     },
     {
       "id": "son46",
       "name": "Claude Sonnet 4.6",
       "provider": "Anthropic",
-      "input_per_mtok": 3,
-      "output_per_mtok": 15,
+      "input_per_mtok": 3.0,
+      "output_per_mtok": 15.0,
       "verification": "verified",
-      "verified_at": "2026-07-22",
+      "verified_at": "2026-08-03",
       "source": "first-party pricing page"
     },
     {
       "id": "kimik3",
       "name": "Kimi K3",
       "provider": "Moonshot AI",
-      "input_per_mtok": 3,
-      "output_per_mtok": 15,
+      "input_per_mtok": 3.0,
+      "output_per_mtok": 15.0,
       "verification": "tracked",
       "verified_at": null,
       "source": "published provider comparison"
@@ -102,21 +102,21 @@
       "id": "gem31p",
       "name": "Gemini 3.1 Pro",
       "provider": "Google",
-      "input_per_mtok": 2,
-      "output_per_mtok": 12,
+      "input_per_mtok": 2.0,
+      "output_per_mtok": 12.0,
       "verification": "verified",
-      "verified_at": "2026-07-22",
+      "verified_at": "2026-08-03",
       "source": "first-party pricing page"
     },
     {
       "id": "grok45",
       "name": "Grok 4.5",
       "provider": "xAI",
-      "input_per_mtok": 2,
-      "output_per_mtok": 6,
-      "verification": "tracked",
-      "verified_at": null,
-      "source": "published provider comparison"
+      "input_per_mtok": 2.0,
+      "output_per_mtok": 6.0,
+      "verification": "verified",
+      "verified_at": "2026-08-03",
+      "source": "first-party pricing page"
     },
     {
       "id": "inkling",
@@ -132,11 +132,11 @@
       "id": "gpt56lun",
       "name": "GPT-5.6 Luna",
       "provider": "OpenAI",
-      "input_per_mtok": 1,
-      "output_per_mtok": 6,
-      "verification": "tracked",
-      "verified_at": null,
-      "source": "published provider comparison"
+      "input_per_mtok": 0.2,
+      "output_per_mtok": 1.2,
+      "verification": "verified",
+      "verified_at": "2026-08-03",
+      "source": "first-party pricing page"
     },
     {
       "id": "gem36f",
@@ -144,16 +144,16 @@
       "provider": "Google",
       "input_per_mtok": 1.5,
       "output_per_mtok": 7.5,
-      "verification": "tracked",
-      "verified_at": null,
-      "source": "published provider comparison"
+      "verification": "verified",
+      "verified_at": "2026-08-03",
+      "source": "first-party pricing page"
     },
     {
       "id": "glm52",
       "name": "GLM-5.2",
       "provider": "Z.AI",
       "input_per_mtok": 0.94,
-      "output_per_mtok": 3,
+      "output_per_mtok": 3.0,
       "verification": "tracked",
       "verified_at": null,
       "source": "published provider comparison"
@@ -162,10 +162,10 @@
       "id": "haiku45",
       "name": "Claude Haiku 4.5",
       "provider": "Anthropic",
-      "input_per_mtok": 1,
-      "output_per_mtok": 5,
+      "input_per_mtok": 1.0,
+      "output_per_mtok": 5.0,
       "verification": "verified",
-      "verified_at": "2026-07-22",
+      "verified_at": "2026-08-03",
       "source": "first-party pricing page"
     },
     {
@@ -188,7 +188,7 @@
       "name": "Gemini 3 Flash",
       "provider": "Google",
       "input_per_mtok": 0.5,
-      "output_per_mtok": 3,
+      "output_per_mtok": 3.0,
       "verification": "verified",
       "verified_at": "2026-07-22",
       "source": "first-party pricing page"
@@ -210,7 +210,7 @@
       "input_per_mtok": 0.14,
       "output_per_mtok": 0.28,
       "verification": "verified",
-      "verified_at": "2026-07-22",
+      "verified_at": "2026-08-03",
       "source": "first-party pricing page"
     },
     {
@@ -232,7 +232,27 @@
       "verification": "verified",
       "verified_at": "2026-07-22",
       "source": "first-party pricing page"
+    },
+    {
+      "id": "opus5",
+      "name": "Claude Opus 5",
+      "provider": "Anthropic",
+      "input_per_mtok": 5.0,
+      "output_per_mtok": 25.0,
+      "verification": "verified",
+      "verified_at": "2026-08-03",
+      "source": "first-party pricing page"
+    },
+    {
+      "id": "dsv4pro",
+      "name": "DeepSeek V4 Pro",
+      "provider": "DeepSeek",
+      "input_per_mtok": 0.435,
+      "output_per_mtok": 0.87,
+      "verification": "verified",
+      "verified_at": "2026-08-03",
+      "source": "first-party pricing page"
     }
   ],
-  "last_change": "2026-07-22"
+  "last_change": "2026-08-03"
 }
