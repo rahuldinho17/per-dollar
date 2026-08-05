@@ -289,11 +289,14 @@
   </section>
 
   <div class="filters">
-    <span class="flabel">BUDGET</span>
-    <span class="bgroup" id="budgets" role="group" aria-label="Budget presets"></span>
+    <span class="bgroup" id="modeGroup" role="group" aria-label="View mode">
+      <button data-m="monthly" class="on">Monthly cost</button><button data-m="budget">Jobs per budget</button>
+    </span>
+    <span class="flabel" id="qtyLabel">JOBS / MONTH</span>
+    <span class="bgroup" id="budgets" role="group" aria-label="Quantity presets"></span>
     <span class="cbud"><span class="flabel">OR</span>
-      <span class="num" style="font-size:13px">$</span>
-      <input type="number" id="cb" min="0.01" step="1" placeholder="250" aria-label="Custom budget in dollars" />
+      <span class="num" style="font-size:13px" id="cbPrefix"></span>
+      <input type="number" id="cb" min="1" step="1" placeholder="500" aria-label="Custom quantity" />
     </span>
     <span class="flabel">TASK</span>
     <select id="task" aria-label="Task"></select>
@@ -303,7 +306,7 @@
     </span>
     <label class="check"><input type="checkbox" id="norm" checked /> Adjust for answer length</label>
     <label class="check" title="Rankings and costs use list prices, ignoring temporary promos — for budgeting and commitments"><input type="checkbox" id="std" /> Plan with standard prices</label>
-    <span class="flabel" title="Hide models scoring below this on the independent capability index">MIN QUALITY</span>
+    <span class="flabel" title="Hide models scoring below this on the independent capability index">MIN CAPABILITY</span>
     <span class="slider">
       <input type="range" id="minIQ" min="0" max="61" step="1" value="0" aria-label="Minimum capability score" />
       <span class="v" id="minIQval">off</span>
@@ -321,6 +324,9 @@
   <div class="pnote" id="pnote" hidden></div>
 
   <div class="legend">
+    <div><b>COST / MONTH</b>Your monthly volume × the cost of one job. Switch to
+      <i>Jobs per budget</i> to ask it the other way round. Volumes default to a mid-size
+      engineering org and should be replaced with your own.</div>
     <div><b>CAPABILITY</b>Artificial Analysis Intelligence Index — an independent third-party
       score out of ~61, tracked 3 Aug. Higher is more generally capable. It rates the model,
       not your task.</div>
@@ -393,7 +399,12 @@
     we never invent a number to fill a gap. The index is general intelligence, not your task:
     a model that clears the bar overall can still fail your specific workload, which is why
     every recommendation is validated on a sample before you switch. For custom tasks:
-    1 token ≈ ¾ of an English word; 100 lines of code ≈ 900 tokens. Promotional
+    1 token ≈ ¾ of an English word; 100 lines of code ≈ 900 tokens. <b>Monthly cost</b>
+    multiplies your stated volume by the cost of one job; default volumes are illustrative
+    figures for a mid-size engineering org and should be replaced with your own. Note the
+    scope: this prices the work sent to a model, not whether the work succeeded — a bug that
+    takes three attempts costs three times as much here, and completion status lives in your
+    issue tracker, not in token usage. Promotional
     prices are shown alongside standard list prices, never in place of them;
     rankings use the effective (promo) price by default because that is what
     this month's invoice will say, and the "plan with standard prices" toggle
@@ -490,6 +501,15 @@ const TASKS = [
 
 const BUDGETS = [0.1, 1, 5, 20, 100];
 
+// Typical monthly volume for a ~30-person engineering org, per task. These make
+// the headline read in real money instead of millions of hypothetical jobs.
+const VOLUMES = {
+  bugfix: 500, codegen: 300, agent: 20000, review: 800, script: 200,
+  support: 50000, catalog: 20000, search: 200000, pdf: 1000,
+  xlate: 5000, email: 2000, rp: 100000, custom: 1000,
+};
+const VOL_PRESETS = [100, 500, 2000, 10000, 50000];
+
 const IDX = {
   budget:   { name:"Budget Bug-Fix Index",   def:"Cheapest verified cost to fix one bug, any model.",
               pts:[0.0048, 0.0041, 0.0035, 0.0028, 0.0022, 0.0018, 0.0015] },
@@ -508,7 +528,9 @@ const REPRICE = [
 ];
 
 let DATA_AS_OF = "2026-08-03";
-let budget = 1, customBudget = false, taskId = "bugfix", normalize = true, wlOnly = false;
+let viewMode = "monthly";      // monthly | budget — monthly is the question a team lead asks
+let volume = VOLUMES.agent;    // jobs per month
+let budget = 1, customBudget = false, taskId = "agent", normalize = true, wlOnly = false;
 let planStandard = false;
 let minIQ = 0;
 let statusFilter = "all";   // all | current | legacy
@@ -593,18 +615,27 @@ function spark(mults, cpt, color) {
 function render() {
   const task = currentTask();
 
-  document.getElementById("budgets").innerHTML = BUDGETS.map(b =>
-    `<button class="${!customBudget && b===budget ? "on" : ""}" data-b="${b}">${fmtBudget(b)}</button>`).join("");
+  const monthly = viewMode === "monthly";
+  document.getElementById("qtyLabel").textContent = monthly ? "JOBS / MONTH" : "BUDGET";
+  document.getElementById("cbPrefix").textContent = monthly ? "" : "$";
+  document.getElementById("cb").placeholder = monthly ? "500" : "250";
+  const presets = monthly ? VOL_PRESETS : BUDGETS;
+  const cur = monthly ? volume : budget;
+  document.getElementById("budgets").innerHTML = presets.map(b =>
+    `<button class="${!customBudget && b===cur ? "on" : ""}" data-b="${b}">${monthly ? big(b) : fmtBudget(b)}</button>`).join("");
   document.querySelectorAll("#budgets button").forEach(el =>
     el.addEventListener("click", () => {
-      budget = parseFloat(el.dataset.b); customBudget = false;
+      const v = parseFloat(el.dataset.b);
+      if (monthly) volume = v; else budget = v;
+      customBudget = false;
       document.getElementById("cb").value = "";
       render();
     }));
 
   document.getElementById("tok").className = "tok" + (taskId === "custom" ? " show" : "");
-  document.getElementById("jobsHead").textContent =
-    (task.unit + " per " + fmtBudget(budget)).toUpperCase();
+  document.getElementById("jobsHead").textContent = monthly
+    ? "COST / MONTH"
+    : (task.unit + " per " + fmtBudget(budget)).toUpperCase();
 
   // assumptions callout (S4)
   document.getElementById("assume").innerHTML = `
@@ -628,14 +659,26 @@ function render() {
     ? ` <span class="hlsub">(launch promo — ${big(Math.floor(budget / cheap.cptAlt))} at standard price)</span>` : "";
   const scored = all.filter(m => m.iq != null);
   const qualified = scored.filter(m => m.iq >= minIQ);
+  const hl = document.getElementById("headline");
   if (minIQ > 0 && qualified.length) {
     const best = qualified.reduce((a,b) => a.cpt <= b.cpt ? a : b);
-    document.getElementById("headline").innerHTML =
-      `Cheapest model scoring <b>${minIQ}+</b> on capability: <span class="ch">${esc(best.name)}</span> — ` +
-      `<b>${big(Math.floor(budget / best.cpt))} ${esc(task.unit)}</b> for ${esc(fmtBudget(budget))}.` +
-      ` <span class="hlsub">${qualified.length} of ${scored.length} scored models clear the bar.</span>`;
+    hl.innerHTML = monthly
+      ? `Cheapest model scoring <b>${minIQ}+</b> on capability: <span class="ch">${esc(best.name)}</span> — ` +
+        `<b>${money(best.cpt * volume)}/month</b> at ${big(volume)} ${esc(task.unit)}.` +
+        ` <span class="hlsub">${qualified.length} of ${scored.length} scored models clear the bar.</span>`
+      : `Cheapest model scoring <b>${minIQ}+</b> on capability: <span class="ch">${esc(best.name)}</span> — ` +
+        `<b>${big(Math.floor(budget / best.cpt))} ${esc(task.unit)}</b> for ${esc(fmtBudget(budget))}.` +
+        ` <span class="hlsub">${qualified.length} of ${scored.length} scored models clear the bar.</span>`;
+  } else if (monthly) {
+    // Lead with the spread in money, because that is the decision: same work,
+    // two bills. "N jobs per dollar" reads as a trivia number at team scale.
+    const lo = cheap.cpt * volume, hi = dear.cpt * volume;
+    hl.innerHTML =
+      `At <b>${big(volume)}</b> ${esc(task.unit)} a month: <span class="ch">${esc(cheap.name)}</span> costs ` +
+      `<b>${money(lo)}</b>, <span class="ex">${esc(dear.name)}</span> costs <b>${money(hi)}</b>.` +
+      ` <span class="hlsub">${money(hi - lo)} a month between the same job done two ways.</span>`;
   } else {
-    document.getElementById("headline").innerHTML =
+    hl.innerHTML =
       `For ${esc(fmtBudget(budget))}, <span class="ch">${esc(cheap.name)}</span> completes <b>${big(cheap.count)} ${esc(task.unit)}</b>; <span class="ex">${esc(dear.name)}</span> completes ${big(dear.count)}.${promoQualifier}`;
   }
 
@@ -650,7 +693,8 @@ function render() {
 
   // sort (S2)
   let rows = [...all].sort((a,b) => {
-    const x = a[sortKey], y = b[sortKey];
+    const key = (sortKey === "count" && monthly) ? "cpt" : sortKey;   // monthly cost tracks cost/job
+    const x = a[key], y = b[key];
     return (typeof x === "string" ? x.localeCompare(y) : x - y) * sortDir;
   });
   document.querySelectorAll("thead th.sort").forEach(th => {
@@ -671,8 +715,8 @@ function render() {
   const legacyCount = all.filter(m => m.legacy).length;
   const hint = [];
   hint.push(minIQ > 0
-    ? `<b>Min quality ${minIQ}</b> — showing the ${qualified.length} of ${scored.length} scored models that clear the bar; ${all.length - scored.length} unscored models hidden.`
-    : `<span class="off">Min quality is off.</span> Drag it to hide models below a quality score and answer “what’s the cheapest model good enough for this job?”`);
+    ? `<b>Min capability ${minIQ}</b> — showing the ${qualified.length} of ${scored.length} scored models that clear the bar; ${all.length - scored.length} unscored models hidden.`
+    : `<span class="off">Min capability is off.</span> Drag it to hide low-scoring models and answer “what’s the cheapest model still capable enough for this job?”`);
   if (statusFilter === "current") hint.push(`Legacy models hidden (${legacyCount}).`);
   else if (statusFilter === "legacy") hint.push(`Showing only the ${legacyCount} models their provider has marked legacy.`);
   else if (legacyCount) hint.push(`<b>${legacyCount}</b> models are marked legacy by their provider.`);
@@ -687,12 +731,13 @@ function render() {
       <tr style="display:block"><td colspan="10" style="display:block">
         <div class="empty">${wlOnly && !watch.size
           ? 'Your watchlist is empty.<br/>Untick <b>WATCHLIST ONLY</b>, then press <b>WATCH</b> on any row to pin it here.'
-          : 'No models match these filters.<br/>Lower <b>MIN QUALITY</b> or set <b>STATUS</b> back to <b>All</b>.'}</div>
+          : 'No models match these filters.<br/>Lower <b>MIN CAPABILITY</b> or set <b>STATUS</b> back to <b>All</b>.'}</div>
       </td></tr>`;
     return;
   }
 
   const maxCount = Math.max(...rows.map(r => r.count), 1);
+  const maxMonthly = Math.max(...rows.map(r => r.cpt * volume), 1);
   const valued = rows.filter(r => r.value != null);
   const bestVal = valued.length ? valued.reduce((a,b) => a.value >= b.value ? a : b) : null;
   // cheapest model clearing the bar — the actual recommendation
@@ -722,8 +767,10 @@ function render() {
       <td class="val c-val" data-label="VALUE">${m.value != null && bestVal
         ? `<span class="vbar" title="${(m.iq / m.cpt).toFixed(0)} capability points per $1 of job cost"><i style="width:${Math.max(3, (m.value / bestVal.value) * 100).toFixed(0)}%"></i></span><span class="vword">${valueWord(m.value / bestVal.value)}</span>`
         : '<span class="vnone">—</span>'}</td>
-      <td class="num jobs barcell c-jobs" data-label="${esc((task.unit + " per " + fmtBudget(budget)).toUpperCase())}">
-        <i class="bar" style="width:${Math.max(1.5, m.count / maxCount * 86)}%"></i><span>${big(m.count)}${alt("jobs", big(Math.floor(budget / (m.cptAlt || 1))))}</span></td>
+      <td class="num jobs barcell c-jobs" data-label="${monthly ? "COST / MONTH" : esc((task.unit + " per " + fmtBudget(budget)).toUpperCase())}">
+        <i class="bar" style="width:${Math.max(1.5, (monthly ? (m.cpt * volume) / maxMonthly : m.count / maxCount) * 86)}%"></i><span>${
+          monthly ? money(m.cpt * volume) : big(m.count)}${
+          monthly ? "" : alt("jobs", big(Math.floor(budget / (m.cptAlt || 1))))}</span></td>
       <td class="c-spark">${m.trend.length < 3
         ? '<span class="sparkchg new" title="No price history yet">NEW</span>'
         : spark(m.trend, m.cpt, m.id === cheap.id ? "#0D7680" : "#6b625b") +
@@ -767,16 +814,28 @@ function renderStatic() {
 const sel = document.getElementById("task");
 sel.innerHTML = TASKS.map(t => `<option value="${t.id}">${esc(t.label)}</option>`).join("");
 sel.value = taskId;
-sel.addEventListener("change", e => { taskId = e.target.value; render(); });
+sel.addEventListener("change", e => {
+  taskId = e.target.value;
+  if (!customBudget) volume = VOLUMES[taskId] || 1000;   // keep the scale believable
+  render();
+});
 document.getElementById("cb").addEventListener("input", e => {
   const v = parseFloat(e.target.value);
-  if (v > 0) { budget = v; customBudget = true; render(); }
+  if (v > 0) { if (viewMode === "monthly") volume = v; else budget = v; customBudget = true; render(); }
 });
 document.getElementById("tin").addEventListener("input", e => { customIn = Math.max(1, +e.target.value || 1); render(); });
 document.getElementById("tout").addEventListener("input", e => { customOut = Math.max(1, +e.target.value || 1); render(); });
 document.getElementById("norm").addEventListener("change", e => { normalize = e.target.checked; render(); });
 document.getElementById("std").addEventListener("change", e => { planStandard = e.target.checked; render(); });
 document.getElementById("minIQ").addEventListener("input", e => { minIQ = +e.target.value; render(); });
+document.querySelectorAll("#modeGroup button").forEach(b => {
+  b.addEventListener("click", () => {
+    viewMode = b.dataset.m; customBudget = false;
+    document.getElementById("cb").value = "";
+    document.querySelectorAll("#modeGroup button").forEach(x => x.classList.toggle("on", x === b));
+    render();
+  });
+});
 document.querySelectorAll("#statusFilter button").forEach(b => {
   b.addEventListener("click", () => {
     statusFilter = b.dataset.s;
