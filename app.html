@@ -150,16 +150,20 @@
   table { border-collapse: collapse; width: 100%; min-width: 940px; table-layout: fixed; }
   /* must total exactly 100% — a colgroup that overflows makes the browser rescale
      columns unpredictably, which is what pushed the trend text into its neighbour */
-  col.c-model-w { width: 25%; }
-  col.c-in-w    { width: 7%; }
-  col.c-out-w   { width: 7%; }
-  col.c-len-w   { width: 6%; }
-  col.c-cap-w   { width: 10%; }
-  col.c-cpj-w   { width: 9.5%; }
-  col.c-jobs-w  { width: 11.5%; }
-  col.c-val-w   { width: 10%; }
-  col.c-trend-w { width: 9%; }
-  col.c-watch-w { width: 5%; }
+  col.c-model-w   { width: 22%; }
+  col.c-in-w      { width: 6%; }
+  col.c-out-w     { width: 6%; }
+  col.c-len-w     { width: 5.5%; }
+  col.c-cap-w     { width: 9%; }
+  col.c-cpj-w     { width: 8.5%; }
+  col.c-jobs-w    { width: 12%; }
+  col.c-val-w     { width: 9%; }
+  col.c-perunit-w { width: 13%; }
+  col.c-trend-w   { width: 5%; }
+  col.c-watch-w   { width: 4%; }
+  td.perunit .saves { color: var(--teal); font-weight: 600; }
+  td.perunit .costs { color: var(--claret); font-weight: 600; }
+  td.perunit .sub2 { display: block; font-size: 9.5px; color: var(--ink-2); }
   thead th { font-family: "Spline Sans Mono", monospace; font-weight: 500; font-size: 10px;
     letter-spacing: 0.1em; color: var(--ink-2); text-align: right; padding: 8px 10px;
     border-bottom: 1.5px solid var(--ink); white-space: nowrap;
@@ -260,6 +264,8 @@
       content: attr(data-label); display: block; font: 500 9px "Spline Sans Mono", monospace;
       letter-spacing: 0.1em; color: var(--ink-2); }
     td.c-cpj, td.c-in, td.c-out, td.c-verb { grid-row: 2; }
+    td.c-perunit { grid-column: 1 / 3; grid-row: 4; }
+    td.c-perunit::before { content: attr(data-label); display: block; font: 500 9px "Spline Sans Mono", monospace; letter-spacing: 0.1em; color: var(--ink-2); }
     td.c-spark { grid-column: 1 / 3; grid-row: 3; }
     td.c-spark .spark { margin-left: 0; }
     td.c-spark .sparkchg { text-align: left; }
@@ -289,17 +295,18 @@
   </section>
 
   <div class="filters">
-    <span class="bgroup" id="modeGroup" role="group" aria-label="View mode">
-      <button data-m="monthly" class="on">Monthly cost</button><button data-m="budget">Jobs per budget</button>
-    </span>
-    <span class="flabel" id="qtyLabel">JOBS / MONTH</span>
+    <span class="flabel">WORKLOAD</span>
+    <select id="workload" aria-label="Workload"></select>
+    <span class="flabel" id="qtyLabel">DEVELOPERS</span>
     <span class="bgroup" id="budgets" role="group" aria-label="Quantity presets"></span>
     <span class="cbud"><span class="flabel">OR</span>
-      <span class="num" style="font-size:13px" id="cbPrefix"></span>
-      <input type="number" id="cb" min="1" step="1" placeholder="500" aria-label="Custom quantity" />
+      <input type="number" id="cb" min="1" step="1" placeholder="30" aria-label="Custom quantity" />
     </span>
-    <span class="flabel">TASK</span>
-    <select id="task" aria-label="Task"></select>
+    <span class="flabel" id="baseLabel">COSTS YOU TODAY</span>
+    <span class="cbud"><span class="num" style="font-size:13px">$</span>
+      <input type="number" id="base" min="0" step="0.01" placeholder="optional" aria-label="Your current cost per unit" />
+      <span class="flabel" id="baseUnit"></span>
+    </span>
     <span class="tok" id="tok">
       <label>Tokens in <input type="number" id="tin" value="5000" min="1" step="100" /></label>
       <label>Tokens out <input type="number" id="tout" value="800" min="1" step="100" /></label>
@@ -318,15 +325,18 @@
     <label class="check"><input type="checkbox" id="wl" /> Watchlist only <span id="wlcount" class="num"></span></label>
   </div>
 
+  <select id="task" style="display:none" aria-hidden="true"></select>
   <p class="hint" id="hint"></p>
 
   <div class="assume" id="assume"></div>
   <div class="pnote" id="pnote" hidden></div>
 
   <div class="legend">
-    <div><b>COST / MONTH</b>Your monthly volume × the cost of one job. Switch to
-      <i>Jobs per budget</i> to ask it the other way round. Volumes default to a mid-size
-      engineering org and should be replaced with your own.</div>
+    <div><b>COST / MONTH</b>What this workload costs at your stated size — 30 developers,
+      50,000 tickets, 20,000 SKUs. The model-call maths is derived underneath and shown in the
+      assumptions above.</div>
+    <div><b>PER UNIT</b>The same cost divided by the thing you count, so it can be compared to
+      what you pay today. Enter your current cost per unit and the table shows the difference.</div>
     <div><b>CAPABILITY</b>Artificial Analysis Intelligence Index — an independent third-party
       score out of ~61, tracked 3 Aug. Higher is more generally capable. It rates the model,
       not your task.</div>
@@ -344,7 +354,7 @@
       <colgroup>
         <col class="c-model-w" /><col class="c-in-w" /><col class="c-out-w" />
         <col class="c-len-w" /><col class="c-cap-w" /><col class="c-cpj-w" />
-        <col class="c-jobs-w" /><col class="c-val-w" /><col class="c-trend-w" /><col class="c-watch-w" />
+        <col class="c-jobs-w" /><col class="c-val-w" /><col class="c-perunit-w" /><col class="c-trend-w" /><col class="c-watch-w" />
       </colgroup>
       <thead><tr>
         <th class="l sort" data-key="name" tabindex="0">MODEL <span class="dir">↕</span></th>
@@ -354,6 +364,7 @@
         <th class="sort" data-key="iq" tabindex="0">CAPABILITY <span class="dir">↕</span></th>
         <th class="sort" data-key="cpt" tabindex="0">COST / JOB <span class="dir">↕</span></th>
         <th class="sort" data-key="value" tabindex="0">VALUE <span class="dir">↕</span></th>
+        <th class="sort" data-key="cpt" tabindex="0"><span id="perUnitHead">PER UNIT</span> <span class="dir">↕</span></th>
         <th class="sort" data-key="count" tabindex="0"><span id="jobsHead"></span> <span class="dir">↕</span></th>
         <th>6-MO TREND</th>
         <th></th>
@@ -503,6 +514,40 @@ const BUDGETS = [0.1, 1, 5, 20, 100];
 
 // Typical monthly volume for a ~30-person engineering org, per task. These make
 // the headline read in real money instead of millions of hypothetical jobs.
+const WORKLOADS = [
+  { id:"coding",  label:"AI coding assistant",        task:"agent",   qty:30,
+    unit:"developers",     one:"developer",      per:1200,
+    basis:"about 60 agent steps per developer per working day",
+    baseHint:"per-seat AI tool you pay today", baseDefault:"" },
+  { id:"support", label:"Customer support automation", task:"support", qty:50000,
+    unit:"tickets / month", one:"ticket",        per:1,
+    basis:"one AI resolution attempt per ticket",
+    baseHint:"cost of a human first-line reply", baseDefault:"" },
+  { id:"catalog", label:"Product catalogue enrichment",task:"catalog", qty:20000,
+    unit:"SKUs",           one:"SKU",            per:1,
+    basis:"one generated description per SKU",
+    baseHint:"copywriting cost per SKU", baseDefault:"" },
+  { id:"search",  label:"On-site AI search",           task:"search",  qty:200000,
+    unit:"queries / month", one:"query",         per:1,
+    basis:"one model call per shopper search",
+    baseHint:"", baseDefault:"" },
+  { id:"prreview",label:"Automated PR review",         task:"review",  qty:800,
+    unit:"pull requests / month", one:"PR",      per:1,
+    basis:"one review pass per pull request",
+    baseHint:"reviewer time per PR", baseDefault:"" },
+  { id:"bugs",    label:"Agent-assisted bug fixing",   task:"bugfix",  qty:500,
+    unit:"bugs / month",   one:"bug",            per:1,
+    basis:"one fix attempt per bug — repeat attempts cost again",
+    baseHint:"engineer time per bug", baseDefault:"" },
+  { id:"docs",    label:"Document summarisation",      task:"pdf",     qty:1000,
+    unit:"documents / month", one:"document",    per:1,
+    basis:"one summary per document",
+    baseHint:"", baseDefault:"" },
+];
+const QTY_PRESETS = { coding:[10,30,100,250], support:[5000,50000,200000,1000000],
+  catalog:[1000,20000,100000,500000], search:[50000,200000,1000000,5000000],
+  prreview:[100,800,3000,10000], bugs:[50,500,2000,10000], docs:[100,1000,10000,50000] };
+
 const VOLUMES = {
   bugfix: 500, codegen: 300, agent: 20000, review: 800, script: 200,
   support: 50000, catalog: 20000, search: 200000, pdf: 1000,
@@ -528,8 +573,9 @@ const REPRICE = [
 ];
 
 let DATA_AS_OF = "2026-08-03";
-let viewMode = "monthly";      // monthly | budget — monthly is the question a team lead asks
-let volume = VOLUMES.agent;    // jobs per month
+let workloadId = "coding";     // what the business counts
+let qty = 30;                  // how many of them
+let baseline = null;           // what it costs them today, per unit — their number, not ours
 let budget = 1, customBudget = false, taskId = "agent", normalize = true, wlOnly = false;
 let planStandard = false;
 let minIQ = 0;
@@ -613,35 +659,39 @@ function spark(mults, cpt, color) {
 }
 
 function render() {
-  const task = currentTask();
 
-  const monthly = viewMode === "monthly";
-  document.getElementById("qtyLabel").textContent = monthly ? "JOBS / MONTH" : "BUDGET";
-  document.getElementById("cbPrefix").textContent = monthly ? "" : "$";
-  document.getElementById("cb").placeholder = monthly ? "500" : "250";
-  const presets = monthly ? VOL_PRESETS : BUDGETS;
-  const cur = monthly ? volume : budget;
+  const wl = WORKLOADS.find(w => w.id === workloadId);
+  taskId = wl.task;
+  const task = currentTask();
+  const volume = qty * wl.per;                    // model calls a month, derived not entered                    // model calls a month, derived not entered
+  document.getElementById("qtyLabel").textContent = wl.unit.toUpperCase();
+  document.getElementById("baseUnit").textContent = "PER " + wl.one.toUpperCase();
+  document.getElementById("base").placeholder = wl.baseHint || "optional";
+  document.getElementById("cb").placeholder = String(wl.qty);
+  const presets = QTY_PRESETS[wl.id] || [10, 100, 1000, 10000];
   document.getElementById("budgets").innerHTML = presets.map(b =>
-    `<button class="${!customBudget && b===cur ? "on" : ""}" data-b="${b}">${monthly ? big(b) : fmtBudget(b)}</button>`).join("");
+    `<button class="${!customBudget && b===qty ? "on" : ""}" data-b="${b}">${big(b)}</button>`).join("");
   document.querySelectorAll("#budgets button").forEach(el =>
     el.addEventListener("click", () => {
-      const v = parseFloat(el.dataset.b);
-      if (monthly) volume = v; else budget = v;
-      customBudget = false;
+      qty = parseFloat(el.dataset.b); customBudget = false;
       document.getElementById("cb").value = "";
       render();
     }));
 
   document.getElementById("tok").className = "tok" + (taskId === "custom" ? " show" : "");
-  document.getElementById("jobsHead").textContent = monthly
-    ? "COST / MONTH"
-    : (task.unit + " per " + fmtBudget(budget)).toUpperCase();
+  document.getElementById("jobsHead").textContent = "COST / MONTH";
+  document.getElementById("perUnitHead").textContent = "PER " + wl.one.toUpperCase() + (baseline ? " · VS YOURS" : "");
 
   // assumptions callout (S4)
   document.getElementById("assume").innerHTML = `
-    <div class="t">TASK ASSUMPTIONS — ${esc(task.label.replace("…","")).toUpperCase()}</div>
-    ${kf(task.short)}
-    <details><summary>Variance and sourcing</summary>${esc(task.detail)}</details>`;
+    <div class="t">HOW ${esc(wl.label.toUpperCase())} IS COSTED</div>
+    <b>${big(qty)} ${esc(wl.unit)}</b> → ${esc(wl.basis)} → <b>${big(volume)}</b> model calls a month.
+    Each call: ${kf(task.short)}
+    <details><summary>Where these assumptions come from, and how to replace them</summary>
+      ${esc(task.detail)} These conversion rates are industry-typical starting points, not your
+      numbers — a cost audit replaces them with your own usage data. This prices the work sent to
+      a model, not whether it succeeded: a bug needing three attempts costs three times as much,
+      and completion status lives in your issue tracker.</details>`;
 
   // compute over all models; headline uses full set (S6, S10, FL-01)
   const all = MODELS.map(m => {
@@ -660,26 +710,31 @@ function render() {
   const scored = all.filter(m => m.iq != null);
   const qualified = scored.filter(m => m.iq >= minIQ);
   const hl = document.getElementById("headline");
-  if (minIQ > 0 && qualified.length) {
-    const best = qualified.reduce((a,b) => a.cpt <= b.cpt ? a : b);
-    hl.innerHTML = monthly
-      ? `Cheapest model scoring <b>${minIQ}+</b> on capability: <span class="ch">${esc(best.name)}</span> — ` +
-        `<b>${money(best.cpt * volume)}/month</b> at ${big(volume)} ${esc(task.unit)}.` +
-        ` <span class="hlsub">${qualified.length} of ${scored.length} scored models clear the bar.</span>`
-      : `Cheapest model scoring <b>${minIQ}+</b> on capability: <span class="ch">${esc(best.name)}</span> — ` +
-        `<b>${big(Math.floor(budget / best.cpt))} ${esc(task.unit)}</b> for ${esc(fmtBudget(budget))}.` +
-        ` <span class="hlsub">${qualified.length} of ${scored.length} scored models clear the bar.</span>`;
-  } else if (monthly) {
-    // Lead with the spread in money, because that is the decision: same work,
-    // two bills. "N jobs per dollar" reads as a trivia number at team scale.
-    const lo = cheap.cpt * volume, hi = dear.cpt * volume;
+  const perUnit = m => m.cpt * wl.per;
+  const pool = (minIQ > 0 && qualified.length) ? qualified : all;
+  const lo = pool.reduce((a,b) => a.cpt <= b.cpt ? a : b);
+  const hi = all.reduce((a,b) => a.cpt >= b.cpt ? a : b);
+  const fmtPU = v => v >= 0.01 ? money(v) : "$" + v.toFixed(4);
+
+  if (baseline) {
+    // Their number against ours — the only honest way to state ROI.
+    const saving = (baseline - perUnit(lo)) * qty;
+    hl.innerHTML = saving >= 0
+      ? `${big(qty)} ${esc(wl.unit)} on <span class="ch">${esc(lo.name)}</span>: ` +
+        `<b>${money(lo.cpt * volume)}/month</b>, against the ${money(baseline * qty)} you spend today — ` +
+        `<b>${money(saving)}/month saved</b>.`
+      : `${big(qty)} ${esc(wl.unit)} on <span class="ch">${esc(lo.name)}</span>: ` +
+        `<b>${money(lo.cpt * volume)}/month</b> — <span class="ex">${money(-saving)}/month more</span> than you spend today.`;
+  } else if (minIQ > 0 && qualified.length) {
     hl.innerHTML =
-      `At <b>${big(volume)}</b> ${esc(task.unit)} a month: <span class="ch">${esc(cheap.name)}</span> costs ` +
-      `<b>${money(lo)}</b>, <span class="ex">${esc(dear.name)}</span> costs <b>${money(hi)}</b>.` +
-      ` <span class="hlsub">${money(hi - lo)} a month between the same job done two ways.</span>`;
+      `Cheapest model scoring <b>${minIQ}+</b> for ${big(qty)} ${esc(wl.unit)}: <span class="ch">${esc(lo.name)}</span> — ` +
+      `<b>${money(lo.cpt * volume)}/month</b>, ${fmtPU(perUnit(lo))} per ${esc(wl.one)}.` +
+      ` <span class="hlsub">${qualified.length} of ${scored.length} scored models clear the bar.</span>`;
   } else {
     hl.innerHTML =
-      `For ${esc(fmtBudget(budget))}, <span class="ch">${esc(cheap.name)}</span> completes <b>${big(cheap.count)} ${esc(task.unit)}</b>; <span class="ex">${esc(dear.name)}</span> completes ${big(dear.count)}.${promoQualifier}`;
+      `${big(qty)} ${esc(wl.unit)}: <span class="ch">${esc(lo.name)}</span> costs <b>${money(lo.cpt * volume)}/month</b> ` +
+      `(${fmtPU(perUnit(lo))} per ${esc(wl.one)}); <span class="ex">${esc(hi.name)}</span> costs <b>${money(hi.cpt * volume)}</b>.` +
+      ` <span class="hlsub">${money((hi.cpt - lo.cpt) * volume)} a month between the same work done two ways.</span>`;
   }
 
   // promo decision rule (S10) — shown only while a promo exists
@@ -693,7 +748,7 @@ function render() {
 
   // sort (S2)
   let rows = [...all].sort((a,b) => {
-    const key = (sortKey === "count" && monthly) ? "cpt" : sortKey;   // monthly cost tracks cost/job
+    const key = sortKey === "count" ? "cpt" : sortKey;   // monthly cost tracks cost per job
     const x = a[key], y = b[key];
     return (typeof x === "string" ? x.localeCompare(y) : x - y) * sortDir;
   });
@@ -717,6 +772,7 @@ function render() {
   hint.push(minIQ > 0
     ? `<b>Min capability ${minIQ}</b> — showing the ${qualified.length} of ${scored.length} scored models that clear the bar; ${all.length - scored.length} unscored models hidden.`
     : `<span class="off">Min capability is off.</span> Drag it to hide low-scoring models and answer “what’s the cheapest model still capable enough for this job?”`);
+  if (baseline) hint.push(`<span class="off">Saving assumes AI handles every ${esc(wl.one)} end to end — scale it by the share you actually expect to deflect without a human.</span>`);
   if (statusFilter === "current") hint.push(`Legacy models hidden (${legacyCount}).`);
   else if (statusFilter === "legacy") hint.push(`Showing only the ${legacyCount} models their provider has marked legacy.`);
   else if (legacyCount) hint.push(`<b>${legacyCount}</b> models are marked legacy by their provider.`);
@@ -767,10 +823,15 @@ function render() {
       <td class="val c-val" data-label="VALUE">${m.value != null && bestVal
         ? `<span class="vbar" title="${(m.iq / m.cpt).toFixed(0)} capability points per $1 of job cost"><i style="width:${Math.max(3, (m.value / bestVal.value) * 100).toFixed(0)}%"></i></span><span class="vword">${valueWord(m.value / bestVal.value)}</span>`
         : '<span class="vnone">—</span>'}</td>
-      <td class="num jobs barcell c-jobs" data-label="${monthly ? "COST / MONTH" : esc((task.unit + " per " + fmtBudget(budget)).toUpperCase())}">
-        <i class="bar" style="width:${Math.max(1.5, (monthly ? (m.cpt * volume) / maxMonthly : m.count / maxCount) * 86)}%"></i><span>${
-          monthly ? money(m.cpt * volume) : big(m.count)}${
-          monthly ? "" : alt("jobs", big(Math.floor(budget / (m.cptAlt || 1))))}</span></td>
+      <td class="num jobs barcell c-jobs" data-label="COST / MONTH">
+        <i class="bar" style="width:${Math.max(1.5, ((m.cpt * volume) / maxMonthly) * 86)}%"></i><span>${money(m.cpt * volume)}</span></td>
+      <td class="num perunit c-perunit" data-label="${esc("PER " + wl.one.toUpperCase())}">${(() => {
+        const pu = m.cpt * wl.per;                       // cost per business unit per month
+        const s = pu >= 0.01 ? money(pu) : "$" + pu.toFixed(4);
+        if (!baseline) return s;
+        const d = baseline - pu;
+        return `${s}<span class="sub2 ${d >= 0 ? "saves" : "costs"}">${d >= 0 ? "saves " : "+"}${money(Math.abs(d * qty))}/mo</span>`;
+      })()}</td>
       <td class="c-spark">${m.trend.length < 3
         ? '<span class="sparkchg new" title="No price history yet">NEW</span>'
         : spark(m.trend, m.cpt, m.id === cheap.id ? "#0D7680" : "#6b625b") +
@@ -814,28 +875,32 @@ function renderStatic() {
 const sel = document.getElementById("task");
 sel.innerHTML = TASKS.map(t => `<option value="${t.id}">${esc(t.label)}</option>`).join("");
 sel.value = taskId;
-sel.addEventListener("change", e => {
-  taskId = e.target.value;
-  if (!customBudget) volume = VOLUMES[taskId] || 1000;   // keep the scale believable
+
+const wsel = document.getElementById("workload");
+wsel.innerHTML = WORKLOADS.map(w => `<option value="${w.id}">${esc(w.label)}</option>`).join("");
+wsel.value = workloadId;
+wsel.addEventListener("change", e => {
+  workloadId = e.target.value;
+  const w = WORKLOADS.find(x => x.id === workloadId);
+  qty = w.qty; customBudget = false; baseline = null;   // a baseline is per-unit; units just changed
+  document.getElementById("cb").value = "";
+  document.getElementById("base").value = "";
+  render();
+});
+document.getElementById("base").addEventListener("input", e => {
+  const v = parseFloat(e.target.value);
+  baseline = v > 0 ? v : null;
   render();
 });
 document.getElementById("cb").addEventListener("input", e => {
   const v = parseFloat(e.target.value);
-  if (v > 0) { if (viewMode === "monthly") volume = v; else budget = v; customBudget = true; render(); }
+  if (v > 0) { qty = v; customBudget = true; render(); }
 });
 document.getElementById("tin").addEventListener("input", e => { customIn = Math.max(1, +e.target.value || 1); render(); });
 document.getElementById("tout").addEventListener("input", e => { customOut = Math.max(1, +e.target.value || 1); render(); });
 document.getElementById("norm").addEventListener("change", e => { normalize = e.target.checked; render(); });
 document.getElementById("std").addEventListener("change", e => { planStandard = e.target.checked; render(); });
 document.getElementById("minIQ").addEventListener("input", e => { minIQ = +e.target.value; render(); });
-document.querySelectorAll("#modeGroup button").forEach(b => {
-  b.addEventListener("click", () => {
-    viewMode = b.dataset.m; customBudget = false;
-    document.getElementById("cb").value = "";
-    document.querySelectorAll("#modeGroup button").forEach(x => x.classList.toggle("on", x === b));
-    render();
-  });
-});
 document.querySelectorAll("#statusFilter button").forEach(b => {
   b.addEventListener("click", () => {
     statusFilter = b.dataset.s;
