@@ -16,7 +16,9 @@
       "output_per_mtok": 30.0,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": 59,
+      "verbosity": 1.0
     },
     {
       "id": "fable5",
@@ -26,7 +28,9 @@
       "output_per_mtok": 50.0,
       "verification": "tracked",
       "verified_at": null,
-      "source": "published provider comparison"
+      "source": "published provider comparison",
+      "capability": 60,
+      "verbosity": 1.15
     },
     {
       "id": "gpt55",
@@ -36,7 +40,9 @@
       "output_per_mtok": 30.0,
       "verification": "verified",
       "verified_at": "2026-07-22",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": null,
+      "verbosity": 1.0
     },
     {
       "id": "opus48",
@@ -47,7 +53,9 @@
       "verification": "verified",
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
-      "active_until": "2027-05-28"
+      "active_until": "2027-05-28",
+      "capability": 56,
+      "verbosity": 1.15
     },
     {
       "id": "gpt56ter",
@@ -57,7 +65,9 @@
       "output_per_mtok": 12.0,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": 55,
+      "verbosity": 1.05
     },
     {
       "id": "gpt54",
@@ -67,7 +77,9 @@
       "output_per_mtok": 15.0,
       "verification": "verified",
       "verified_at": "2026-07-22",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": null,
+      "verbosity": 1.05
     },
     {
       "id": "son5",
@@ -77,7 +89,9 @@
       "output_per_mtok": 15.0,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": null,
+      "verbosity": 1.1
     },
     {
       "id": "son46",
@@ -88,7 +102,9 @@
       "verification": "verified",
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
-      "legacy": true
+      "legacy": true,
+      "capability": null,
+      "verbosity": 1.1
     },
     {
       "id": "kimik3",
@@ -98,7 +114,9 @@
       "output_per_mtok": 15.0,
       "verification": "tracked",
       "verified_at": null,
-      "source": "published provider comparison"
+      "source": "published provider comparison",
+      "capability": 57,
+      "verbosity": 1.0
     },
     {
       "id": "gem31p",
@@ -108,7 +126,9 @@
       "output_per_mtok": 12.0,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": null,
+      "verbosity": 0.85
     },
     {
       "id": "grok45",
@@ -118,7 +138,9 @@
       "output_per_mtok": 6.0,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": 54,
+      "verbosity": 1.0
     },
     {
       "id": "inkling",
@@ -128,7 +150,9 @@
       "output_per_mtok": 4.68,
       "verification": "tracked",
       "verified_at": null,
-      "source": "published provider comparison"
+      "source": "published provider comparison",
+      "capability": 41,
+      "verbosity": 0.95
     },
     {
       "id": "gpt56lun",
@@ -138,7 +162,9 @@
       "output_per_mtok": 1.2,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": 51,
+      "verbosity": 1.0
     },
     {
       "id": "gem36f",
@@ -148,7 +174,9 @@
       "output_per_mtok": 7.5,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": null,
+      "verbosity": 0.8
     },
     {
       "id": "glm52",
@@ -158,7 +186,9 @@
       "output_per_mtok": 3.0,
       "verification": "tracked",
       "verified_at": null,
-      "source": "published provider comparison"
+      "source": "published provider comparison",
+      "capability": 51,
+      "verbosity": 0.95
     },
     {
       "id": "haiku45",
@@ -168,7 +198,9 @@
       "output_per_mtok": 5.0,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": null,
+      "verbosity": 1.0
     },
     {
       "id": "mm3",
@@ -183,7 +215,9 @@
         "input_per_mtok": 0.3,
         "output_per_mtok": 1.2,
         "ends": null
-      }
+      },
+      "capability": null,
+      "verbosity": 0.95
     },
     {
       "id": "gem3f",
@@ -193,7 +227,9 @@
       "output_per_mtok": 3.0,
       "verification": "verified",
       "verified_at": "2026-07-22",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": null,
+      "verbosity": 0.8
     },
     {
       "id": "g41mini",
@@ -205,7 +241,9 @@
       "verified_at": "2026-07-22",
       "source": "first-party pricing page",
       "legacy": true,
-      "retires": "2026-10-23"
+      "retires": "2026-10-23",
+      "capability": null,
+      "verbosity": 0.95
     },
     {
       "id": "dsv4f",
@@ -215,7 +253,9 @@
       "output_per_mtok": 0.28,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": null,
+      "verbosity": 0.9
     },
     {
       "id": "g41nano",
@@ -227,7 +267,9 @@
       "verified_at": "2026-07-22",
       "source": "first-party pricing page",
       "legacy": true,
-      "retires": "2026-10-23"
+      "retires": "2026-10-23",
+      "capability": null,
+      "verbosity": 0.9
     },
     {
       "id": "gem31fl",
@@ -237,7 +279,9 @@
       "output_per_mtok": 0.4,
       "verification": "verified",
       "verified_at": "2026-07-22",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": null,
+      "verbosity": 0.75
     },
     {
       "id": "opus5",
@@ -247,7 +291,9 @@
       "output_per_mtok": 25.0,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": 61,
+      "verbosity": 1.15
     },
     {
       "id": "dsv4pro",
@@ -257,8 +303,14 @@
       "output_per_mtok": 0.87,
       "verification": "verified",
       "verified_at": "2026-08-03",
-      "source": "first-party pricing page"
+      "source": "first-party pricing page",
+      "capability": null,
+      "verbosity": 0.95
     }
   ],
-  "last_change": "2026-08-03"
+  "last_change": "2026-08-03",
+  "fields": {
+    "capability": "Artificial Analysis Intelligence Index (~61 max); null when the model has no published score",
+    "verbosity": "answer-length multiplier vs a neutral baseline; output tokens scale by this"
+  }
 }
