@@ -38,5 +38,53 @@
     "signal": "Fee-waived guarantee works for individuals/SMB but is a red flag in enterprise \u2014 not done there. Better: gate the audit as a teaser \u2014 show the savings figure and limited proof the work is real, withhold the how. Preview-over-guarantee.",
     "theme": "pricing",
     "raw_quote": "The guarantee is more marketing than anything else"
+  },
+  {
+    "date": "2026-08-05",
+    "who": "Ryan Lunka (AI lead, Aries Solutions)",
+    "type": "call",
+    "theme": "objection",
+    "signal": "Rejected the audit as framed: 'I don't yet see how the solution helps me solve that for a client.' Believes inference cost is an overstated, temporary problem \u2014 the real gap is tying AI spend to business outcomes, not measuring it.",
+    "raw_quote": "you're in the right swimming pool in terms of problem to solve"
+  },
+  {
+    "date": "2026-08-05",
+    "who": "Ryan Lunka (Aries)",
+    "type": "call",
+    "theme": "product-defect",
+    "signal": "The demo undermined itself: at $5k budget the tool showed 3.2M bug fixes, making the problem look trivial. 'It'll cost you more to have the meeting about the five grand than it will five grand.'",
+    "raw_quote": "Nobody has 3.2 million bugs"
+  },
+  {
+    "date": "2026-08-05",
+    "who": "Ryan Lunka (Aries)",
+    "type": "call",
+    "theme": "feature-request",
+    "signal": "Proposed the pivot: expose the cost/capability dataset into agentic coding tools via API/MCP so the AGENT picks the model per task. Solves governance (devs default to the big model, policing is burdensome) with zero user friction.",
+    "raw_quote": "expose that information into the agent"
+  },
+  {
+    "date": "2026-08-05",
+    "who": "Ryan Lunka (Aries)",
+    "type": "call",
+    "theme": "feature-request",
+    "signal": "Counterfactual ROI, no A/B test needed: when the router switches a task off the dev's default, log both \u2014 what it would have cost and what it did cost. Aggregate = built-in proof of savings.",
+    "raw_quote": "now all of a sudden you've got this aggregate ROI"
+  },
+  {
+    "date": "2026-08-05",
+    "who": "Ryan Lunka (Aries)",
+    "type": "call",
+    "theme": "ux",
+    "signal": "'Quality' terminology confused him repeatedly \u2014 asked 4x what it meant, since the column says CAPABILITY. Also: that the task list is illustrative was not obvious and should be elevated.",
+    "raw_quote": "What is quality?"
+  },
+  {
+    "date": "2026-08-05",
+    "who": "Ryan Lunka (Aries)",
+    "type": "call",
+    "theme": "gtm",
+    "signal": "Business-model implication: '$10,000 problems' mean thin margins \u2014 but a cheap, frictionless product across hundreds of thousands of teams is solvable. Points to self-serve volume, not consulting engagements.",
+    "raw_quote": "if your TAM is big enough"
   }
 ]
