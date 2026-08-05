@@ -1,0 +1,15 @@
+{
+  "name": "perdollar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cost per finished job across LLM models, with a decision router and counterfactual savings ledger.",
+  "scripts": {
+    "route": "node router/cli.mjs route",
+    "savings": "node router/cli.mjs savings",
+    "refresh": "node scripts/refresh-prices.mjs",
+    "verify": "node scripts/verify.mjs",
+    "test": "node router/test.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

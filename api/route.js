@@ -10,12 +10,16 @@
 // names never leave it.
 
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 import { decide, TASK_CLASSES } from "../router/engine.mjs";
 
+// Resolve relative to this module, not process.cwd() — the working directory of a
+// serverless function is not guaranteed to be the repo root.
+const HERE = dirname(fileURLToPath(import.meta.url));
 let feed = null;
 function models() {
-  if (!feed) feed = JSON.parse(readFileSync(join(process.cwd(), "api", "prices.json"), "utf8"));
+  if (!feed) feed = JSON.parse(readFileSync(join(HERE, "prices.json"), "utf8"));
   return feed.models;
 }
 

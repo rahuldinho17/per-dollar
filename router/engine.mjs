@@ -25,6 +25,69 @@ export const TASK_CLASSES = {
   "classify":        { minCapability: 0,  tokens: { in: 800,   out: 50   }, why: "label selection from a fixed set" },
 };
 
+/**
+ * Capability estimate when no third-party score exists (every new model, day one).
+ * Four sources, best first — always returns its provenance so a caller can see
+ * how much to trust it.
+ *
+ *  measured  — pass rate observed on this caller's own traffic (best; see ledger)
+ *  vendor    — the lab's own published benchmark, discounted for being vendor-run
+ *  family    — inherited from the same lab's comparable tier
+ *  price     — inferred from where the lab priced it in its own lineup
+ */
+export function estimateCapability(model, { measured, siblings = [] } = {}) {
+  if (model.capability != null)
+    return { score: model.capability, basis: "third-party", confidence: "high",
+             note: "Artificial Analysis Intelligence Index" };
+
+  if (measured && measured.samples >= 20)
+    return { score: Math.round(measured.passRate * 61), basis: "measured", confidence: "high",
+             note: `observed ${Math.round(measured.passRate * 100)}% success over ${measured.samples} of your own tasks` };
+
+  if (model.vendor_benchmark != null)
+    return { score: Math.round(model.vendor_benchmark * 0.92), basis: "vendor", confidence: "low",
+             note: "lab's own benchmark, discounted 8% — vendor-run harnesses flatter their own models" };
+
+  // Price is a decent prior — labs price by tier — but only across comparable
+  // price points. Inheriting a flagship's score for a budget sibling is the
+  // dangerous direction of error: it routes hard work to a weak model. So we
+  // bracket by price and never extrapolate upward.
+  const scored = siblings.filter(s => s.capability != null && s.id !== model.id);
+  const p = model.output_per_mtok;
+
+  const sameLab = scored.filter(s => s.provider === model.provider)
+    .filter(s => s.output_per_mtok / p <= 2 && p / s.output_per_mtok <= 2);
+  if (sameLab.length) {
+    const near = sameLab.reduce((a, b) =>
+      Math.abs(b.output_per_mtok - p) < Math.abs(a.output_per_mtok - p) ? b : a);
+    return { score: near.capability, basis: "family", confidence: "medium",
+             note: `inferred from ${near.name} — same provider, within 2x on output price` };
+  }
+
+  const below = scored.filter(s => s.output_per_mtok <= p).sort((a, b) => b.output_per_mtok - a.output_per_mtok)[0];
+  const above = scored.filter(s => s.output_per_mtok > p).sort((a, b) => a.output_per_mtok - b.output_per_mtok)[0];
+
+  if (below && above) {
+    const t = (Math.log(p) - Math.log(below.output_per_mtok)) /
+              (Math.log(above.output_per_mtok) - Math.log(below.output_per_mtok));
+    return { score: Math.round(below.capability + t * (above.capability - below.capability)),
+             basis: "price", confidence: "low",
+             note: `interpolated between ${below.name} and ${above.name} by output price — a guess, not a measurement` };
+  }
+  if (above && !below) {
+    // Cheaper than everything we have measured. We genuinely do not know, and
+    // guessing high is the error that hurts, so we bound it low and say so.
+    const floor = Math.min(...scored.map(s => s.capability));
+    return { score: null, basis: "unknown-cheap", confidence: "none", bound_below: floor,
+             note: `cheaper than every scored model; capability is likely at or below ${floor} but unmeasured — measure it before trusting it with hard tasks` };
+  }
+  if (below && !above) {
+    return { score: below.capability, basis: "price", confidence: "low",
+             note: `dearer than every scored model; assumed no worse than ${below.name}` };
+  }
+  return { score: null, basis: "none", confidence: "none", note: "no basis for an estimate" };
+}
+
 export function jobCost(model, tokensIn, tokensOut, cacheHitRate = 0) {
   const std = model.input_per_mtok;
   const cached = model.cached_input_per_mtok ?? std;   // conservative when unpublished

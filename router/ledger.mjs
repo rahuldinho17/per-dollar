@@ -32,6 +32,33 @@ export function record(entry) {
   return { recorded: true, total_entries: l.entries.length, ledger: LEDGER };
 }
 
+/**
+ * Observed pass rate per model per task class — the capability data nobody else
+ * has, because it comes from real work rather than a benchmark. Feed it back
+ * into estimateCapability() and third-party scores stop being load-bearing.
+ *
+ * Outcome is whatever the caller can honestly observe: tests passed, the diff was
+ * accepted, no retry was needed. A task with no outcome recorded is ignored
+ * rather than counted as a success.
+ */
+export function passRates({ minSamples = 5 } = {}) {
+  const l = load();
+  const buckets = {};
+  for (const e of l.entries) {
+    if (e.outcome !== "success" && e.outcome !== "failure") continue;
+    const k = `${e.used_id}::${e.task}`;
+    const b = (buckets[k] ||= { model: e.used_id, task: e.task, samples: 0, passes: 0, retries: 0 });
+    b.samples++;
+    if (e.outcome === "success") b.passes++;
+    b.retries += e.retries || 0;
+  }
+  return Object.values(buckets)
+    .filter(b => b.samples >= minSamples)
+    .map(b => ({ ...b, pass_rate: Math.round((b.passes / b.samples) * 100) / 100,
+                 avg_retries: Math.round((b.retries / b.samples) * 100) / 100 }))
+    .sort((a, b) => b.samples - a.samples);
+}
+
 export function summary({ since } = {}) {
   const l = load();
   let entries = l.entries;
@@ -68,6 +95,8 @@ export function summary({ since } = {}) {
     by_task: Object.fromEntries(Object.entries(byTask).map(([k, v]) =>
       [k, { tasks: v.tasks, spent: r(v.spent), saved: r(v.would - v.spent) }])),
     models_used: byModel,
+    outcomes_recorded: entries.filter(e => e.outcome).length,
+    observed_pass_rates: passRates(),
     caveats: [
       "counterfactual costs assume the same input tokens on the default model, with output scaled by its answer-length factor",
       "it does not account for a retry a weaker model might have needed — measure quality separately before trusting the total",
