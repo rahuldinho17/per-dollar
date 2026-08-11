@@ -88,6 +88,32 @@ export function estimateCapability(model, { measured, siblings = [] } = {}) {
   return { score: null, basis: "none", confidence: "none", note: "no basis for an estimate" };
 }
 
+/**
+ * Turn data/eu-hosts.json into routable options so a residency-constrained query
+ * returns an answer instead of a dead end. Each becomes host::model, tagged
+ * "tracked" — these are indicative rates from public pages, never quoted as verified.
+ */
+export function euHostModels(euHosts, { estimateCapabilityFrom = [] } = {}) {
+  const byId = Object.fromEntries((euHosts.hosts || []).map(h => [h.id, h]));
+  return (euHosts.offerings || [])
+    .filter(o => o.inP != null && o.outP != null)
+    .map(o => {
+      const h = byId[o.host] || {};
+      return {
+        id: `${o.host}::${o.model}`,
+        name: `${o.model} @ ${h.name || o.host}`,
+        provider: h.name || o.host,
+        input_per_mtok: o.inP, output_per_mtok: o.outP,
+        verbosity: 1, capability: null,
+        residency: h.residency || "unknown",
+        residency_note: h.note || null,
+        verification: "tracked",
+        source: "EU host public pricing page — indicative, confirm before quoting",
+        eu_host: true, country: h.country || null,
+      };
+    });
+}
+
 export function jobCost(model, tokensIn, tokensOut, cacheHitRate = 0) {
   const std = model.input_per_mtok;
   const cached = model.cached_input_per_mtok ?? std;   // conservative when unpublished
@@ -114,7 +140,7 @@ export function decide(opts = {}) {
   const {
     models = [], task, tokensIn, tokensOut, available,
     minCapability, excludeLegacy = true, cacheHitRate = 0,
-    requireVerified = false, allowUnscored = false,
+    requireVerified = false, allowUnscored = false, residency,
   } = opts;
 
   const cls = TASK_CLASSES[task];
@@ -128,8 +154,26 @@ export function decide(opts = {}) {
 
   const excluded = [];
   const unscoredIncluded = [];
+
+  // Residency first. For an EU buyer "must stay in Germany" is binding and cost
+  // optimisation happens strictly inside it — the reverse of how every other
+  // router works. RESIDENCY_ALLOWS[requested] lists what satisfies the request.
+  const RESIDENCY_ALLOWS = {
+    "eu-de": ["eu-de", "self"],
+    "eu":    ["eu-de", "eu-fr", "eu", "self"],
+    "eu-ok": ["eu-de", "eu-fr", "eu", "self", "global"],
+    "any":   null,
+  };
   const pool = models.filter(m => {
     if (available && !available.includes(m.id)) { return false; }
+    if (residency && residency !== "any") {
+      const allowed = RESIDENCY_ALLOWS[residency];
+      if (!allowed) { excluded.push({ id: m.id, reason: `unknown residency requirement "${residency}"` }); return false; }
+      if (!allowed.includes(m.residency)) {
+        excluded.push({ id: m.id, reason: `residency ${m.residency || "unknown"} does not satisfy ${residency}` });
+        return false;
+      }
+    }
     if (requireVerified && m.verification !== "verified") { excluded.push({ id: m.id, reason: "price not first-party verified" }); return false; }
     if (excludeLegacy && m.legacy) { excluded.push({ id: m.id, reason: "provider marked legacy" }); return false; }
     if (floor > 0) {
@@ -148,7 +192,9 @@ export function decide(opts = {}) {
 
   if (!pool.length) {
     return { error: "no model satisfies these constraints", floor, excluded,
-             hint: "lower minCapability, allow legacy models, or widen `available`" };
+             hint: residency && residency !== "any"
+               ? `no tracked model satisfies residency "${residency}". EU-resident open-weight hosting (IONOS, Scaleway, OVHcloud, STACKIT) is in data/eu-hosts.json and is usually the answer here.`
+               : "lower minCapability, allow legacy models, or widen `available`" };
   }
 
   const priced = pool
@@ -162,6 +208,8 @@ export function decide(opts = {}) {
     recommended: {
       id: pick.model.id, name: pick.model.name, provider: pick.model.provider,
       capability: pick.model.capability ?? null,
+      residency: pick.model.residency ?? null,
+      residency_note: pick.model.residency_note ?? null,
       cost_per_job: round(pick.cost),
       verification: pick.model.verification, verified_at: pick.model.verified_at ?? null,
     },
@@ -176,6 +224,7 @@ export function decide(opts = {}) {
     assumptions: {
       task: task ?? "custom", tokens_in: tIn, tokens_out: tOut,
       min_capability: floor, cache_hit_rate: cacheHitRate,
+      residency: residency || "any",
       capability_floors_are: "heuristics, not measured pass rates — validate on your own traffic before relying on them",
       output_tokens_scaled_by: "each model's answer-length factor",
     },

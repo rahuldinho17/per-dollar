@@ -10,7 +10,10 @@
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
-      "tracked_at": "2026-08-03"
+      "tracked_at": "2026-08-03",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "gpt56sol",
@@ -19,7 +22,10 @@
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
-      "tracked_at": "2026-07-22"
+      "tracked_at": "2026-07-22",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "fable5",
@@ -28,7 +34,10 @@
       "verification": "tracked",
       "source": "published provider comparison",
       "verified_at": null,
-      "tracked_at": "2026-07-22"
+      "tracked_at": "2026-07-22",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "gpt55",
@@ -36,7 +45,10 @@
       "outP": 30.0,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-22",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "opus48",
@@ -46,7 +58,10 @@
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
       "legacy": false,
-      "active_until": "2027-05-28"
+      "active_until": "2027-05-28",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "gpt56ter",
@@ -56,7 +71,10 @@
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
       "tracked_at": "2026-07-22",
-      "cachedIn": 0.2
+      "cachedIn": 0.2,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "gpt54",
@@ -64,7 +82,10 @@
       "outP": 15.0,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-22",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "son5",
@@ -73,7 +94,10 @@
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
-      "tracked_at": "2026-07-22"
+      "tracked_at": "2026-07-22",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "son46",
@@ -82,7 +106,10 @@
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
-      "legacy": true
+      "legacy": true,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "kimik3",
@@ -91,7 +118,10 @@
       "verification": "tracked",
       "source": "published provider comparison",
       "verified_at": null,
-      "tracked_at": "2026-07-22"
+      "tracked_at": "2026-07-22",
+      "residency": "non-eu",
+      "residency_note": "operated outside the EU/US",
+      "self_hosted": false
     },
     {
       "id": "gem31p",
@@ -99,7 +129,10 @@
       "outP": 12.0,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-08-03"
+      "verified_at": "2026-08-03",
+      "residency": "global",
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing",
+      "self_hosted": false
     },
     {
       "id": "grok45",
@@ -108,7 +141,10 @@
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
-      "tracked_at": "2026-07-22"
+      "tracked_at": "2026-07-22",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "inkling",
@@ -117,7 +153,10 @@
       "verification": "tracked",
       "source": "published provider comparison",
       "verified_at": null,
-      "tracked_at": "2026-07-22"
+      "tracked_at": "2026-07-22",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "gpt56lun",
@@ -127,7 +166,10 @@
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
       "tracked_at": "2026-07-22",
-      "cachedIn": 0.02
+      "cachedIn": 0.02,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "gem36f",
@@ -136,7 +178,10 @@
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
-      "tracked_at": "2026-07-22"
+      "tracked_at": "2026-07-22",
+      "residency": "global",
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing",
+      "self_hosted": false
     },
     {
       "id": "glm52",
@@ -145,7 +190,10 @@
       "verification": "tracked",
       "source": "published provider comparison",
       "verified_at": null,
-      "tracked_at": "2026-07-22"
+      "tracked_at": "2026-07-22",
+      "residency": "non-eu",
+      "residency_note": "operated outside the EU/US",
+      "self_hosted": false
     },
     {
       "id": "haiku45",
@@ -153,7 +201,10 @@
       "outP": 5.0,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-08-03"
+      "verified_at": "2026-08-03",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "mm3",
@@ -164,7 +215,10 @@
       "promoOut": 1.2,
       "promoEnds": null,
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-22",
+      "residency": "non-eu",
+      "residency_note": "operated outside the EU/US",
+      "self_hosted": false
     },
     {
       "id": "gem3f",
@@ -172,7 +226,10 @@
       "outP": 3.0,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-22",
+      "residency": "global",
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing",
+      "self_hosted": false
     },
     {
       "id": "g41mini",
@@ -182,7 +239,10 @@
       "source": "first-party pricing page",
       "verified_at": "2026-07-22",
       "legacy": true,
-      "retires": "2026-10-23"
+      "retires": "2026-10-23",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "dsv4f",
@@ -191,7 +251,10 @@
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
-      "cachedIn": 0.0028
+      "cachedIn": 0.0028,
+      "residency": "non-eu",
+      "residency_note": "operated outside the EU/US",
+      "self_hosted": false
     },
     {
       "id": "g41nano",
@@ -201,7 +264,10 @@
       "source": "first-party pricing page",
       "verified_at": "2026-07-22",
       "legacy": true,
-      "retires": "2026-10-23"
+      "retires": "2026-10-23",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false
     },
     {
       "id": "gem31fl",
@@ -209,7 +275,10 @@
       "outP": 0.4,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-07-22"
+      "verified_at": "2026-07-22",
+      "residency": "global",
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing",
+      "self_hosted": false
     },
     {
       "id": "dsv4pro",
@@ -218,7 +287,10 @@
       "cachedIn": 0.003625,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-08-03"
+      "verified_at": "2026-08-03",
+      "residency": "non-eu",
+      "residency_note": "operated outside the EU/US",
+      "self_hosted": false
     }
   ],
   "last_change": "2026-08-03",

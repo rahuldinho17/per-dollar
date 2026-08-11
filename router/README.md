@@ -63,3 +63,23 @@ lands far more easily that way, and aggregates can be shared later by choice.
   `allow_unscored` to include them, and the response says when it did.
 - **The counterfactual assumes no retry.** If a cheaper model needed two attempts,
   the recorded saving is overstated. Pair the ledger with a quality check.
+
+## Data residency (T1.1)
+
+For an EU buyer, residency is not a preference — it is the binding constraint, and
+cost optimisation happens strictly inside it. No other router models this.
+
+```bash
+node router/cli.mjs route product-copy --residency eu-de   # must stay in Germany
+curl ".../api/route?task=code-fix&residency=eu"            # anywhere in the EU
+```
+
+Levels: `eu-de` (Germany only) · `eu` (EU) · `eu-ok` (EU preferred, global endpoints
+acceptable) · `any`. Applied before cost, so a German-residency query never returns a
+US-operated API however cheap it is.
+
+`data/eu-hosts.json` carries EU-resident open-weight hosting — IONOS, Scaleway,
+OVHcloud, STACKIT — plus a self-hosting break-even note. These providers publish no
+pricing API and appear in no aggregator, which is why they are worth carrying: for a
+compliance-constrained buyer they are the entire shortlist. Every row is `tracked`
+and must be confirmed against the provider's page before being quoted.

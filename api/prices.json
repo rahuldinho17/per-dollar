@@ -18,7 +18,9 @@
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
       "capability": 59,
-      "verbosity": 1.0
+      "verbosity": 1.0,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "fable5",
@@ -30,7 +32,9 @@
       "verified_at": null,
       "source": "published provider comparison",
       "capability": 60,
-      "verbosity": 1.15
+      "verbosity": 1.15,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "gpt55",
@@ -42,7 +46,9 @@
       "verified_at": "2026-07-22",
       "source": "first-party pricing page",
       "capability": null,
-      "verbosity": 1.0
+      "verbosity": 1.0,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "opus48",
@@ -55,7 +61,9 @@
       "source": "first-party pricing page",
       "active_until": "2027-05-28",
       "capability": 56,
-      "verbosity": 1.15
+      "verbosity": 1.15,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "gpt56ter",
@@ -67,7 +75,9 @@
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
       "capability": 55,
-      "verbosity": 1.05
+      "verbosity": 1.05,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "gpt54",
@@ -79,7 +89,9 @@
       "verified_at": "2026-07-22",
       "source": "first-party pricing page",
       "capability": null,
-      "verbosity": 1.05
+      "verbosity": 1.05,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "son5",
@@ -91,7 +103,9 @@
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
       "capability": null,
-      "verbosity": 1.1
+      "verbosity": 1.1,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "son46",
@@ -104,7 +118,9 @@
       "source": "first-party pricing page",
       "legacy": true,
       "capability": null,
-      "verbosity": 1.1
+      "verbosity": 1.1,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "kimik3",
@@ -116,7 +132,9 @@
       "verified_at": null,
       "source": "published provider comparison",
       "capability": 57,
-      "verbosity": 1.0
+      "verbosity": 1.0,
+      "residency": "non-eu",
+      "residency_note": "operated outside the EU/US"
     },
     {
       "id": "gem31p",
@@ -128,7 +146,9 @@
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
       "capability": null,
-      "verbosity": 0.85
+      "verbosity": 0.85,
+      "residency": "global",
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing"
     },
     {
       "id": "grok45",
@@ -140,7 +160,9 @@
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
       "capability": 54,
-      "verbosity": 1.0
+      "verbosity": 1.0,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "inkling",
@@ -152,7 +174,9 @@
       "verified_at": null,
       "source": "published provider comparison",
       "capability": 41,
-      "verbosity": 0.95
+      "verbosity": 0.95,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "gpt56lun",
@@ -164,7 +188,9 @@
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
       "capability": 51,
-      "verbosity": 1.0
+      "verbosity": 1.0,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "gem36f",
@@ -176,7 +202,9 @@
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
       "capability": null,
-      "verbosity": 0.8
+      "verbosity": 0.8,
+      "residency": "global",
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing"
     },
     {
       "id": "glm52",
@@ -188,7 +216,9 @@
       "verified_at": null,
       "source": "published provider comparison",
       "capability": 51,
-      "verbosity": 0.95
+      "verbosity": 0.95,
+      "residency": "non-eu",
+      "residency_note": "operated outside the EU/US"
     },
     {
       "id": "haiku45",
@@ -200,7 +230,9 @@
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
       "capability": null,
-      "verbosity": 1.0
+      "verbosity": 1.0,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "mm3",
@@ -217,7 +249,9 @@
         "ends": null
       },
       "capability": null,
-      "verbosity": 0.95
+      "verbosity": 0.95,
+      "residency": "non-eu",
+      "residency_note": "operated outside the EU/US"
     },
     {
       "id": "gem3f",
@@ -229,7 +263,9 @@
       "verified_at": "2026-07-22",
       "source": "first-party pricing page",
       "capability": null,
-      "verbosity": 0.8
+      "verbosity": 0.8,
+      "residency": "global",
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing"
     },
     {
       "id": "g41mini",
@@ -243,7 +279,9 @@
       "legacy": true,
       "retires": "2026-10-23",
       "capability": null,
-      "verbosity": 0.95
+      "verbosity": 0.95,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "dsv4f",
@@ -255,7 +293,9 @@
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
       "capability": null,
-      "verbosity": 0.9
+      "verbosity": 0.9,
+      "residency": "non-eu",
+      "residency_note": "operated outside the EU/US"
     },
     {
       "id": "g41nano",
@@ -269,7 +309,9 @@
       "legacy": true,
       "retires": "2026-10-23",
       "capability": null,
-      "verbosity": 0.9
+      "verbosity": 0.9,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "gem31fl",
@@ -281,7 +323,9 @@
       "verified_at": "2026-07-22",
       "source": "first-party pricing page",
       "capability": null,
-      "verbosity": 0.75
+      "verbosity": 0.75,
+      "residency": "global",
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing"
     },
     {
       "id": "opus5",
@@ -293,7 +337,9 @@
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
       "capability": 61,
-      "verbosity": 1.15
+      "verbosity": 1.15,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "dsv4pro",
@@ -305,12 +351,15 @@
       "verified_at": "2026-08-03",
       "source": "first-party pricing page",
       "capability": null,
-      "verbosity": 0.95
+      "verbosity": 0.95,
+      "residency": "non-eu",
+      "residency_note": "operated outside the EU/US"
     }
   ],
   "last_change": "2026-08-03",
   "fields": {
     "capability": "Artificial Analysis Intelligence Index (~61 max); null when the model has no published score",
-    "verbosity": "answer-length multiplier vs a neutral baseline; output tokens scale by this"
+    "verbosity": "answer-length multiplier vs a neutral baseline; output tokens scale by this",
+    "residency": "us | global | non-eu | self \u2014 where the API operator processes data. A hard constraint for EU buyers, applied before cost."
   }
 }

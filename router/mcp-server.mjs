@@ -15,21 +15,26 @@
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { decide, counterfactual, jobCost, TASK_CLASSES } from "./engine.mjs";
+import { decide, counterfactual, jobCost, euHostModels, TASK_CLASSES } from "./engine.mjs";
 import { record, summary } from "./ledger.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FEED_URL = process.env.PERDOLLAR_FEED || "https://per-dollar.vercel.app/api/prices.json";
 const LOCAL_FEED = join(HERE, "..", "api", "prices.json");
+const EU_HOSTS = join(HERE, "..", "data", "eu-hosts.json");
+function withEuHosts(list) {
+  try { return [...list, ...euHostModels(JSON.parse(readFileSync(EU_HOSTS, "utf8")))]; }
+  catch { return list; }
+}
 
 let cache = null, cachedAt = 0;
 async function models() {
   if (cache && Date.now() - cachedAt < 3600e3) return cache;
   try {
     const r = await fetch(FEED_URL, { headers: { Accept: "application/json" } });
-    if (r.ok) { const j = await r.json(); cache = j.models; cachedAt = Date.now(); return cache; }
+    if (r.ok) { const j = await r.json(); cache = withEuHosts(j.models); cachedAt = Date.now(); return cache; }
   } catch { /* fall through to the bundled copy */ }
-  if (existsSync(LOCAL_FEED)) { cache = JSON.parse(readFileSync(LOCAL_FEED, "utf8")).models; cachedAt = Date.now(); return cache; }
+  if (existsSync(LOCAL_FEED)) { cache = withEuHosts(JSON.parse(readFileSync(LOCAL_FEED, "utf8")).models); cachedAt = Date.now(); return cache; }
   throw new Error("could not load the PerDollar price feed");
 }
 
@@ -51,6 +56,8 @@ const TOOLS = [
         cache_hit_rate: { type: "number", description: "0-1; agent loops re-read context, which changes the ranking" },
         allow_unscored: { type: "boolean", description: "include models with no published capability score" },
         exclude_legacy: { type: "boolean", description: "drop provider-deprecated models (default true)" },
+        residency: { type: "string", enum: ["any", "eu-ok", "eu", "eu-de"],
+          description: "data-residency requirement. 'eu-de' = must stay in Germany, 'eu' = anywhere in the EU, 'eu-ok' = EU preferred but global endpoints acceptable. Applied before cost: it is a compliance constraint, not a preference." },
       },
       required: ["task"],
     },
@@ -89,7 +96,7 @@ async function callTool(name, args = {}) {
       models: ms, task: args.task, tokensIn: args.tokens_in, tokensOut: args.tokens_out,
       available: args.available, minCapability: args.min_capability,
       cacheHitRate: args.cache_hit_rate ?? 0, allowUnscored: args.allow_unscored ?? false,
-      excludeLegacy: args.exclude_legacy ?? true,
+      excludeLegacy: args.exclude_legacy ?? true, residency: args.residency,
     });
   }
   if (name === "perdollar_report") {

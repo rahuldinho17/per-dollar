@@ -28,7 +28,8 @@ const API = "https://openrouter.ai/api/v1/models";
 
 const EPSILON = 1e-6;      // ignore float noise
 const PROMO_BAND = 0.95;   // fetched < 95% of standard => promo, not a permanent cut
-const MAX_JUMP = 5;        // anomaly gate on standard-price changes
+const MAX_CUT   = 5;      // a 5x cut is plausible in this market
+const MAX_HIKE  = 1.25;   // a >25% rise is rare enough that a human should look at it
 const DISCOVERY_TTL_DAYS = 60;      // drop stale unreviewed discoveries
 const DISCOVERY_MAX_AGE_DAYS = 45;  // only queue genuinely NEW listings
 const DISCOVERY_CAP = 40;           // a queue nobody can read is not a queue
@@ -69,7 +70,8 @@ function writePublicFeed(prices, ROOT) {
       const e = { id: m.id, name, provider,
         input_per_mtok: m.inP, output_per_mtok: m.outP,
         verification: m.verification || "verified",
-        verified_at: m.verified_at ?? null, source: m.source ?? null };
+        verified_at: m.verified_at ?? null, source: m.source ?? null,
+        residency: m.residency ?? null, residency_note: m.residency_note ?? null };
       if (m.promoIn != null) e.promo = { input_per_mtok: m.promoIn, output_per_mtok: m.promoOut, ends: m.promoEnds ?? null };
       return e;
     }),
@@ -141,13 +143,22 @@ async function main() {
       }
 
       const ratio = std > 0 ? next / std : Infinity;
-      if (ratio > MAX_JUMP || ratio < 1 / MAX_JUMP) { anomalies.push({ id: model.id, dim, prev: std, next }); continue; }
+      if (ratio > MAX_HIKE || ratio < 1 / MAX_CUT) {
+        anomalies.push({ id: model.id, dim, prev: std, next,
+          why: ratio > MAX_HIKE ? `+${Math.round((ratio - 1) * 100)}% — check the slug maps to the right SKU` : `${Math.round((1 - ratio) * 100)}% cut — unusually large` });
+        continue;
+      }
 
       log({ model: model.id, dimension: dim, old: std, new: next, kind: next < std ? "cut" : "hike" });
       model[dim] = next;
       model[promoKey] = null;
+      // A machine changed this number, so the human verification no longer applies to it.
+      // Keeping verified_at/source here silently launders a scrape into a human check —
+      // the exact provenance corruption this product exists to prevent.
       model.verification = "auto-tracked";
       model.tracked_at = today;
+      model.verified_at = null;
+      model.source = "openrouter-api";
     }
   }
 
@@ -249,7 +260,7 @@ async function main() {
   }
   if (anomalies.length) {
     console.log("ANOMALIES held for human review (not applied):");
-    for (const a of anomalies) console.log(`  ${a.id}.${a.dim}: ${a.prev} -> ${a.next}`);
+    for (const a of anomalies) console.log(`  ${a.id}.${a.dim}: ${a.prev} -> ${a.next}  (${a.why})`);
   }
 }
 

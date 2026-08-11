@@ -50,5 +50,21 @@ ok("measured beats inference",
 const cheap = estimateCapability(models.find(x => x.id === "gem31fl"), { siblings: models });
 ok("never guesses high for cheap unscored", cheap.score === null || cheap.score <= 45, JSON.stringify(cheap));
 
+console.log("residency (T1.1)");
+{
+  const { euHostModels } = await import("./engine.mjs");
+  const eu = JSON.parse(readFileSync(join(HERE, "..", "data", "eu-hosts.json"), "utf8"));
+  const euModels = euHostModels(eu);
+  ok("eu hosts load", euModels.length >= 5, `(${euModels.length})`);
+  ok("eu hosts are tracked, never verified", euModels.every(m => m.verification === "tracked"));
+  const all = [...models, ...euModels];
+  const de = decide({ models: all, task: "product-copy", residency: "eu-de", allowUnscored: true });
+  ok("eu-de returns a German host", !de.error && de.recommended.residency === "eu-de", JSON.stringify(de.error || de.recommended.residency));
+  const anyR = decide({ models: all, task: "product-copy", residency: "any", allowUnscored: true });
+  ok("residency never cheaper than unconstrained", de.recommended.cost_per_job >= anyR.recommended.cost_per_job);
+  ok("no model satisfies eu-de without eu hosts", !!decide({ models, task: "product-copy", residency: "eu-de", allowUnscored: true }).error);
+  ok("residency echoed in assumptions", decide({ models: all, task: "summarize", residency: "eu" }).assumptions.residency === "eu");
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

@@ -45,6 +45,7 @@ export default function handler(req, res) {
         cache_hit_rate: "0-1; changes the ranking on context-heavy work",
         allow_unscored: "include models with no published capability score",
         exclude_legacy: "drop provider-deprecated models (default true)",
+        residency: "any | eu-ok | eu | eu-de — data-residency requirement, applied before cost",
         tokens_in: "real input token count, overrides the task estimate",
         tokens_out: "real output token count",
       },
@@ -67,6 +68,7 @@ export default function handler(req, res) {
     allowUnscored: bool(q.allow_unscored, false),
     excludeLegacy: bool(q.exclude_legacy, true),
     requireVerified: bool(q.require_verified, false),
+    residency: q.residency,
   });
 
   res.setHeader("Cache-Control", "public, max-age=300");

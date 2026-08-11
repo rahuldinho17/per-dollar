@@ -7,12 +7,17 @@
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { decide, counterfactual, TASK_CLASSES } from "./engine.mjs";
+import { decide, counterfactual, euHostModels, TASK_CLASSES } from "./engine.mjs";
 import { record, summary, reset } from "./ledger.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FEED = join(HERE, "..", "api", "prices.json");
-const models = () => JSON.parse(readFileSync(FEED, "utf8")).models;
+const EU = join(HERE, "..", "data", "eu-hosts.json");
+const models = () => {
+  const base = JSON.parse(readFileSync(FEED, "utf8")).models;
+  try { return [...base, ...euHostModels(JSON.parse(readFileSync(EU, "utf8")))]; }
+  catch { return base; }
+};
 
 const argv = process.argv.slice(2);
 const cmd = argv[0];
@@ -27,6 +32,7 @@ if (cmd === "route") {
     available: flag("available") ? flag("available").split(",") : undefined,
     minCapability: flag("min-capability") ? +flag("min-capability") : undefined,
     cacheHitRate: flag("cache") ? +flag("cache") : 0,
+    residency: flag("residency"),
     allowUnscored: has("allow-unscored"), excludeLegacy: !has("include-legacy"),
   }));
 } else if (cmd === "report") {
@@ -45,7 +51,8 @@ if (cmd === "route") {
 } else {
   console.log(`PerDollar router
 
-  route <task> [--available a,b] [--min-capability N] [--cache 0.8]
+  route <task> [--residency eu-de|eu|eu-ok|any] [--available a,b]
+               [--min-capability N] [--cache 0.8]
                [--allow-unscored] [--include-legacy] [--in N] [--out N]
   report --used ID --default ID --in N --out N [--task NAME] [--outcome success|failure] [--retries N]
   savings [--since YYYY-MM-DD]
