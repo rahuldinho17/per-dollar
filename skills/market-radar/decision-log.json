@@ -33,5 +33,40 @@
     "theme": "gtm-copy",
     "decision": "accept",
     "reason": "Lead outreach with validated switches, not visibility. Messaging principle, applied in calls."
+  },
+  {
+    "date": "2026-08-11",
+    "id": "MR-2026-W33-01",
+    "theme": "defensibility",
+    "decision": "accept",
+    "reason": "Lead with residency + counterfactual proof; comparison layer is commoditised."
+  },
+  {
+    "date": "2026-08-11",
+    "id": "MR-2026-W33-02",
+    "theme": "data-trust",
+    "decision": "accept",
+    "reason": "Split price-trend narrative: frontier falling, budget tier rising."
+  },
+  {
+    "date": "2026-08-11",
+    "id": "MR-2026-W33-03",
+    "theme": "vertical-depth",
+    "decision": "accept",
+    "reason": "Expand EU/DE host dataset \u2014 the only uncontested data."
+  },
+  {
+    "date": "2026-08-11",
+    "id": "MR-2026-W33-04",
+    "theme": "positioning",
+    "decision": "accept",
+    "reason": "Retire Indices; BenchLM does it with more history."
+  },
+  {
+    "date": "2026-08-11",
+    "id": "MR-2026-W33-05",
+    "theme": "data-feed",
+    "decision": "accept",
+    "reason": "Build decision feed; deferral condition (real consumer) met via Kai."
   }
 ]

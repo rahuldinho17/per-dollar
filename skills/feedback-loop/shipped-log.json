@@ -97,5 +97,60 @@
     "grade": "too-early",
     "outcome": "",
     "lesson": ""
+  },
+  {
+    "id": "MR-2026-W33-01",
+    "shipped": "2026-08-11",
+    "theme": "defensibility",
+    "change": "Standfirst leads with residency, not comparison",
+    "hypothesis": "Comparison is commoditised; residency is uncontested",
+    "success_metric": "prospects repeat the residency framing back",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  },
+  {
+    "id": "MR-2026-W33-02",
+    "shipped": "2026-08-11",
+    "theme": "data-trust",
+    "change": "Price-direction note: frontier falling, budget tier rising",
+    "hypothesis": "Correcting our own narrative pre-empts a technical buyer correcting it",
+    "success_metric": "no prospect challenges the falling-price claim",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  },
+  {
+    "id": "MR-2026-W33-03",
+    "shipped": "2026-08-11",
+    "theme": "vertical-depth",
+    "change": "EU host dataset expanded to 9 hosts / 18 offerings",
+    "hypothesis": "The only dataset no competitor carries",
+    "success_metric": "a residency query returns a usable answer in every EU variant",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  },
+  {
+    "id": "MR-2026-W33-04",
+    "shipped": "2026-08-11",
+    "theme": "positioning",
+    "change": "Indices section retired",
+    "hypothesis": "Defending a feature BenchLM does better costs more than cutting it",
+    "success_metric": "no one asks where the indices went",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
+  },
+  {
+    "id": "MR-2026-W33-05",
+    "shipped": "2026-08-11",
+    "theme": "data-feed",
+    "change": "/api/decide \u2014 decision feed with residency",
+    "hypothesis": "A decision feed beats a data feed; PPT ships data",
+    "success_metric": "one external consumer calls it \u2014 ShopAgentic first",
+    "grade": "too-early",
+    "outcome": "",
+    "lesson": ""
   }
 ]

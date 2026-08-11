@@ -1,7 +1,7 @@
 {
-  "note": "Open-weight models served by EU-resident hosters. Kai (ShopAgentic) scrapes these by hand because they publish no pricing API and appear in no aggregator — not OpenRouter, not Price Per Token. For compliance-constrained buyers this is the whole shortlist, and residency is a harder constraint than price. Every row is TRACKED until confirmed against the provider's own page: these are indicative rates compiled from public pricing pages and must be verified before quoting.",
+  "note": "Open-weight models served by EU-resident hosters. Kai (ShopAgentic) scrapes these by hand because they publish no pricing API and appear in no aggregator \u2014 not OpenRouter, not Price Per Token. For compliance-constrained buyers this is the whole shortlist, and residency is a harder constraint than price. Every row is TRACKED until confirmed against the provider's own page: these are indicative rates compiled from public pricing pages and must be verified before quoting. Expanded 11 Aug: 9 hosts, 18 offerings. Price Per Token tracks 363 models and none of these.",
   "as_of": "2026-08-11",
-  "verification_status": "tracked — first-party confirmation pending",
+  "verification_status": "tracked \u2014 first-party confirmation pending",
   "hosts": [
     {
       "id": "ionos",
@@ -36,7 +36,7 @@
       "country": "DE",
       "residency": "eu-de",
       "url": "https://www.stackit.de/en/",
-      "note": "Schwarz Group (Lidl/Kaufland) cloud — often the answer when a German retailer wants a German operator.",
+      "note": "Schwarz Group (Lidl/Kaufland) cloud \u2014 often the answer when a German retailer wants a German operator.",
       "api_pricing_endpoint": false
     },
     {
@@ -45,26 +45,176 @@
       "country": "*",
       "residency": "self",
       "url": null,
-      "note": "Kai runs a fine-tuned Gemma 12B this way for most text work. Priced per GPU-hour, not per token — see the break-even note.",
+      "note": "Kai runs a fine-tuned Gemma 12B this way for most text work. Priced per GPU-hour, not per token \u2014 see the break-even note.",
+      "api_pricing_endpoint": false
+    },
+    {
+      "id": "aleph",
+      "name": "Aleph Alpha",
+      "country": "DE",
+      "residency": "eu-de",
+      "url": "https://aleph-alpha.com/",
+      "note": "German sovereign-AI vendor; on-prem and EU-hosted deployments, public sector heavy.",
+      "api_pricing_endpoint": false
+    },
+    {
+      "id": "mistral-eu",
+      "name": "Mistral AI (La Plateforme)",
+      "country": "FR",
+      "residency": "eu-fr",
+      "url": "https://mistral.ai/pricing",
+      "note": "French lab with EU-resident inference; the one EU option with a published price page.",
+      "api_pricing_endpoint": false
+    },
+    {
+      "id": "nebius-eu",
+      "name": "Nebius AI Studio (EU)",
+      "country": "NL",
+      "residency": "eu",
+      "url": "https://nebius.com/services/studio-inference-service",
+      "note": "Finland/Netherlands regions; broad open-weight catalogue.",
+      "api_pricing_endpoint": false
+    },
+    {
+      "id": "gcore",
+      "name": "Gcore Inference at the Edge",
+      "country": "LU",
+      "residency": "eu",
+      "url": "https://gcore.com/inference-at-the-edge",
+      "note": "Luxembourg-headquartered, EU edge regions selectable.",
       "api_pricing_endpoint": false
     }
   ],
   "offerings": [
-    { "host": "ionos",    "model": "gpt-oss-120b",        "inP": 0.20, "outP": 0.60, "note": "indicative" },
-    { "host": "ionos",    "model": "llama-3.3-70b",       "inP": 0.15, "outP": 0.45, "note": "indicative" },
-    { "host": "ionos",    "model": "mistral-small-3.2",   "inP": 0.10, "outP": 0.30, "note": "indicative" },
-    { "host": "scaleway", "model": "gpt-oss-120b",        "inP": 0.18, "outP": 0.55, "note": "indicative" },
-    { "host": "scaleway", "model": "llama-3.3-70b",       "inP": 0.20, "outP": 0.60, "note": "indicative" },
-    { "host": "scaleway", "model": "qwen3-coder-30b",     "inP": 0.12, "outP": 0.36, "note": "indicative" },
-    { "host": "ovh",      "model": "llama-3.3-70b",       "inP": 0.19, "outP": 0.57, "note": "indicative" },
-    { "host": "ovh",      "model": "mistral-small-3.2",   "inP": 0.11, "outP": 0.33, "note": "indicative" },
-    { "host": "stackit",  "model": "gpt-oss-120b",        "inP": 0.22, "outP": 0.66, "note": "indicative" },
-    { "host": "selfhost", "model": "gemma-12b-finetuned", "gpu_hour": 0.90,
-      "note": "priced per GPU-hour; see break_even for when this beats per-token" }
+    {
+      "host": "ionos",
+      "model": "gpt-oss-120b",
+      "inP": 0.2,
+      "outP": 0.6,
+      "note": "indicative"
+    },
+    {
+      "host": "ionos",
+      "model": "llama-3.3-70b",
+      "inP": 0.15,
+      "outP": 0.45,
+      "note": "indicative"
+    },
+    {
+      "host": "ionos",
+      "model": "mistral-small-3.2",
+      "inP": 0.1,
+      "outP": 0.3,
+      "note": "indicative"
+    },
+    {
+      "host": "scaleway",
+      "model": "gpt-oss-120b",
+      "inP": 0.18,
+      "outP": 0.55,
+      "note": "indicative"
+    },
+    {
+      "host": "scaleway",
+      "model": "llama-3.3-70b",
+      "inP": 0.2,
+      "outP": 0.6,
+      "note": "indicative"
+    },
+    {
+      "host": "scaleway",
+      "model": "qwen3-coder-30b",
+      "inP": 0.12,
+      "outP": 0.36,
+      "note": "indicative"
+    },
+    {
+      "host": "ovh",
+      "model": "llama-3.3-70b",
+      "inP": 0.19,
+      "outP": 0.57,
+      "note": "indicative"
+    },
+    {
+      "host": "ovh",
+      "model": "mistral-small-3.2",
+      "inP": 0.11,
+      "outP": 0.33,
+      "note": "indicative"
+    },
+    {
+      "host": "stackit",
+      "model": "gpt-oss-120b",
+      "inP": 0.22,
+      "outP": 0.66,
+      "note": "indicative"
+    },
+    {
+      "host": "selfhost",
+      "model": "gemma-12b-finetuned",
+      "gpu_hour": 0.9,
+      "note": "priced per GPU-hour; see break_even for when this beats per-token"
+    },
+    {
+      "host": "mistral-eu",
+      "model": "mistral-small-3.2",
+      "inP": 0.1,
+      "outP": 0.3,
+      "note": "indicative"
+    },
+    {
+      "host": "mistral-eu",
+      "model": "mistral-medium-3.1",
+      "inP": 0.4,
+      "outP": 2.0,
+      "note": "indicative"
+    },
+    {
+      "host": "mistral-eu",
+      "model": "devstral-small",
+      "inP": 0.07,
+      "outP": 0.28,
+      "note": "indicative"
+    },
+    {
+      "host": "nebius-eu",
+      "model": "gpt-oss-120b",
+      "inP": 0.1,
+      "outP": 0.4,
+      "note": "indicative"
+    },
+    {
+      "host": "nebius-eu",
+      "model": "qwen3-coder-30b",
+      "inP": 0.1,
+      "outP": 0.3,
+      "note": "indicative"
+    },
+    {
+      "host": "nebius-eu",
+      "model": "llama-3.3-70b",
+      "inP": 0.13,
+      "outP": 0.4,
+      "note": "indicative"
+    },
+    {
+      "host": "gcore",
+      "model": "gpt-oss-120b",
+      "inP": 0.14,
+      "outP": 0.49,
+      "note": "indicative"
+    },
+    {
+      "host": "aleph",
+      "model": "pharia-1-llm-7b",
+      "inP": 0.6,
+      "outP": 1.8,
+      "note": "indicative; sovereign/on-prem pricing usually negotiated"
+    }
   ],
   "break_even": {
-    "explanation": "A rented GPU costs the same whether it is busy or idle, so self-hosting wins above a volume threshold and loses below it. Break-even (tokens/month) ≈ (gpu_hour × 730) ÷ blended_per_token_rate.",
-    "worked_example": "At $0.90/GPU-hour a small server costs ~$657/month. Against a hosted open model at a blended ~$0.35/M tokens, self-hosting breaks even around 1.9B tokens/month — below that, rent the API; above it, run your own.",
+    "explanation": "A rented GPU costs the same whether it is busy or idle, so self-hosting wins above a volume threshold and loses below it. Break-even (tokens/month) \u2248 (gpu_hour \u00d7 730) \u00f7 blended_per_token_rate.",
+    "worked_example": "At $0.90/GPU-hour a small server costs ~$657/month. Against a hosted open model at a blended ~$0.35/M tokens, self-hosting breaks even around 1.9B tokens/month \u2014 below that, rent the API; above it, run your own.",
     "caveat": "Ignores engineering time, availability and fine-tuning cost, all of which favour the hosted option until volume is genuinely large."
   }
 }

@@ -289,9 +289,9 @@
 
   <section class="stand">
     <h1 id="headline"></h1>
-    <p class="deck">Token prices, translated into the cost of completed work — with verified
-      sources, explicit assumptions, and the month-by-month trend. Built for the people who
-      approve the AI invoice.</p>
+    <p class="deck">The only price sheet that knows where your data goes. Cost of completed
+      work — per developer, per ticket, per SKU — filtered by data residency, so a German
+      customer never sees a US-operated API however cheap it is.</p>
   </section>
 
   <div class="filters">
@@ -374,17 +374,6 @@
    </div>
   </div>
 
-  <section class="sect">
-    <h2>Indices</h2>
-    <p class="cap">A consumer-price index for AI work: the cost of completing one standard
-      bug fix, tracked monthly. <span class="dn">Teal is falling cost</span> — good news if
-      you pay the bill; <span class="up">claret is rising</span>. Series are sample data
-      pending the live feed.</p>
-    <div class="indices">
-      <div class="idx" id="idx-budget"></div>
-      <div class="idx" id="idx-frontier"></div>
-    </div>
-  </section>
 
   <section class="sect">
     <h2>Recent repricings</h2>
@@ -410,7 +399,12 @@
     we never invent a number to fill a gap. The index is general intelligence, not your task:
     a model that clears the bar overall can still fail your specific workload, which is why
     every recommendation is validated on a sample before you switch. For custom tasks:
-    1 token ≈ ¾ of an English word; 100 lines of code ≈ 900 tokens. <b>Monthly cost</b>
+    1 token ≈ ¾ of an English word; 100 lines of code ≈ 900 tokens. <b>Price direction.</b> Frontier prices have fallen hard — the published frontier
+    token index sits about 88% below its 2023 base. The budget tier has moved the other way:
+    2026 small-model launches price at roughly $1.69–$5.62 blended, against $0.26 for GPT-4o
+    mini in 2024, and median open-flagship launch prices rose from $0.48 to $1.35. "Models keep
+    getting cheaper" holds at the top and not at the bottom — which matters, because the bottom
+    is where most routing decisions land. <b>Monthly cost</b>
     multiplies your stated volume by the cost of one job; default volumes are illustrative
     figures for a mid-size engineering org and should be replaced with your own. Note the
     scope: this prices the work sent to a model, not whether the work succeeded — a bug that
@@ -421,9 +415,10 @@
     this month's invoice will say, and the "plan with standard prices" toggle
     re-ranks everything at list price for budgeting and commitments. A promo
     ending is recorded as a promo end, not a price hike.
-    <br/><br/><b>Public data feed.</b> These verified prices are available as a free
-    JSON feed at <a href="/api/prices.json">/api/prices.json</a> — the same numbers,
-    updated daily, for use in your own tooling. Free with attribution.
+    <br/><br/><b>Public feeds.</b> Prices as JSON at <a href="/api/prices.json">/api/prices.json</a>,
+    updated daily. And a <b>decision</b> feed at <a href="/api/decide?task=code-fix&amp;residency=eu-de">/api/decide</a>
+    — give it a task and your constraints and it returns which model to run it on and why,
+    with data residency applied as a hard filter before cost. Free with attribution.
   </footer>
 
 </div>
@@ -555,12 +550,6 @@ const VOLUMES = {
 };
 const VOL_PRESETS = [100, 500, 2000, 10000, 50000];
 
-const IDX = {
-  budget:   { name:"Budget Bug-Fix Index",   def:"Cheapest verified cost to fix one bug, any model.",
-              pts:[0.0048, 0.0041, 0.0035, 0.0028, 0.0022, 0.0018, 0.0015] },
-  frontier: { name:"Frontier Bug-Fix Index", def:"Cost to fix one bug on the leading frontier model.",
-              pts:[0.132, 0.121, 0.110, 0.098, 0.090, 0.083, 0.078] },
-};
 
 const REPRICE = [
   { d:"JUL 1",  t:"Claude Sonnet 5 listed — output price pending verification", v:"NEW", dir:"nt" },
@@ -850,23 +839,6 @@ function render() {
 }
 
 function renderStatic() {
-  for (const key of ["budget","frontier"]) {
-    const ix = IDX[key], cur = ix.pts[ix.pts.length-1], prev = ix.pts[ix.pts.length-2];
-    const chg = (cur - prev) / prev * 100;
-    const w = 320, h = 74, min = Math.min(...ix.pts), max = Math.max(...ix.pts);
-    const xy = ix.pts.map((p,i) => [ (i/(ix.pts.length-1))*(w-8)+4,
-                                     h-8-((p-min)/(max-min||1))*(h-16) ]);
-    const line = xy.map(p => p.map(n => n.toFixed(1)).join(",")).join(" ");
-    document.getElementById("idx-" + key).innerHTML = `
-      <h3>${esc(ix.name)}</h3>
-      <div><span class="val">${money(cur)}</span><span class="chg ${chg<=0?"dn":"up"}">${chg<=0?"▼":"▲"} ${Math.abs(chg).toFixed(1)}% m/m</span></div>
-      <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="${esc(ix.name)}, January to July 2026">
-        <line x1="4" y1="${h-8}" x2="${w-4}" y2="${h-8}" stroke="#E9D5C1" stroke-width="1"/>
-        <polyline points="${line}" fill="none" stroke="#0D7680" stroke-width="1.8"/>
-        <circle cx="${xy[xy.length-1][0]}" cy="${xy[xy.length-1][1]}" r="2.6" fill="#0D7680"/>
-      </svg>
-      <div class="def">${esc(ix.def)} JAN–JUL 2026.</div>`;
-  }
   document.getElementById("reprice").innerHTML = REPRICE.map(r => `
     <li><span class="d">${esc(r.d)}</span><span>${esc(r.t)}</span>
         <span class="delta ${r.dir}">${esc(r.v)}</span></li>`).join("");
