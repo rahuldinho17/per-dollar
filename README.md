@@ -150,3 +150,12 @@ items from the project so far.
 `node scripts/verify.mjs --stamp ...`, which reads the system date — never write a
 date by hand into `data/prices.json`. A mis-stamped verification date is worse than
 a stale one: it asserts a check that did not happen on that day.
+
+### Reviewing promos
+
+`node scripts/verify.mjs --promos` lists every model carrying a promotional price with
+its discount ratio, and flags the patterns that mean we have mislabelled a pricing
+*tier* as a promotion — an exact 50/50 discount is the batch-API signature, ~10% is a
+cached-input rate, and an uneven input/output split usually means two different SKUs.
+Then either `--promo-confirm <ids> --ends YYYY-MM-DD` or `--promo-clear <ids>`; both
+write to the changelog, clears as corrections.

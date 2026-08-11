@@ -5,8 +5,8 @@
   "models": [
     {
       "id": "opus5",
-      "inP": 5.0,
-      "outP": 25.0,
+      "inP": 5,
+      "outP": 25,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
@@ -17,8 +17,8 @@
     },
     {
       "id": "gpt56sol",
-      "inP": 5.0,
-      "outP": 30.0,
+      "inP": 5,
+      "outP": 30,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
@@ -29,8 +29,8 @@
     },
     {
       "id": "fable5",
-      "inP": 10.0,
-      "outP": 50.0,
+      "inP": 10,
+      "outP": 50,
       "verification": "tracked",
       "source": "published provider comparison",
       "verified_at": null,
@@ -41,8 +41,8 @@
     },
     {
       "id": "gpt55",
-      "inP": 5.0,
-      "outP": 30.0,
+      "inP": 5,
+      "outP": 30,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-07-22",
@@ -52,8 +52,8 @@
     },
     {
       "id": "opus48",
-      "inP": 5.0,
-      "outP": 25.0,
+      "inP": 5,
+      "outP": 25,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
@@ -65,8 +65,8 @@
     },
     {
       "id": "gpt56ter",
-      "inP": 2.0,
-      "outP": 12.0,
+      "inP": 2,
+      "outP": 12,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
@@ -74,12 +74,15 @@
       "cachedIn": 0.2,
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false
+      "self_hosted": false,
+      "promoIn": 1,
+      "promoOut": 6,
+      "promoEnds": null
     },
     {
       "id": "gpt54",
       "inP": 2.5,
-      "outP": 15.0,
+      "outP": 15,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-07-22",
@@ -89,20 +92,23 @@
     },
     {
       "id": "son5",
-      "inP": 3.0,
-      "outP": 15.0,
+      "inP": 3,
+      "outP": 15,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
       "tracked_at": "2026-07-22",
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false
+      "self_hosted": false,
+      "promoIn": 2,
+      "promoOut": 10,
+      "promoEnds": null
     },
     {
       "id": "son46",
-      "inP": 3.0,
-      "outP": 15.0,
+      "inP": 3,
+      "outP": 15,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
@@ -113,8 +119,8 @@
     },
     {
       "id": "kimik3",
-      "inP": 3.0,
-      "outP": 15.0,
+      "inP": 3,
+      "outP": 15,
       "verification": "tracked",
       "source": "published provider comparison",
       "verified_at": null,
@@ -125,8 +131,8 @@
     },
     {
       "id": "gem31p",
-      "inP": 2.0,
-      "outP": 12.0,
+      "inP": 2,
+      "outP": 12,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
@@ -136,8 +142,8 @@
     },
     {
       "id": "grok45",
-      "inP": 2.0,
-      "outP": 6.0,
+      "inP": 2,
+      "outP": 6,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
@@ -156,7 +162,10 @@
       "tracked_at": "2026-07-22",
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false
+      "self_hosted": false,
+      "promoIn": 0.95,
+      "promoOut": 4.05,
+      "promoEnds": null
     },
     {
       "id": "gpt56lun",
@@ -169,7 +178,10 @@
       "cachedIn": 0.02,
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false
+      "self_hosted": false,
+      "promoIn": 0.1,
+      "promoOut": 0.6,
+      "promoEnds": null
     },
     {
       "id": "gem36f",
@@ -186,19 +198,22 @@
     {
       "id": "glm52",
       "inP": 0.94,
-      "outP": 3.0,
+      "outP": 3,
       "verification": "tracked",
       "source": "published provider comparison",
       "verified_at": null,
       "tracked_at": "2026-07-22",
       "residency": "non-eu",
       "residency_note": "operated outside the EU/US",
-      "self_hosted": false
+      "self_hosted": false,
+      "promoIn": 0.76,
+      "promoOut": 2.42,
+      "promoEnds": null
     },
     {
       "id": "haiku45",
-      "inP": 1.0,
-      "outP": 5.0,
+      "inP": 1,
+      "outP": 5,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-03",
@@ -223,7 +238,7 @@
     {
       "id": "gem3f",
       "inP": 0.5,
-      "outP": 3.0,
+      "outP": 3,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-07-22",

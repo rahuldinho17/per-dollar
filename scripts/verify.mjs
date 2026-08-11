@@ -43,6 +43,76 @@ const PROV = {
 };
 
 const prices = JSON.parse(readFileSync(PRICES, "utf8"));
+
+// ---- promo review mode ----------------------------------------------------
+// A promo is a price with a lifespan, so it needs confirming differently from a
+// standard price: is it real, and when does it end? Uniform discounts are the
+// tell that we have picked up a pricing TIER (batch is ~50%, cached ~10%) and
+// mislabelled it as a promotion.
+if (process.argv.includes("--promos")) {
+  const rows = prices.models.filter((m) => m.promoIn != null || m.promoOut != null);
+  if (!rows.length) { console.log("\nNo promos currently tracked.\n"); process.exit(0); }
+
+  console.log(`\nPROMO REVIEW — ${today}`);
+  console.log(`${rows.length} model(s) carry a promotional price. Confirm each against the`);
+  console.log(`provider's own page: is it a real, time-limited offer — and when does it end?\n`);
+
+  for (const m of rows) {
+    const prov = PROV[m.id] || "?";
+    const inPct = m.promoIn != null ? (m.promoIn / m.inP) * 100 : null;
+    const outPct = m.promoOut != null ? (m.promoOut / m.outP) * 100 : null;
+    const near = (v, t) => v != null && Math.abs(v - t) < 3;
+    let suspicion = "";
+    if (near(inPct, 50) && near(outPct, 50)) suspicion = "  ⚠ exactly 50% — this is the batch-API discount signature, not a promo";
+    else if (near(inPct, 10) && near(outPct, 10)) suspicion = "  ⚠ ~10% — looks like a cached-input rate, not a promo";
+    else if (inPct != null && outPct != null && Math.abs(inPct - outPct) > 20)
+      suspicion = "  ⚠ input and output discounted unevenly — check you are comparing the same SKU";
+
+    console.log(`  [ ] ${m.id.padEnd(9)} ${prov}`);
+    console.log(`        standard  $${m.inP} in / $${m.outP} out`);
+    console.log(`        promo     $${m.promoIn ?? "—"} in / $${m.promoOut ?? "—"} out` +
+                `   (${inPct != null ? inPct.toFixed(0) : "—"}% / ${outPct != null ? outPct.toFixed(0) : "—"}%)`);
+    console.log(`        ends      ${m.promoEnds || "UNANNOUNCED"}`);
+    console.log(`        source    ${SOURCES[prov] || "?"}`);
+    if (suspicion) console.log(suspicion);
+    console.log("");
+  }
+  console.log(`  Confirm a real promo and set its end date:`);
+  console.log(`    node scripts/verify.mjs --promo-confirm mm3 --ends 2026-09-30`);
+  console.log(`  Not a promo (it was a batch/cached tier, or it has ended):`);
+  console.log(`    node scripts/verify.mjs --promo-clear gpt56ter,gpt56lun\n`);
+  process.exit(0);
+}
+
+if (process.argv.includes("--promo-confirm") || process.argv.includes("--promo-clear")) {
+  const changelog = JSON.parse(readFileSync(CHANGELOG, "utf8"));
+  const flagAt = (n) => { const i = process.argv.indexOf(n); return i >= 0 ? process.argv[i + 1] : null; };
+  const confirm = flagAt("--promo-confirm");
+  const clear = flagAt("--promo-clear");
+  const ends = flagAt("--ends");
+  let n = 0;
+
+  for (const m of prices.models) {
+    if (confirm && confirm.split(",").includes(m.id)) {
+      m.promoEnds = ends || null;
+      m.promo_verified_at = today;
+      changelog.push({ date: today, model: m.id, kind: "promo_confirmed", source: "human re-verification",
+        note: `promo confirmed first-party${ends ? `, ends ${ends}` : ", end date unannounced"}` });
+      n++;
+    }
+    if (clear && clear.split(",").includes(m.id)) {
+      changelog.push({ date: today, model: m.id, kind: "correction", source: "human re-verification",
+        note: `promo removed — ${m.promoIn}/${m.promoOut} was not a promotional rate (likely a batch or cached tier)` });
+      m.promoIn = null; m.promoOut = null; m.promoEnds = null;
+      n++;
+    }
+  }
+  writeFileSync(PRICES, JSON.stringify(prices, null, 2) + "\n");
+  writeFileSync(CHANGELOG, JSON.stringify(changelog, null, 2) + "\n");
+  console.log(`updated ${n} model(s). Regenerate the feed: node scripts/refresh-prices.mjs`);
+  process.exit(0);
+}
+
 const arg = process.argv.find((a) => a.startsWith("--stamp"));
 const stampList = arg ? (process.argv[process.argv.indexOf(arg) + 1] || "").split(",").filter(Boolean) : null;
 
