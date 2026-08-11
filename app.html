@@ -136,9 +136,6 @@
   .assume details { margin-top: 6px; color: var(--ink-2); }
   .assume summary { cursor: pointer; color: var(--teal); font-size: 12.5px; }
   .assume summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
-  .pnote { border: 1px dashed var(--claret); background: var(--raised); padding: 10px 14px;
-    font-size: 12.5px; color: var(--ink-2); margin-top: 10px; max-width: 86ch; line-height: 1.55; }
-  .pnote b { font-family: "Spline Sans Mono", monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--claret); }
   .pbadge { font: 600 9px "Spline Sans Mono", monospace; letter-spacing: 0.1em;
     border: 1px solid var(--claret); color: var(--claret); padding: 1px 5px;
     border-radius: 2px; margin-left: 8px; vertical-align: 2px; white-space: nowrap; }
@@ -240,9 +237,29 @@
     font-size: 12.5px; font-weight: 600; white-space: nowrap; }
   .delta.dn { color: var(--teal); } .delta.up { color: var(--claret); } .delta.nt { color: var(--ink-2); }
 
-  .method { margin-top: 56px; border-top: 3px double var(--ink); padding: 16px 0 60px;
-    font-size: 13px; color: var(--ink-2); line-height: 1.7; max-width: 82ch; }
-  .method b { color: var(--ink); }
+  /* Methodology: 500+ words in one narrow column shouted for attention it did not
+     need. Now progressive disclosure in a full-width grid — quiet at rest, complete
+     on demand. Nothing is deleted, because provenance is the product. */
+  .method { margin-top: 56px; border-top: 3px double var(--ink); padding: 14px 0 60px; }
+  .mhead { font-family: "Spline Sans Mono", monospace; font-size: 10px; letter-spacing: 0.14em;
+    color: var(--ink-2); margin-bottom: 14px; }
+  .mhead span { color: var(--ink-3); letter-spacing: 0.04em; }
+  .mgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 2px 26px; }
+  .method details { border-top: 1px solid var(--wheat-2); padding: 9px 0; }
+  .method summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--ink);
+    list-style: none; display: flex; align-items: baseline; gap: 7px; }
+  .method summary::-webkit-details-marker { display: none; }
+  .method summary::before { content: "+"; font-family: "Spline Sans Mono", monospace;
+    font-size: 12px; color: var(--claret); width: 9px; flex: none; }
+  .method details[open] summary::before { content: "–"; }
+  .method summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+  .method details p, .method details { font-size: 12.5px; color: var(--ink-2); line-height: 1.6; }
+  .method details[open] { padding-bottom: 13px; }
+  .method details > :not(summary) { margin-top: 7px; }
+  .method b { color: var(--ink); font-weight: 600; }
+  .mfoot { margin-top: 22px; padding-top: 12px; border-top: 1px solid var(--wheat-2);
+    font-size: 12.5px; color: var(--ink-2); line-height: 1.6; max-width: 90ch; }
 
   /* S9: stacked ledger on phones */
   @media (max-width: 640px) {
@@ -329,7 +346,6 @@
   <p class="hint" id="hint"></p>
 
   <div class="assume" id="assume"></div>
-  <div class="pnote" id="pnote" hidden></div>
 
   <div class="legend">
     <div><b>COST / MONTH</b>What this workload costs at your stated size — 30 developers,
@@ -382,43 +398,67 @@
   </section>
 
   <footer class="method">
-    <b>Methodology.</b> Cost per job = (input tokens × input price) + (output tokens ×
-    answer-length factor × output price). Length factors estimate how long each model's
-    answers run for the same prompt — different tokenizers and response styles mean 1,000
-    tokens is not the same amount of answer everywhere; the live product measures these
-    per task. Prices are standard-tier, first-party API list rates verified 3 August 2026,
-    each linked to its source from the ledger; batch (~50% off) and cached-input (~90% off)
-    rates are excluded here. Task definitions are usage-weighted from published studies
-    (Anthropic Economic Index, OpenRouter State of AI, OpenAI usage report); each task
-    states its assumptions above the ledger, and token footprints are estimates until the
-    benchmark suite replaces them with measured medians. <b>Capability.</b> The CAPABILITY column is the Artificial Analysis Intelligence
-    Index (v4.1), tracked 3 Aug 2026 — an independent third-party score, not ours. VALUE is capability
-    per euro of job cost, shown as a rating against the best option currently in view rather
-    than a raw ratio — the underlying figure (capability points per $1) is on hover. Models
-    with no published score show "no score" and are excluded when a capability floor is set;
-    we never invent a number to fill a gap. The index is general intelligence, not your task:
-    a model that clears the bar overall can still fail your specific workload, which is why
-    every recommendation is validated on a sample before you switch. For custom tasks:
-    1 token ≈ ¾ of an English word; 100 lines of code ≈ 900 tokens. <b>Price direction.</b> Frontier prices have fallen hard — the published frontier
-    token index sits about 88% below its 2023 base. The budget tier has moved the other way:
-    2026 small-model launches price at roughly $1.69–$5.62 blended, against $0.26 for GPT-4o
-    mini in 2024, and median open-flagship launch prices rose from $0.48 to $1.35. "Models keep
-    getting cheaper" holds at the top and not at the bottom — which matters, because the bottom
-    is where most routing decisions land. <b>Monthly cost</b>
-    multiplies your stated volume by the cost of one job; default volumes are illustrative
-    figures for a mid-size engineering org and should be replaced with your own. Note the
-    scope: this prices the work sent to a model, not whether the work succeeded — a bug that
-    takes three attempts costs three times as much here, and completion status lives in your
-    issue tracker, not in token usage. Promotional
-    prices are shown alongside standard list prices, never in place of them;
-    rankings use the effective (promo) price by default because that is what
-    this month's invoice will say, and the "plan with standard prices" toggle
-    re-ranks everything at list price for budgeting and commitments. A promo
-    ending is recorded as a promo end, not a price hike.
-    <br/><br/><b>Public feeds.</b> Prices as JSON at <a href="/api/prices.json">/api/prices.json</a>,
-    updated daily. And a <b>decision</b> feed at <a href="/api/decide?task=code-fix&amp;residency=eu-de">/api/decide</a>
-    — give it a task and your constraints and it returns which model to run it on and why,
-    with data residency applied as a hard filter before cost. Free with attribution.
+    <div class="mhead">METHODOLOGY &amp; LIMITS <span>— open any card for the detail</span></div>
+    <div class="mgrid">
+
+      <details><summary>How a cost is calculated</summary>
+        Cost per job = (input tokens × input price) + (output tokens × answer-length factor ×
+        output price). Monthly cost multiplies that by your stated volume. Answer-length factors
+        estimate how long each model's replies run for the same prompt, because different
+        tokenizers mean 1,000 tokens is not the same amount of answer everywhere. Batch (~50%
+        off) and cached-input (~90% off) rates are excluded. Rules of thumb: 1 token ≈ ¾ of an
+        English word; 100 lines of code ≈ 900 tokens.
+      </details>
+
+      <details><summary>Where the prices come from</summary>
+        Standard-tier, first-party API list rates. <b>Verified</b> means a human opened the
+        provider's own pricing page on the date shown; <b>tracked</b> means it came from a
+        published comparison and has not been confirmed. Every row links to its source. An
+        automated job re-checks daily and writes an append-only history; corrections to our own
+        errors are published as corrections, not silently fixed.
+      </details>
+
+      <details><summary>Capability and value</summary>
+        The capability score is the Artificial Analysis Intelligence Index — independent, not
+        ours — and rates the model in general, not your task. Value is capability per euro of
+        job cost, rated against the best option in view. Models with no published score show
+        "not scored" and drop out when a capability floor is set; we never invent a number.
+        A model that clears the bar overall can still fail your workload, which is why any
+        switch is validated on a sample first.
+      </details>
+
+      <details><summary>Volumes and workloads</summary>
+        Workloads convert something you count — developers, tickets, SKUs — into model calls,
+        and the conversion is shown in the assumptions above the table. Default volumes are
+        illustrative figures for a mid-size org and should be replaced with your own. Task
+        definitions are usage-weighted from published studies (Anthropic Economic Index,
+        OpenRouter State of AI, OpenAI usage report).
+      </details>
+
+      <details><summary>Promotions, legacy models and price direction</summary>
+        Promotional prices sit alongside standard list prices, never in place of them; rankings
+        use the effective price because that is what this month's invoice says, and the standard-prices
+        toggle re-ranks at list for budgeting. A promo ending is recorded as a promo end, not a
+        hike. Legacy models carry their retirement date where the provider publishes one.
+        On direction: frontier prices sit about 88% below their 2023 base, but the budget tier
+        has risen — 2026 small-model launches price at roughly $1.69–$5.62 blended against $0.26
+        for GPT-4o mini in 2024. "Models keep getting cheaper" holds at the top, not the bottom.
+      </details>
+
+      <details><summary>What this does not tell you</summary>
+        Whether the work succeeded. This prices the work sent to a model: a bug needing three
+        attempts costs three times as much here, and completion lives in your issue tracker.
+        It also excludes negotiated rates, which can beat every number shown, and self-hosted
+        economics, which is a different calculation entirely.
+      </details>
+
+    </div>
+    <div class="mfoot">
+      <b>Public feeds.</b> Prices at <a href="/api/prices.json">/api/prices.json</a>, updated daily.
+      Decisions at <a href="/api/decide?task=code-fix&amp;residency=eu-de">/api/decide</a> — give it a task
+      and your constraints, get back which model to run it on and why, with data residency applied
+      before cost. Free with attribution.
+    </div>
   </footer>
 
 </div>
@@ -726,14 +766,6 @@ function render() {
       ` <span class="hlsub">${money((hi.cpt - lo.cpt) * volume)} a month between the same work done two ways.</span>`;
   }
 
-  // promo decision rule (S10) — shown only while a promo exists
-  const promos = all.filter(m => m.pv.hasPromo);
-  const pnote = document.getElementById("pnote");
-  pnote.hidden = !promos.length;
-  if (promos.length) pnote.innerHTML = `<b>PROMO RULE</b> — ` + promos.map(m =>
-    `${esc(m.name)} is running a promo ($${m.promoIn}/$${m.promoOut}; standard $${m.inP}/$${m.outP}, ` +
-    `${m.promoEnds ? "ends " + esc(m.promoEnds) : "end date unannounced"})`).join("; ") +
-    `. If you can switch models cheaply, take the promo. If you're committing a workload or a budget to a model, plan at the standard price and treat the promo as found money.`;
 
   // sort (S2)
   let rows = [...all].sort((a,b) => {
