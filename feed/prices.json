@@ -6,7 +6,7 @@
   "currency": "USD",
   "unit": "per_million_tokens",
   "license": "Free to use with attribution to PerDollar (per-dollar.vercel.app).",
-  "disclaimer": "Standard-tier first-party API list prices. 'verified' = checked against the provider's own pricing page; 'tracked' = from a published comparison, pending first-party confirmation. Promotional prices are separate from standard. Not financial advice; confirm against the provider before relying on a figure.",
+  "disclaimer": "Standard-tier first-party API list prices. Verification tiers: 'verified' = a human checked the provider's own page on verified_at; 'agent-verified' = an automated daily check found this exact price on that page; 'tracked' = from a published comparison, unconfirmed; 'unsourced' = the price is not on the page we cite and we do not stand behind it. Promotional prices are separate from standard. Not financial advice; confirm against the provider before relying on a figure.",
   "models": [
     {
       "id": "opus5",

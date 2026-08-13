@@ -229,9 +229,21 @@ export function decide(opts = {}) {
       cost_per_job: round(pick.cost),
       verification: pick.model.verification, verified_at: pick.model.verified_at ?? null,
     },
-    reason: floor > 0
-      ? `cheapest of ${priced.length} models scoring ${floor}+ (needed for ${cls?.why ?? "this task"})`
-      : `cheapest of ${priced.length} eligible models; this task class has no capability floor (${cls?.why ?? "caller-specified"})`,
+    reason: (() => {
+      const need = cls?.why ?? "this task";
+      const nScored = priced.filter(p => p.model.capability != null).length;
+      const nUnscored = priced.length - nScored;
+      if (floor <= 0)
+        return `cheapest of ${priced.length} eligible models; this task class has no capability floor (${need})`;
+      // Only claim a model clears the floor if it actually has a score.
+      if (pick.model.capability == null)
+        return `cheapest of ${priced.length} eligible models. This task needs ${floor}+ (${need}), but the pick has no published capability score — ` +
+               `${nScored} scored model${nScored === 1 ? "" : "s"} cleared the floor and ${nUnscored} unscored were included at your request, and this was cheapest of all of them.`;
+      if (nUnscored > 0)
+        return `cheapest of ${priced.length} eligible models for a ${floor}+ task (${need}); ` +
+               `it scores ${pick.model.capability}, though ${nUnscored} of the options considered have no score at all.`;
+      return `cheapest of ${priced.length} models scoring ${floor}+ (needed for ${need})`;
+    })(),
     runner_up: runnerUp ? {
       id: runnerUp.model.id, name: runnerUp.model.name,
       cost_per_job: round(runnerUp.cost),
@@ -246,7 +258,7 @@ export function decide(opts = {}) {
     },
     warnings: [
       ...(excluded.filter(e => e.reason === "no published capability score").length && !allowUnscored
-        ? [`${excluded.filter(e => e.reason === "no published capability score").length} models were excluded only because they have no published capability score — they may well be cheaper and adequate. Set allowUnscored to include them.`] : []),
+        ? [`${excluded.filter(e => e.reason === "no published capability score").length} models were excluded only because they have no published capability score — they may well be cheaper and adequate. Set allow_unscored=true to include them.`] : []),
       ...(unscoredIncluded.length
         ? [`included ${unscoredIncluded.length} model(s) with no capability score at your request: ${unscoredIncluded.join(", ")}`] : []),
     ],
@@ -359,11 +371,23 @@ export function planBudget(opts = {}) {
                 : "on plan" };
         })()
       : null,
-    alternatives: priced.slice(0, 4).map(p => ({
-      id: p.m.id, name: p.m.name, capability: p.m.capability ?? null,
-      cost_per_job: round(p.cost), month_total: round(p.cost * volume),
-      fits: p.cost <= ceiling,
-    })),
+    // Ranked the way the pick was made — by capability among what fits — so the list
+    // explains the recommendation instead of contradicting it.
+    alternatives: [...priced]
+      .sort((a, b) => {
+        const af = a.cost <= ceiling, bf = b.cost <= ceiling;
+        if (af !== bf) return af ? -1 : 1;                       // affordable first
+        const ca = a.m.capability ?? -1, cb = b.m.capability ?? -1;
+        if (cb !== ca) return cb - ca;                            // then most capable
+        return a.cost - b.cost;                                   // then cheapest
+      })
+      .filter(p => p.m.id !== pick.m.id)
+      .slice(0, 4)
+      .map(p => ({
+        id: p.m.id, name: p.m.name, capability: p.m.capability ?? null,
+        cost_per_job: round(p.cost), month_total: round(p.cost * volume),
+        fits: p.cost <= ceiling,
+      })),
     assumptions: { task: task ?? "custom", tokens_in: tIn, tokens_out: tOut, volume,
       note: "projection assumes the stated volume and token profile; the ledger's real numbers should replace them once routing has run" },
   };
