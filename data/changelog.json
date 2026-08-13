@@ -217,14 +217,14 @@
     "model": "gpt56ter",
     "kind": "correction",
     "source": "human re-verification",
-    "note": "promo removed — 1/6 was not a promotional rate (likely a batch or cached tier)"
+    "note": "promo removed \u2014 1/6 was not a promotional rate (likely a batch or cached tier)"
   },
   {
     "date": "2026-08-11",
     "model": "gpt56lun",
     "kind": "correction",
     "source": "human re-verification",
-    "note": "promo removed — 0.1/0.6 was not a promotional rate (likely a batch or cached tier)"
+    "note": "promo removed \u2014 0.1/0.6 was not a promotional rate (likely a batch or cached tier)"
   },
   {
     "date": "2026-08-11",
@@ -232,5 +232,78 @@
     "kind": "promo_confirmed",
     "source": "human re-verification",
     "note": "promo confirmed first-party, ends 2026-09-30"
+  },
+  {
+    "date": "2026-08-12",
+    "source": "human verification",
+    "model": "gem31fl",
+    "dimension": "inP",
+    "old": 0.1,
+    "new": 0.25,
+    "kind": "correction",
+    "note": "human first-party check; the auto-detected rise was CORRECT and our anomaly gate wrongly blocked it"
+  },
+  {
+    "date": "2026-08-12",
+    "source": "human verification",
+    "model": "gem31fl",
+    "dimension": "outP",
+    "old": 0.4,
+    "new": 1.5,
+    "kind": "correction"
+  },
+  {
+    "date": "2026-08-12",
+    "source": "human verification",
+    "model": "glm52",
+    "dimension": "inP",
+    "old": 0.94,
+    "new": 1.4,
+    "kind": "correction",
+    "note": "reverting our own 22 Jul correction \u2014 first-party z.ai pricing is 1.40/4.40, the comparison feed was wrong"
+  },
+  {
+    "date": "2026-08-12",
+    "source": "human verification",
+    "model": "glm52",
+    "dimension": "outP",
+    "old": 3,
+    "new": 4.4,
+    "kind": "correction"
+  },
+  {
+    "date": "2026-08-12",
+    "source": "human verification",
+    "model": "g41mini",
+    "kind": "provenance_error",
+    "note": "was marked verified/first-party but the price does not appear on the OpenAI pricing page; demoted to unsourced pending a real source"
+  },
+  {
+    "date": "2026-08-12",
+    "source": "human verification",
+    "model": "g41nano",
+    "kind": "provenance_error",
+    "note": "was marked verified/first-party but the price does not appear on the OpenAI pricing page; demoted to unsourced pending a real source"
+  },
+  {
+    "date": "2026-08-12",
+    "source": "human verification",
+    "model": "inkling",
+    "kind": "provenance_error",
+    "note": "was marked verified/first-party but the price does not appear on the Thinking Machines site; demoted to unsourced pending a real source"
+  },
+  {
+    "date": "2026-08-12",
+    "source": "human verification",
+    "model": "grok45",
+    "kind": "provenance_error",
+    "note": "was marked verified/first-party but the price does not appear on the xAI API page; demoted to unsourced pending a real source"
+  },
+  {
+    "date": "2026-08-12",
+    "source": "human verification",
+    "model": "opus48",
+    "kind": "status",
+    "note": "marked legacy (human check)"
   }
 ]

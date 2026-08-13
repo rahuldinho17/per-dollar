@@ -18,6 +18,8 @@ jobs:
           node-version: "20"
       - name: Fetch current prices
         run: node scripts/refresh-prices.mjs
+      - name: Verify prices against provider pages
+        run: node scripts/verify-agent.mjs || echo "verify-agent had trouble; prices unaffected"
       - name: Commit if changed
         run: |
           git config user.name "perdollar-bot"

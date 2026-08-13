@@ -159,3 +159,29 @@ its discount ratio, and flags the patterns that mean we have mislabelled a prici
 cached-input rate, and an uneven input/output split usually means two different SKUs.
 Then either `--promo-confirm <ids> --ends YYYY-MM-DD` or `--promo-clear <ids>`; both
 write to the changelog, clears as corrections.
+
+## Daily verification agent
+
+`scripts/verify-agent.mjs` runs after each price refresh. For every model it fetches the
+provider's own pricing page and looks for the price we publish.
+
+- **Found** → the row becomes `agent-verified` with the date. A human `verified` stamp
+  always outranks this and is never overwritten; the badge just notes the agent
+  re-confirmed it.
+- **Not found, or different** → the row is flagged with `?`, an explanation is written to
+  `data/verify-queue.json`, and the changelog records it. **The agent never edits a price.**
+
+Two rules make it trustworthy. It can only confirm, never change — a disagreement is a
+question for a human, not a silent update. And silence is not consent: an unparseable page
+is *flagged*, never verified, because an agent that marks things verified when it finds
+nothing to contradict would destroy the only thing this product sells.
+
+```
+node scripts/verify-agent.mjs --dry        # report without writing
+node scripts/verify-agent.mjs --id gpt55   # one model
+cat data/verify-queue.json                 # what needs a human
+```
+
+Expect flags on JavaScript-rendered pricing pages (several providers render prices
+client-side, so a plain fetch sees nothing). Those need either a headless browser or a
+provider-specific extractor; until then they stay honestly flagged rather than assumed.

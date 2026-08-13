@@ -48,6 +48,10 @@
   .status.paused { color: var(--claret); }
   .status.paused b { color: var(--claret); }
   .msub .tracked { color: var(--claret); }
+  .msub .agentv { color: var(--teal); }
+  .needsh { display: inline-block; width: 14px; height: 14px; line-height: 14px; text-align: center;
+    border-radius: 50%; background: var(--claret); color: var(--paper); font-size: 9px;
+    font-weight: 700; margin-left: 6px; vertical-align: 1px; cursor: help; }
   .fb { font: 600 13px "Source Sans 3", sans-serif; color: var(--paper);
     background: var(--ink); border: 1px solid var(--ink); border-radius: 2px;
     padding: 8px 14px; text-decoration: none; white-space: nowrap; }
@@ -411,9 +415,14 @@
       </details>
 
       <details><summary>Where the prices come from</summary>
-        Standard-tier, first-party API list rates. <b>Verified</b> means a human opened the
-        provider's own pricing page on the date shown; <b>tracked</b> means it came from a
-        published comparison and has not been confirmed. Every row links to its source. An
+        Standard-tier, first-party API list rates, in four levels of confidence.
+        <b>Verified</b> — a human opened the provider's own page on the date shown.
+        <b>Agent-verified</b> — an automated check found that exact price on the provider's page
+        that day; it can only ever confirm, never edit a price, and a human stamp always outranks it.
+        <b>Tracked</b> — from a published comparison, not yet confirmed.
+        <b>Source unconfirmed</b> — the price is not on the page we cite, so we do not stand
+        behind it. A <b>?</b> beside a model means the agent could not confirm it and a human
+        should look. Every row links to its source. An
         automated job re-checks daily and writes an append-only history; corrections to our own
         errors are published as corrections, not silently fixed.
       </details>
@@ -665,9 +674,18 @@ function shortDate(iso) {
     : d.toLocaleDateString("en-GB", { day: "numeric", month: "short" }).toUpperCase();
 }
 function badgeText(m) {
-  if (m.verification === "auto-tracked") return "AUTO-TRACKED " + shortDate(m.tracked_at);
-  if (m.verification === "tracked")      return "TRACKED " + shortDate(m.tracked_at) + " · UNVERIFIED";
-  return "VERIFIED " + shortDate(m.verified_at || DATA_AS_OF);
+  if (m.verification === "unsourced")      return "SOURCE UNCONFIRMED";
+  if (m.verification === "auto-tracked")   return "AUTO-TRACKED " + shortDate(m.tracked_at);
+  if (m.verification === "tracked")        return "TRACKED " + shortDate(m.tracked_at) + " · UNVERIFIED";
+  if (m.verification === "agent-verified") return "AGENT-VERIFIED " + shortDate(m.agent_checked_at);
+  // A human check is the strongest claim; show when the agent last re-confirmed it.
+  return "VERIFIED " + shortDate(m.verified_at || DATA_AS_OF) +
+    (m.agent_status === "confirmed" && m.agent_checked_at ? " · AGENT " + shortDate(m.agent_checked_at) : "");
+}
+function badgeClass(m) {
+  if (m.verification === "verified") return "";
+  if (m.verification === "agent-verified") return "agentv";
+  return "tracked";
 }
 
 function trendChange(m) {
@@ -828,9 +846,9 @@ function render() {
     return `
     <tr class="${m.id === cheap.id ? "best" : ""}${bestVal && m.id === bestVal.id ? " bestval" : ""}${m.legacy ? " is-legacy" : ""}">
       <td class="l c-model">
-        <div class="mname">${esc(m.name)}${m.legacy ? `<span class="legacy" title="The provider has marked this model legacy — plan a migration before it is retired">LEGACY${m.retires ? " · RETIRES " + shortDate(m.retires).toUpperCase() : ""}</span>` : ""}${m.pv.hasPromo ? `<span class="pbadge${m.pv.usePromo ? "" : " off"}">PROMO</span>` : ""}</div>
+        <div class="mname">${esc(m.name)}${m.agent_status === "needs-human" ? `<span class="needsh" title="${esc(m.agent_note || "the agent could not confirm this price on the provider page")}">?</span>` : ""}${m.legacy ? `<span class="legacy" title="The provider has marked this model legacy — plan a migration before it is retired">LEGACY${m.retires ? " · RETIRES " + shortDate(m.retires).toUpperCase() : ""}</span>` : ""}${m.pv.hasPromo ? `<span class="pbadge${m.pv.usePromo ? "" : " off"}">PROMO</span>` : ""}</div>
         <div class="msub">${esc(m.provider.toUpperCase())} ·
-          <a class="${m.verification === "verified" ? "" : "tracked"}" href="${esc(src)}" target="_blank" rel="noopener"
+          <a class="${badgeClass(m)}" href="${esc(src)}" target="_blank" rel="noopener"
              title="${esc(src)} — ${esc(m.source || "provider pricing page")}">${esc(badgeText(m))} · SOURCE ↗</a>${
           m.pv.hasPromo ? ` · ${m.promoEnds ? "PROMO ENDS " + esc(String(m.promoEnds).toUpperCase()) : "PROMO END UNANNOUNCED"}` : ""}</div>
       </td>
@@ -950,6 +968,9 @@ renderStatic();
         if (u.retires !== undefined) m.retires = u.retires;
         if (u.active_until !== undefined) m.active_until = u.active_until;
         if (u.cachedIn !== undefined) m.cachedIn = u.cachedIn;
+        if (u.agent_checked_at) m.agent_checked_at = u.agent_checked_at;
+        if (u.agent_status) m.agent_status = u.agent_status;
+        if (u.agent_note) m.agent_note = u.agent_note;
       }
     });
     DATA_AS_OF = d.as_of || DATA_AS_OF;
