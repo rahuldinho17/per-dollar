@@ -66,5 +66,29 @@ console.log("residency (T1.1)");
   ok("residency echoed in assumptions", decide({ models: all, task: "summarize", residency: "eu" }).assumptions.residency === "eu");
 }
 
+console.log("budget adherence (T1.3)");
+{
+  const { planBudget } = await import("./engine.mjs");
+  const big = planBudget({ models, task: "agent-step", budget: 5000, volume: 1200, allowUnscored: true });
+  const small = planBudget({ models, task: "agent-step", budget: 30, volume: 1200, allowUnscored: true });
+  ok("large budget buys more capability",
+    (big.recommended.capability ?? 0) >= (small.recommended.capability ?? 0),
+    `${big.recommended.capability} vs ${small.recommended.capability}`);
+  ok("picks best that fits, not cheapest", big.recommended.cost_per_job > small.recommended.cost_per_job);
+  ok("reports fit", big.fits === true);
+  const impossible = planBudget({ models, task: "agent-step", budget: 0.01, volume: 100000, allowUnscored: true });
+  ok("impossible budget says so", impossible.fits === false && /over/.test(impossible.verdict));
+  ok("still returns a fallback pick", !!impossible.recommended.id);
+  const mid = planBudget({ models, task: "agent-step", budget: 50, volume: 1200,
+    spentSoFar: 44, elapsedDays: 15, daysInMonth: 30, allowUnscored: true });
+  ok("overspend lowers the ceiling", mid.budget.ceiling_per_job < small.budget.ceiling_per_job,
+    `${mid.budget.ceiling_per_job} vs ${small.budget.ceiling_per_job}`);
+  ok("pacing reported", mid.pacing && /%/.test(mid.pacing.pace_vs_plan));
+  ok("rejects missing budget", !!planBudget({ models, task: "agent-step" }).error);
+  const eu = planBudget({ models: [...models], task: "agent-step", budget: 500, volume: 100,
+    residency: "eu-de", allowUnscored: true });
+  ok("residency respected in budget mode", !!eu.error || eu.recommended.residency === "eu-de");
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

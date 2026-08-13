@@ -7,8 +7,8 @@
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { decide, counterfactual, euHostModels, TASK_CLASSES } from "./engine.mjs";
-import { record, summary, reset } from "./ledger.mjs";
+import { decide, counterfactual, planBudget, euHostModels, TASK_CLASSES } from "./engine.mjs";
+import { record, summary, reset, burn } from "./ledger.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FEED = join(HERE, "..", "api", "prices.json");
@@ -35,6 +35,17 @@ if (cmd === "route") {
     residency: flag("residency"),
     allowUnscored: has("allow-unscored"), excludeLegacy: !has("include-legacy"),
   }));
+} else if (cmd === "budget") {
+  const b = +flag("budget"), v = +flag("volume");
+  const state = burn({ budget: b, volume: v });
+  out(planBudget({
+    models: models(), task: argv[1], budget: b, volume: v,
+    spentSoFar: state.spent, elapsedDays: state.elapsed_days, daysInMonth: state.days_in_month,
+    residency: flag("residency"), allowUnscored: has("allow-unscored"),
+    cacheHitRate: flag("cache") ? +flag("cache") : 0,
+  }));
+} else if (cmd === "burn") {
+  out(burn({ budget: flag("budget") ? +flag("budget") : undefined }));
 } else if (cmd === "report") {
   const cf = counterfactual({ models: models(), usedId: flag("used"), defaultId: flag("default"),
     tokensIn: +flag("in"), tokensOut: +flag("out"), cacheHitRate: flag("cache") ? +flag("cache") : 0 });
@@ -54,6 +65,8 @@ if (cmd === "route") {
   route <task> [--residency eu-de|eu|eu-ok|any] [--available a,b]
                [--min-capability N] [--cache 0.8]
                [--allow-unscored] [--include-legacy] [--in N] [--out N]
+  budget <task> --budget N --volume N [--residency eu-de] [--allow-unscored]
+  burn [--budget N]
   report --used ID --default ID --in N --out N [--task NAME] [--outcome success|failure] [--retries N]
   savings [--since YYYY-MM-DD]
   reset

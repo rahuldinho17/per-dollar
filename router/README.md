@@ -83,3 +83,35 @@ OVHcloud, STACKIT — plus a self-hosting break-even note. These providers publi
 pricing API and appear in no aggregator, which is why they are worth carrying: for a
 compliance-constrained buyer they are the entire shortlist. Every row is `tracked`
 and must be confirmed against the provider's page before being quoted.
+
+## Budget adherence (T1.3)
+
+Every other router minimises cost. That is not how a buyer thinks: they allocate a
+budget — "$500 per developer per month" — and then, in Kai's words, *"they hope"*.
+So this inverts the optimisation. Spend the allocation well: return the **most
+capable** model whose projected month still fits.
+
+```bash
+node router/cli.mjs budget agent-step --budget 500 --volume 1200
+node router/cli.mjs burn --budget 500        # month-to-date pace
+curl ".../api/budget?task=agent-step&budget=500&volume=1200"
+```
+
+It tightens on its own. Money already spent is money the rest of the month cannot
+spend, so the per-job ceiling falls as the month burns and the pick downgrades
+without anyone intervening:
+
+```
+spent $0  day 0   ceiling $0.0375    GPT-5.6 Terra          cap 55
+spent $38 day 15  ceiling $0.0117    GPT-5.6 Luna           cap 51
+spent $44 day 15  ceiling $0.0017    Gemini 3.1 Flash-Lite  cap —
+```
+
+When nothing fits it says so plainly rather than silently picking the cheapest and
+overrunning: *"nothing fits this budget. The cheapest option still projects $X, $Y
+over. Raise the budget, cut volume, or accept the overrun."*
+
+Cursor and Copilot do this internally to keep users inside a subscription. This is
+the same mechanic pointed outward, at a budget the customer sets — and it composes
+with residency, so an EU-only team gets the best model that is both compliant and
+affordable.

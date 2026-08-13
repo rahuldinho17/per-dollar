@@ -59,6 +59,36 @@ export function passRates({ minSamples = 5 } = {}) {
     .sort((a, b) => b.samples - a.samples);
 }
 
+/**
+ * Month-to-date burn against a budget (T1.3). Feeds planBudget so today's routing
+ * decision reflects what the month has already cost — the loop that makes budget
+ * adherence automatic rather than advisory.
+ */
+export function burn({ budget, volume, month } = {}) {
+  const l = load();
+  const m = month || new Date().toISOString().slice(0, 7);
+  const entries = l.entries.filter(e => e.at.slice(0, 7) === m);
+  const spent = entries.reduce((s, e) => s + (e.actual_cost || 0), 0);
+
+  const now = new Date();
+  const daysInMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 0)).getUTCDate();
+  const elapsedDays = m === now.toISOString().slice(0, 7) ? now.getUTCDate() : daysInMonth;
+
+  const out = { month: m, jobs: entries.length, spent: r(spent), elapsed_days: elapsedDays, days_in_month: daysInMonth };
+  if (budget > 0) {
+    const expected = budget * (elapsedDays / daysInMonth);
+    const projected = elapsedDays > 0 ? spent / elapsedDays * daysInMonth : 0;
+    out.budget = budget;
+    out.pace_vs_plan = expected > 0 ? Math.round((spent / expected) * 100) + "%" : "n/a";
+    out.projected_month_end = r(projected);
+    out.projected_vs_budget = Math.round((projected / budget) * 100) + "%";
+    out.status = projected > budget ? "over" : projected > budget * 0.9 ? "tight" : "on track";
+    out.remaining = r(Math.max(0, budget - spent));
+  }
+  if (volume > 0) out.volume_assumed = volume;
+  return out;
+}
+
 export function summary({ since } = {}) {
   const l = load();
   let entries = l.entries;

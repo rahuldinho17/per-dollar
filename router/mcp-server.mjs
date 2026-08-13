@@ -15,8 +15,8 @@
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { decide, counterfactual, jobCost, euHostModels, TASK_CLASSES } from "./engine.mjs";
-import { record, summary } from "./ledger.mjs";
+import { decide, counterfactual, jobCost, planBudget, euHostModels, TASK_CLASSES } from "./engine.mjs";
+import { record, summary, burn } from "./ledger.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const FEED_URL = process.env.PERDOLLAR_FEED || "https://per-dollar.vercel.app/api/prices.json";
@@ -83,6 +83,23 @@ const TOOLS = [
     },
   },
   {
+    name: "perdollar_budget",
+    description:
+      "Stay inside a monthly AI budget. Given the budget and expected volume, returns the MOST capable model that still fits — not the cheapest — and tightens automatically as the month's spend accumulates. Use this instead of perdollar_route when the team has an allocated budget.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        task: { type: "string", enum: Object.keys(TASK_CLASSES) },
+        budget: { type: "number", description: "monthly budget in dollars" },
+        volume: { type: "number", description: "expected jobs this month" },
+        residency: { type: "string", enum: ["any", "eu-ok", "eu", "eu-de"] },
+        allow_unscored: { type: "boolean" },
+        cache_hit_rate: { type: "number" },
+      },
+      required: ["task", "budget", "volume"],
+    },
+  },
+  {
     name: "perdollar_savings",
     description: "Summarise the accumulated saving: tasks routed, spent, what the default models would have cost, and a monthly projection.",
     inputSchema: { type: "object", properties: { since: { type: "string", description: "ISO date lower bound" } } },
@@ -113,6 +130,15 @@ async function callTool(name, args = {}) {
       retries: args.retries,
     });
     return { ...cf, ledger: rec };
+  }
+  if (name === "perdollar_budget") {
+    const state = burn({ budget: args.budget, volume: args.volume });
+    return planBudget({
+      models: ms, task: args.task, budget: args.budget, volume: args.volume,
+      spentSoFar: state.spent, elapsedDays: state.elapsed_days, daysInMonth: state.days_in_month,
+      residency: args.residency, allowUnscored: args.allow_unscored ?? false,
+      cacheHitRate: args.cache_hit_rate ?? 0,
+    });
   }
   if (name === "perdollar_savings") return summary({ since: args.since });
   return { error: `unknown tool ${name}` };

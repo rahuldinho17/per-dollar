@@ -241,6 +241,119 @@ export function decide(opts = {}) {
 }
 
 /**
+ * T1.3 — budget adherence.
+ *
+ * Every other router minimises cost. That is not how the buyer thinks: they
+ * allocate a budget ("$500 per developer per month") and then, in Kai's words,
+ * "they hope". So invert the optimisation — spend the budget, don't shrink it:
+ * pick the MOST capable model whose projected monthly spend still fits.
+ *
+ * Cursor and Copilot do this internally to stay inside a subscription. This is
+ * the same mechanic pointed outward, at a budget the customer sets.
+ *
+ * @param budget      total monthly budget in dollars
+ * @param volume      expected jobs per month
+ * @param spentSoFar  already spent this month (from the ledger)
+ * @param elapsed/of  days elapsed and days in the month, for pacing
+ */
+export function planBudget(opts = {}) {
+  const {
+    models = [], task, tokensIn, tokensOut, budget, volume,
+    spentSoFar = 0, elapsedDays = 0, daysInMonth = 30,
+    reserve = 0.1,                       // hold back 10% for spikes
+    ...rest
+  } = opts;
+
+  if (!(budget > 0) || !(volume > 0))
+    return { error: "planBudget needs a positive monthly budget and expected volume" };
+
+  // What is actually left, and for how many jobs.
+  const remaining = Math.max(0, budget * (1 - reserve) - spentSoFar);
+  const jobsDone = elapsedDays > 0 ? Math.round(volume * (elapsedDays / daysInMonth)) : 0;
+  const jobsLeft = Math.max(1, volume - jobsDone);
+  // The ceiling IS the correction: money already burned is money the rest of the
+  // month cannot spend, so overspending early automatically lowers what the
+  // remaining jobs may cost. No separate throttle needed.
+  const ceiling = remaining / jobsLeft;
+
+  const cls = TASK_CLASSES[task];
+  const tIn = tokensIn ?? cls?.tokens.in;
+  const tOut = tokensOut ?? cls?.tokens.out;
+  if (tIn == null || tOut == null)
+    return { error: `unknown task "${task}" and no explicit token counts` };
+
+  // Reuse decide() for eligibility (residency, legacy, capability, availability),
+  // then choose differently: best capability that fits, not cheapest overall.
+  const base = decide({ models, task, tokensIn: tIn, tokensOut: tOut, ...rest });
+  if (base.error) return base;
+
+  const eligible = models.filter(m => base.considered.some(c => c.id === m.id) ||
+    !base.excluded.some(e => e.id === m.id));
+  const priced = eligible
+    .map(m => ({ m, cost: jobCost(m, tIn, tOut, rest.cacheHitRate ?? 0) }))
+    .filter(p => Number.isFinite(p.cost) && p.cost > 0)
+    .sort((a, b) => a.cost - b.cost);
+
+  const affordable = priced.filter(p => p.cost <= ceiling);
+  const cheapest = priced[0];
+
+  // Among what fits, take the most capable; ties break toward the cheaper.
+  const best = affordable.length
+    ? affordable.reduce((a, b) => {
+        const ca = a.m.capability ?? -1, cb = b.m.capability ?? -1;
+        if (cb !== ca) return cb > ca ? b : a;
+        return b.cost < a.cost ? b : a;
+      })
+    : null;
+
+  const pick = best || cheapest;
+  const projected = pick.cost * volume;
+  const overBy = projected - budget;
+
+  return {
+    recommended: {
+      id: pick.m.id, name: pick.m.name, provider: pick.m.provider,
+      capability: pick.m.capability ?? null,
+      cost_per_job: round(pick.cost),
+      residency: pick.m.residency ?? null,
+    },
+    fits: !!best,
+    budget: {
+      monthly: budget, reserve_pct: Math.round(reserve * 100),
+      spent_so_far: round(spentSoFar),
+      remaining_after_reserve: round(remaining),
+      jobs_remaining: jobsLeft,
+      ceiling_per_job: round(ceiling),
+      projected_month_total: round(projected),
+      projected_vs_budget_pct: Math.round((projected / budget) * 100),
+    },
+    verdict: best
+      ? (spentSoFar > 0
+          ? `${pick.m.name} is the most capable model that fits the $${round(ceiling)}/job left after $${round(spentSoFar)} already spent`
+          : `${pick.m.name} is the most capable model that fits — projected ${Math.round((projected / budget) * 100)}% of budget`)
+      : `nothing fits this budget. The cheapest option (${pick.m.name}) still projects $${round(projected)}, ` +
+        `$${round(overBy)} over. Raise the budget, cut volume, or accept the overrun.`,
+    pacing: elapsedDays > 0
+      ? (() => {
+          const expected = budget * (elapsedDays / daysInMonth);
+          const pace = expected > 0 ? spentSoFar / expected : 0;
+          return { on_track: pace <= 1.05, pace_vs_plan: Math.round(pace * 100) + "%",
+            note: pace > 1.05 ? "burning faster than plan — this pick is already tightened to compensate"
+                : pace < 0.8 ? "under plan — a more capable model is affordable"
+                : "on plan" };
+        })()
+      : null,
+    alternatives: priced.slice(0, 4).map(p => ({
+      id: p.m.id, name: p.m.name, capability: p.m.capability ?? null,
+      cost_per_job: round(p.cost), month_total: round(p.cost * volume),
+      fits: p.cost <= ceiling,
+    })),
+    assumptions: { task: task ?? "custom", tokens_in: tIn, tokens_out: tOut, volume,
+      note: "projection assumes the stated volume and token profile; the ledger's real numbers should replace them once routing has run" },
+  };
+}
+
+/**
  * B2 — counterfactual saving for one completed task.
  * The developer's habit is the baseline: what would this have cost on the model
  * they would have reached for anyway? No A/B test and no eval harness needed,
