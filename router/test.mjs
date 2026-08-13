@@ -47,8 +47,14 @@ console.log("capability estimation");
 ok("third-party wins", estimateCapability(models.find(x => x.id === "opus5"), { siblings: models }).basis === "third-party");
 ok("measured beats inference",
   estimateCapability(models.find(x => x.id === "gem3f"), { siblings: models, measured: { passRate: 0.9, samples: 50 } }).basis === "measured");
-const cheap = estimateCapability(models.find(x => x.id === "gem31fl"), { siblings: models });
-ok("never guesses high for cheap unscored", cheap.score === null || cheap.score <= 45, JSON.stringify(cheap));
+// Use a synthetic model, not a live one: this asserted against gem31fl, whose price
+// moved from $0.40 to $1.50, leaving it legitimately bracketed by two scored models.
+const floorPrice = Math.min(...models.filter(m => m.capability != null).map(m => m.output_per_mtok));
+const cheap = estimateCapability(
+  { id: "synthetic", provider: "test", input_per_mtok: floorPrice / 100, output_per_mtok: floorPrice / 100, capability: null },
+  { siblings: models });
+ok("never guesses high for a model cheaper than everything scored",
+  cheap.score === null && cheap.basis === "unknown-cheap", JSON.stringify(cheap));
 
 console.log("residency (T1.1)");
 {

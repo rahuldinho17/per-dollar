@@ -190,6 +190,22 @@ export function decide(opts = {}) {
     return true;
   });
 
+  // Residency fallback: every EU-resident host is unscored today, so a jurisdiction
+  // query with a capability floor excludes them all and returns "nothing" — which is
+  // false and unhelpful. Retry with unscored allowed and warn prominently instead.
+  if (!pool.length && residency && residency !== "any" && !allowUnscored && floor > 0) {
+    const retry = decide({ ...opts, allowUnscored: true });
+    if (!retry.error) {
+      retry.warnings = [
+        `No model with a published capability score satisfies residency "${residency}", so unscored models were included. ` +
+        `The pick below is compliant and cheap but its capability is unmeasured — sample it before trusting it with work that needs a ${floor}+ model.`,
+        ...(retry.warnings || []),
+      ];
+      retry.capability_unverified = true;
+      return retry;
+    }
+  }
+
   if (!pool.length) {
     return { error: "no model satisfies these constraints", floor, excluded,
              hint: residency && residency !== "any"

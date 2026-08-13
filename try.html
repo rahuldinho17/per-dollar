@@ -139,9 +139,9 @@
       </div>
 
       <div class="fld">
-        <label>CACHE HIT RATE</label>
-        <input type="number" id="cache" value="0" min="0" max="1" step="0.1" />
-        <div class="hint">0 to 1. Agent loops re-read context, which changes the ranking.</div>
+        <label>CACHE HIT RATE (%)</label>
+        <input type="number" id="cache" value="0" min="0" max="100" step="10" />
+        <div class="hint">0–100%. Agent loops re-read the same context, and a high hit rate changes which host wins.</div>
       </div>
 
       <button class="go" id="go">Ask the router</button>
@@ -207,7 +207,9 @@ function buildUrl() {
   const base = location.origin;
   const p = new URLSearchParams({ task: $("task").value });
   if ($("residency").value !== "any") p.set("residency", $("residency").value);
-  if (+$("cache").value > 0) p.set("cache_hit_rate", $("cache").value);
+  const pct = Math.min(100, Math.max(0, +$("cache").value || 0));
+  if (pct !== +$("cache").value) $("cache").value = pct;      // clamp what was typed
+  if (pct > 0) p.set("cache_hit_rate", String(pct / 100));
   let path = "/api/decide";
   if (mode === "budget") {
     path = "/api/budget";
@@ -261,10 +263,10 @@ function render(d) {
       </div>
     </div>`;
 
-  const list = d.alternatives || d.considered;
-  if (list && list.length > 1) {
+  const list = (d.alternatives || d.considered || []).filter(a => (a.id || a.name) !== rec.id);
+  if (list.length) {
     html += `<div class="rows"><div class="rh">${mode === "budget" ? "WHAT ELSE FITS" : "ALSO CONSIDERED"}</div>` +
-      list.slice(0, 5).map(a => `
+      list.slice(0, 4).map(a => `
         <div class="r">
           <span class="n">${esc(a.name || a.id)}</span>
           <span class="v">${money(a.cost_per_job)}${a.month_total != null ? ` · $${a.month_total}/mo` : ""}</span>
@@ -274,7 +276,7 @@ function render(d) {
   }
 
   if (d.warnings && d.warnings.length)
-    html += `<div class="warn"><b>WORTH KNOWING</b>${d.warnings.map(esc).join("<br/>")}</div>`;
+    html += `<div class="warn"><b>${d.capability_unverified ? "CAPABILITY UNMEASURED" : "WORTH KNOWING"}</b>${d.warnings.map(esc).join("<br/><br/>")}</div>`;
   if (d.pacing)
     html += `<div class="warn"><b>PACING</b>Spending at ${esc(d.pacing.pace_vs_plan)} of plan — ${esc(d.pacing.note)}</div>`;
 
