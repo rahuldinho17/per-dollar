@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PerDollar — know what your AI support bot really costs</title>
-<meta name="description" content="PerDollar turns LLM token prices into the cost of finished work — per resolved ticket, per product description, per search query. Verified prices, commerce workloads, and a paid audit that pays for itself." />
+<title>PerDollar — the independent decision layer for AI model choice</title>
+<meta name="description" content="Which model should run this task? An independent router over daily-verified prices, with data residency as a hard constraint, budget adherence, and a ledger that proves what it saved." />
 <meta property="og:title" content="PerDollar — the cost of AI work, per completed job" />
 <meta property="og:description" content="For commerce teams running AI on support, catalog, and search: see what each model costs per finished job, and where your bill is overspending." />
 <meta property="og:type" content="website" />
@@ -201,57 +201,58 @@
     <a href="/" class="brand">Per<span>Dollar</span></a>
     <div class="links">
       <a class="navlink" href="#problem">The problem</a>
-      <a class="navlink" href="#example">Worked example</a>
-      <a class="navlink" href="#offer">The audit</a>
+      <a class="navlink" href="#what">What it does</a>
+      <a class="navlink" href="#why">Why not the others</a>
       <a class="navlink" href="/app.html">Live price sheet</a>
       <a class="navlink" href="/hosts.html">Open-model hosts</a>
-      <a class="navlink" href="/try.html">Try the router</a>
-      <a class="btn primary" href="https://calendly.com/rahul-product-atelier/30min" target="_blank" rel="noopener">Book an audit</a>
+      <a class="btn primary" href="/try.html">Try the router</a>
     </div>
   </div>
 </nav>
 
 <header class="hero">
   <div class="wrap">
-    <div class="eyebrow reveal">The system of record for commerce AI spend</div>
-    <h1 class="reveal">Own the number behind <b>every AI-powered order.</b></h1>
-    <p class="lede reveal">Your support bot, product copy, and on-site search all run on models that
-      get priced by the token and billed by the job — and the gap between the two is enormous.
-      PerDollar is the record of what commerce AI actually costs per finished job: verified prices,
-      your real workloads, and the switch that saves the most.</p>
+    <div class="eyebrow reveal">The independent decision layer for AI model choice</div>
+    <h1 class="reveal">Which model should <b>run this task?</b></h1>
+    <p class="lede reveal">Your team defaults to the biggest model because nobody can police the
+      choice. PerDollar answers it per task instead — the cheapest model capable enough, from the
+      ones you can actually reach, inside your budget and inside your jurisdiction. Then it records
+      what that decision saved.</p>
     <div class="cta-row reveal">
-      <a class="btn primary" href="#offer">Get a cost audit</a>
-      <a class="btn ghost" href="/app.html">Explore the price sheet →</a>
+      <a class="btn primary" href="/try.html">Try the router</a>
+      <a class="btn ghost" href="/app.html">See the price sheet →</a>
     </div>
-    <div class="micro reveal">Built by an ex-commercetools operator. Prices verified against first-party sources, not scraped.</div>
+    <div class="micro reveal">Free, no sign-up. Independent of every model vendor — we do not sell inference.</div>
 
-    <!-- signature: the spread -->
-    <div class="spread reveal" aria-label="Cost of the same workload on two models">
+    <!-- signature: a routing decision, not a price table -->
+    <div class="spread reveal" aria-label="What the router returns">
       <div class="sh">
-        <span class="t"><b>WORKLOAD:</b> AI support resolutions</span>
-        <span class="t">BUDGET: <b>$1,000</b></span>
+        <span class="t"><b>ASKED:</b> one coding-agent step · must stay in Germany</span>
+        <span class="t">20,000 STEPS / MONTH</span>
       </div>
       <div class="body">
         <div class="col">
-          <div class="lbl">Frontier model, chosen by default</div>
-          <div class="model">GPT-5.5 · $5 / $30 per M tokens</div>
-          <div class="big lose mono">38,000</div>
-          <div class="unit">tickets resolved for $1,000</div>
+          <div class="lbl">What most teams run</div>
+          <div class="model">Frontier model, chosen once at launch</div>
+          <div class="big lose mono">$3,205</div>
+          <div class="unit">per month</div>
         </div>
         <div class="col">
-          <div class="lbl">Right-sized model, same task</div>
-          <div class="model">Gemini 3 Flash · $0.50 / $3 per M tokens</div>
-          <div class="big win mono">430,000</div>
-          <div class="unit">tickets resolved for $1,000</div>
+          <div class="lbl">What the router returns</div>
+          <div class="model">mistral-small @ IONOS · German data centre</div>
+          <div class="big win mono">$28</div>
+          <div class="unit">per month, same work, EU-resident</div>
         </div>
       </div>
-      <div class="foot">Same tickets, same quality bar — an <b>11× cost difference</b> that never shows up on a per-token price chart. Most teams picked their model once and never revisited it.</div>
+      <div class="foot">Asked before each task, answered with a reason, a runner-up and what it
+        excluded. <b>Residency is applied before cost</b> — a Germany-only question never returns a
+        US-operated API, however cheap it is.</div>
     </div>
 
     <div class="trust reveal" id="trustline">
-      <span>Prices verified <span class="mono">22 Jul 2026</span></span>
-      <span>·</span><span><span class="mono">22</span> models tracked daily</span>
-      <span>·</span><span>Commerce workloads: <span class="mono">support · catalog · search · reviews</span></span>
+      <span>Prices verified <span class="mono">13 Aug 2026</span></span>
+      <span>·</span><span><span class="mono">24</span> models + EU-resident hosts</span>
+      <span>·</span><span>Residency: <span class="mono">any · EU · Germany</span></span>
     </div>
   </div>
 </header>
@@ -259,17 +260,18 @@
 <section class="band" id="problem">
   <div class="wrap">
     <div class="kicker reveal">The problem</div>
-    <h2 class="head reveal">Your AI bill grows with GMV. <b>Nobody can tell you why per order.</b></h2>
-    <p class="sub reveal">Token pricing is an abstraction three layers removed from a business decision.
-      Between "$3 per million tokens" and "what one resolved ticket costs" sits a wall of
-      tokenizer quirks, answer-length differences, and model choices no one has revisited since launch.</p>
+    <h2 class="head reveal">Model choice is made a thousand times a day. <b>Nobody is watching.</b></h2>
+    <p class="sub reveal">Every engineer picks the biggest model because it is right there and the cost
+      is somebody else's line item. A policy telling them otherwise is a nag nobody enforces. The
+      decision is too frequent and too small to govern by hand — so it has to be answered where it
+      is made.</p>
     <div class="grid3">
-      <div class="pcard reveal"><div class="n">01</div><h3>Priced by the token, billed by the job</h3>
-        <p>A cheaper per-token model can cost more per finished answer if it's wordier or needs more retries. Per-token charts hide this entirely.</p></div>
+      <div class="pcard reveal"><div class="n">01</div><h3>Governance by policy does not work</h3>
+        <p>Asking engineers to justify a model per task is a tax on everyone. The choice has to be made for them, at the moment of use, or it will not be made at all.</p></div>
       <div class="pcard reveal"><div class="n">02</div><h3>Set once, never revisited</h3>
-        <p>Most teams picked a model at launch. Prices have fallen and new models have shipped repeatedly since — the default is now rarely the right call.</p></div>
-      <div class="pcard reveal"><div class="n">03</div><h3>Discounts left on the table</h3>
-        <p>Prompt caching and batch pricing routinely cut real cost 50–90% on repetitive commerce workloads. Most bills use neither.</p></div>
+        <p>Most teams picked a model at launch. New models land every couple of days and prices move underneath you — the default stopped being the right answer months ago.</p></div>
+      <div class="pcard reveal"><div class="n">03</div><h3>Compliance beats cost, and nobody prices it</h3>
+        <p>For a European customer, "must stay in the EU" is binding before price is even discussed. The EU-resident hosts that satisfy it appear in no pricing aggregator.</p></div>
     </div>
   </div>
 </section>
@@ -277,7 +279,7 @@
 <section class="band" id="example">
   <div class="wrap">
     <div class="example reveal">
-      <div class="kicker">A worked example · commerce support</div>
+      <div class="kicker">A worked example · what the decision is worth</div>
       <h2 class="head">What one resolved ticket costs, across models.</h2>
       <p class="sub" style="color:#D8CDC1">A mid-size merchant resolves ~50,000 tickets a month with an AI first-line bot.
         Each resolution reads the ticket, customer history and policy (~2,500 tokens) and writes a reply (~450 tokens).</p>
@@ -291,7 +293,8 @@
       <p class="note">Read straight down the column: the same 50,000 resolutions swing from <b>$1,300</b> to under <b>$110</b> a month
         by right-sizing the model, and lower again with caching — <b>a ~$14,000/year line item</b> on one workload.
         The caveat we always attach: a cheaper model that fails the task isn't cheaper, so every switch is validated on a
-        100-ticket sample before you commit. That validation is the audit.</p>
+        100-ticket sample before you commit — which is why the router records outcomes rather than
+        assuming them.</p>
     </div>
   </div>
 </section>
@@ -354,66 +357,107 @@
   </div>
 </section>
 
-<section class="band">
+<section class="band" id="what">
   <div class="wrap">
-    <div class="kicker reveal">What you get</div>
-    <h2 class="head reveal">A one-page audit of your AI spend, <b>in the language of your business.</b></h2>
+    <div class="kicker reveal">What it does</div>
+    <h2 class="head reveal">Three questions, answered <b>where the work happens.</b></h2>
+    <p class="sub reveal">Your agent asks before it starts and reports when it finishes. No proxy sits
+      in the request path, so nothing slows down and no prompt leaves your infrastructure.</p>
     <div class="grid2">
-      <div class="dcard reveal"><h3><span class="mono">01</span>Spend, decomposed by workload</h3>
-        <p>Your monthly LLM cost broken down by job — support, catalog copy, search, review summarization — not by opaque API endpoint.</p></div>
-      <div class="dcard reveal"><h3><span class="mono">02</span>Where you're overpaying</h3>
-        <p>The workloads running on frontier models that a tier down would handle at comparable quality, with the dollar figure attached.</p></div>
-      <div class="dcard reveal"><h3><span class="mono">03</span>Discounts you're not using</h3>
-        <p>Cache-eligible and batch-eligible traffic you're paying full rate for, and what switching would save each month.</p></div>
-      <div class="dcard reveal"><h3><span class="mono">04</span>A validated switch plan</h3>
-        <p>Concrete model moves ranked by saving and risk, each with the eval to run first — so you change with evidence, not hope.</p></div>
+      <div class="dcard reveal"><h3><span class="mono">01</span>Decide — with jurisdiction first</h3>
+        <p>The cheapest model capable enough for this task, from the models you can reach. Data
+          residency is a hard filter applied before cost, so a Germany-only team is routed to
+          German infrastructure rather than told to be careful.</p></div>
+      <div class="dcard reveal"><h3><span class="mono">02</span>Stay inside a budget</h3>
+        <p>Give it $500 per developer per month and it returns the <em>most capable</em> model that
+          fits, not the cheapest. As the month's spend accumulates the ceiling falls and the pick
+          downgrades on its own — no alert to action, no throttle to configure.</p></div>
+      <div class="dcard reveal"><h3><span class="mono">03</span>Prove what it saved</h3>
+        <p>Every routed task records what it cost and what the model your engineer would have
+          reached for would have cost. The saving is an auditable number from your own traffic —
+          no A/B test, no eval harness, no vendor claim.</p></div>
+      <div class="dcard reveal"><h3><span class="mono">04</span>On prices you can check</h3>
+        <p>Every price links to the provider's own page and says who confirmed it and when. Where we
+          cannot source a number we say so rather than publish it. Corrections to our own errors
+          are published as corrections.</p></div>
     </div>
   </div>
 </section>
 
-<section class="band" id="offer">
+<section class="band" id="why">
+  <div class="wrap">
+    <div class="kicker reveal">Why not the others</div>
+    <h2 class="head reveal">Everyone routing your traffic <b>has a stake in the answer.</b></h2>
+    <p class="sub reveal">Model routing is not new. What is missing is a router that is not also
+      selling you the inference, locked inside one editor, or optimising its own margin.</p>
+    <div class="versus">
+      <div class="vcard bad reveal">
+        <div class="vlbl">Vendor and IDE routers</div>
+        <div class="vstat">Optimising their margin</div>
+        <ul>
+          <li>Cursor Router decides inside Cursor, for requests made in Cursor — not your support bot, catalogue or search</li>
+          <li>A gateway that sells inference has a reason to prefer its own cheap capacity</li>
+          <li>Savings are vendor-stated from vendor A/B tests, not measured on your traffic</li>
+          <li>No concept of data residency, which is the binding constraint for European buyers</li>
+        </ul>
+      </div>
+      <div class="vcard good reveal">
+        <div class="vlbl">PerDollar</div>
+        <div class="vstat">No inference to sell</div>
+        <ul>
+          <li>Works wherever your work happens — agents, support, catalogue, search</li>
+          <li>Independent: we make nothing whichever model wins</li>
+          <li>Savings computed against the model <em>your</em> engineer would have chosen</li>
+          <li>Residency applied before cost, over EU hosts no aggregator lists</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="start">
   <div class="wrap">
     <div class="offer reveal">
       <div>
-        <h2>See the savings <em>before</em> you pay.</h2>
-        <p>Start with a free estimate: from what's public about your store, we'll show you roughly
-          what your AI runs cost today and how much looks addressable — a real number, with the
-          workloads named. The full audit, with your data and the exact switches, is the paid step.</p>
-        <p style="color:var(--ink-3);font-size:14.5px">For commerce teams spending $500+/month on LLM APIs. The free estimate proves the work is real before any commitment.</p>
+        <h2>Ask it a question <em>right now.</em></h2>
+        <p>No sign-up, nothing to install. Pick a task and a jurisdiction and see what comes back —
+          the same answer your agent would get.</p>
+        <p style="color:var(--ink-3);font-size:14.5px">When you want it inside your workflow: one MCP
+          server for coding agents, or a plain HTTP call from anything else.</p>
       </div>
       <div class="price">
-        <div class="tier">FREE</div>
-        <div class="amt" style="font-size:30px">Savings estimate</div>
-        <div class="terms">An outside read of your likely AI spend and where it's addressable. Yours to keep, no data required.</div>
+        <div class="tier">IN THE BROWSER</div>
+        <div class="amt" style="font-size:26px">Try the router</div>
+        <div class="terms">A form, not a terminal. Shows the equivalent API call as you change it.</div>
         <div class="tierline"></div>
-        <div class="tier">THEN</div>
-        <div class="amt">€490</div>
-        <div class="terms">The full audit: your real usage mapped to verified prices, the exact model switches, the caching plan, and the eval to run before you change anything.</div>
-        <span class="guar">Individuals &amp; small teams: fee waived if we find no savings.</span>
+        <div class="tier">IN YOUR AGENT</div>
+        <div class="amt" style="font-size:15px;font-family:'Spline Sans Mono',monospace">claude mcp add perdollar</div>
+        <div class="terms">Your agent asks before each task and reports what it cost afterwards.</div>
         <div style="margin-top:22px">
-          <a class="btn primary" style="padding:13px 22px;font-size:15.5px" href="https://calendly.com/rahul-product-atelier/30min" target="_blank" rel="noopener">Get your free estimate →</a>
-          <div style="margin-top:12px;font-size:13.5px"><a href="mailto:rahul@product-atelier.com?subject=PerDollar%20savings%20estimate&body=Company%3A%0ARole%3A%0AMonthly%20LLM%20spend%20(approx.)%3A%0AProviders%20in%20use%3A%0AMain%20AI%20workloads%20(support%2C%20catalog%2C%20search%2C%20reviews...)%3A%0A%0AWhat%20I'd%20most%20want%20to%20cut%3A">or send details by email →</a></div>
+          <a class="btn primary" style="padding:13px 22px;font-size:15.5px" href="/try.html">Try the router →</a>
+          <div style="margin-top:12px;font-size:13.5px"><a href="/feed/prices.json">or take the raw price feed →</a></div>
         </div>
       </div>
     </div>
 
     <div class="steps">
-      <div class="step reveal"><div class="sn">1<small>FREE</small></div><h3>Get your savings estimate</h3>
-        <p>From what's public about your store, we show you roughly what your AI runs cost today and how much looks addressable — workloads named, no data or commitment required.</p></div>
-      <div class="step reveal"><div class="sn">2<small>~15 MIN</small></div><h3>Confirm it with one export</h3>
-        <p>If the estimate looks worth chasing, send one usage CSV from your provider console — no prompt contents, nothing sensitive — and we turn the estimate into your real number.</p></div>
-      <div class="step reveal"><div class="sn">3<small>THE AUDIT</small></div><h3>You get a decision, not a dashboard</h3>
-        <p>A one-page audit: the exact switches, what each saves, and the eval to run first. This is the paid step — the estimate already showed you it's real.</p></div>
+      <div class="step reveal"><div class="sn">1<small>BEFORE THE TASK</small></div><h3>Your agent asks</h3>
+        <p>Task type, your available models, your budget and your jurisdiction go in. A model, a reason and a runner-up come back.</p></div>
+      <div class="step reveal"><div class="sn">2<small>AFTER THE TASK</small></div><h3>It reports the real numbers</h3>
+        <p>Actual tokens, actual cost, and the model your engineer would otherwise have used. The counterfactual is computed from both.</p></div>
+      <div class="step reveal"><div class="sn">3<small>END OF MONTH</small></div><h3>You have a number, not a claim</h3>
+        <p>Spent, would-have-spent, saved — from your own traffic. The kind of figure a finance team can check rather than take on trust.</p></div>
     </div>
   </div>
 </section>
 
 <section class="final">
   <div class="wrap">
-    <h2>See what your AI actually costs <b>per order</b> — free.</h2>
-    <p>Start with a savings estimate built from what's already public. See the number before you commit a minute of your team's time.</p>
-    <a class="btn primary" href="https://calendly.com/rahul-product-atelier/30min" target="_blank" rel="noopener">Get your free estimate</a>
-    <div style="margin-top:20px"><a href="/app.html" style="font-size:14.5px">or explore the live price sheet first →</a></div>
+    <h2>Stop guessing which model to <b>run.</b></h2>
+    <p>Ask the router one question. If the answer is useful, wire it into your agent in a line.
+      If your team spends enough for this to matter, come and talk.</p>
+    <a class="btn primary" href="/try.html">Try the router</a>
+    <div style="margin-top:20px"><a href="https://calendly.com/rahul-product-atelier/30min" target="_blank" rel="noopener" style="font-size:14.5px">or book 30 minutes →</a></div>
   </div>
 </section>
 
@@ -422,13 +466,14 @@
     <a href="/" class="brand">Per<span>Dollar</span></a>
     <div class="fl">
       <a href="#problem">The problem</a>
-      <a href="#example">Worked example</a>
-      <a href="#offer">The audit</a>
+      <a href="#what">What it does</a>
+      <a href="#why">Why not the others</a>
       <a href="/app.html">Live price sheet</a>
       <a href="/hosts.html">Open-model hosts</a>
+      <a href="/feed/prices.json">Price feed</a>
       <a href="/try.html">Try the router</a>
     </div>
-    <div class="fine">Prices are standard-tier, first-party API list rates verified against provider sources and refreshed daily; batch and cached-input rates tracked separately. Capability is workload-specific — a cheaper model that fails the task is not cheaper, so every recommendation is validated on real traffic before you commit. © 2026 PerDollar.</div>
+    <div class="fine">Prices are standard-tier, first-party API list rates, refreshed daily and labelled with who verified them and when; where we cannot source a price we say so rather than publish it. Capability scores are an independent third-party index and rate the model in general, not your task — a model that clears the bar can still fail your workload, which is why the ledger records outcomes and every switch should be sampled before it is trusted. We sell no inference and take no share of what you spend. © 2026 PerDollar.</div>
   </div>
 </footer>
 
