@@ -53,7 +53,8 @@ if (cmd === "route") {
   const r = record({ task: flag("task", "unspecified"), used_id: flag("used"), default_id: flag("default"),
     tokens_in: +flag("in"), tokens_out: +flag("out"),
     actual_cost: cf.used.cost, counterfactual_cost: cf.would_have_used.cost, saved: cf.saved,
-    outcome: flag("outcome"), retries: flag("retries") ? +flag("retries") : undefined });
+    outcome: flag("outcome"), retries: flag("retries") ? +flag("retries") : undefined,
+    reason: flag("reason") });
   out({ ...cf, ledger: r });
 } else if (cmd === "savings") {
   out(summary({ since: flag("since") }));

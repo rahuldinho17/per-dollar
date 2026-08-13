@@ -27,6 +27,10 @@ function save(l) {
 
 export function record(entry) {
   const l = load();
+  // Store the justification alongside the cost. "We saved $X" is a claim;
+  // "here is every decision and why" is an audit trail — which is what a
+  // sceptical CTO actually asks for. Borrowed from vLLM Semantic Router's
+  // decision replay.
   l.entries.push({ at: new Date().toISOString(), ...entry });
   save(l);
   return { recorded: true, total_entries: l.entries.length, ledger: LEDGER };
@@ -125,6 +129,7 @@ export function summary({ since } = {}) {
     by_task: Object.fromEntries(Object.entries(byTask).map(([k, v]) =>
       [k, { tasks: v.tasks, spent: r(v.spent), saved: r(v.would - v.spent) }])),
     models_used: byModel,
+    decisions_with_reason: entries.filter(e => e.reason).length,
     outcomes_recorded: entries.filter(e => e.outcome).length,
     observed_pass_rates: passRates(),
     caveats: [

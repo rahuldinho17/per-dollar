@@ -115,3 +115,27 @@ Cursor and Copilot do this internally to keep users inside a subscription. This 
 the same mechanic pointed outward, at a budget the customer sets — and it composes
 with residency, so an EU-only team gets the best model that is both compliant and
 affordable.
+
+## Where this sits among the open-source routers
+
+Surveyed Aug 2026 (LiteLLM, Portkey, RouteLLM, LLMRouter, ClawRouter, vLLM Semantic Router).
+Three honest conclusions:
+
+**Gateways are complements, not competitors.** LiteLLM and Portkey are the rails — 100+
+providers, virtual keys, budgets, fallbacks — and neither decides anything on quality
+grounds. Reviewers say it plainly: routing logic must be built on top. PerDollar is
+designed to sit beside them, not replace them, which is why it stays out of the request path.
+
+**Research routers optimise a different signal.** RouteLLM trains on 80,000+ Chatbot Arena
+human preferences. That is "which answer would a person prefer in a chat", not "did the bug
+get fixed at my company". Their data is public and generic; the ledger's is private and specific.
+
+**vLLM Semantic Router already routes on privacy — so the residency claim must be precise.**
+It classifies the *prompt* (PII detection) and sends sensitive requests to internal models:
+"keep data within its boundaries". PerDollar classifies the *provider* — which commercial
+endpoint satisfies a jurisdiction — and carries the EU host pricing that makes the answer
+actionable. The defensible claim is not "nobody routes on residency"; it is **nobody carries
+verified pricing for EU-resident hosting**, so nobody else can name the cheapest compliant option.
+
+The general lesson: every one of these projects has better routing machinery than we do, and
+none has price provenance, EU coverage or a counterfactual ledger. The moat is the dataset.

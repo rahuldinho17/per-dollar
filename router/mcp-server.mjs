@@ -78,6 +78,7 @@ const TOOLS = [
         outcome: { type: "string", enum: ["success", "failure", "unknown"],
           description: "did the task actually succeed? tests passed / diff accepted / no retry needed. This is what turns the ledger into capability data — record it honestly or leave it unknown." },
         retries: { type: "number", description: "how many extra attempts the task needed" },
+        reason: { type: "string", description: "why this model was chosen — paste the `reason` string perdollar_route returned, so the ledger holds an audit trail of justifications, not just costs" },
       },
       required: ["used_id", "default_id", "tokens_in", "tokens_out"],
     },
@@ -127,7 +128,7 @@ async function callTool(name, args = {}) {
       tokens_in: args.tokens_in, tokens_out: args.tokens_out,
       actual_cost: cf.used.cost, counterfactual_cost: cf.would_have_used.cost, saved: cf.saved,
       outcome: args.outcome && args.outcome !== "unknown" ? args.outcome : undefined,
-      retries: args.retries,
+      retries: args.retries, reason: args.reason,
     });
     return { ...cf, ledger: rec };
   }
