@@ -234,7 +234,7 @@
     "note": "promo confirmed first-party, ends 2026-09-30"
   },
   {
-    "date": "2026-08-12",
+    "date": "2026-08-13",
     "source": "human verification",
     "model": "gem31fl",
     "dimension": "inP",
@@ -244,7 +244,7 @@
     "note": "human first-party check; the auto-detected rise was CORRECT and our anomaly gate wrongly blocked it"
   },
   {
-    "date": "2026-08-12",
+    "date": "2026-08-13",
     "source": "human verification",
     "model": "gem31fl",
     "dimension": "outP",
@@ -253,7 +253,7 @@
     "kind": "correction"
   },
   {
-    "date": "2026-08-12",
+    "date": "2026-08-13",
     "source": "human verification",
     "model": "glm52",
     "dimension": "inP",
@@ -263,7 +263,7 @@
     "note": "reverting our own 22 Jul correction \u2014 first-party z.ai pricing is 1.40/4.40, the comparison feed was wrong"
   },
   {
-    "date": "2026-08-12",
+    "date": "2026-08-13",
     "source": "human verification",
     "model": "glm52",
     "dimension": "outP",
@@ -272,35 +272,35 @@
     "kind": "correction"
   },
   {
-    "date": "2026-08-12",
+    "date": "2026-08-13",
     "source": "human verification",
     "model": "g41mini",
     "kind": "provenance_error",
     "note": "was marked verified/first-party but the price does not appear on the OpenAI pricing page; demoted to unsourced pending a real source"
   },
   {
-    "date": "2026-08-12",
+    "date": "2026-08-13",
     "source": "human verification",
     "model": "g41nano",
     "kind": "provenance_error",
     "note": "was marked verified/first-party but the price does not appear on the OpenAI pricing page; demoted to unsourced pending a real source"
   },
   {
-    "date": "2026-08-12",
+    "date": "2026-08-13",
     "source": "human verification",
     "model": "inkling",
     "kind": "provenance_error",
     "note": "was marked verified/first-party but the price does not appear on the Thinking Machines site; demoted to unsourced pending a real source"
   },
   {
-    "date": "2026-08-12",
+    "date": "2026-08-13",
     "source": "human verification",
     "model": "grok45",
     "kind": "provenance_error",
     "note": "was marked verified/first-party but the price does not appear on the xAI API page; demoted to unsourced pending a real source"
   },
   {
-    "date": "2026-08-12",
+    "date": "2026-08-13",
     "source": "human verification",
     "model": "opus48",
     "kind": "status",

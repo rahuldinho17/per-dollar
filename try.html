@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PerDollar — try the router</title>
+<meta name="description" content="Ask the router which model should run a task, with data residency and budget constraints. No terminal needed." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600&family=Source+Sans+3:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{--paper:#FFF1E5;--raised:#FFF9F3;--ink:#33302E;--ink-2:#6b625b;--ink-3:#9c948b;
+    --claret:#990F3D;--teal:#0D7680;--wheat:#F2DFCE;--wheat-2:#E9D5C1}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Source Sans 3",system-ui,sans-serif;font-size:15px;line-height:1.5}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  a{color:var(--teal)}
+  .num{font-family:"Spline Sans Mono",monospace;font-variant-numeric:tabular-nums}
+  .mast{display:flex;align-items:center;gap:18px;padding:14px 0 12px;border-bottom:3px double var(--ink)}
+  .mark{font-family:"Newsreader",serif;font-weight:600;font-size:24px;text-decoration:none;color:inherit}
+  .mark span{color:var(--claret)}
+  .mnav{display:flex;gap:18px;font-size:13.5px;margin-right:auto}
+  .mnav a{color:var(--ink-2);text-decoration:none}.mnav a:hover{color:var(--ink)}
+  .mnav a.on{color:var(--ink);font-weight:600;border-bottom:2px solid var(--claret)}
+
+  .stand{padding:38px 0 6px}
+  .stand h1{font-family:"Newsreader",serif;font-weight:500;font-size:clamp(28px,4.4vw,42px);
+    line-height:1.12;margin:0 0 12px;max-width:24ch}
+  .stand .deck{font-family:"Newsreader",serif;font-style:italic;font-size:17px;color:var(--ink-2);
+    margin:0 0 26px;max-width:62ch}
+
+  .panel{display:grid;grid-template-columns:340px 1fr;gap:26px;align-items:start}
+  @media(max-width:820px){.panel{grid-template-columns:1fr}}
+  .controls{background:var(--raised);border:1px solid var(--wheat-2);border-radius:6px;padding:18px}
+  .fld{margin-bottom:15px}
+  .fld label{display:block;font-family:"Spline Sans Mono",monospace;font-size:10px;letter-spacing:.12em;
+    color:var(--ink-2);margin-bottom:5px}
+  .fld select,.fld input{width:100%;font:500 14px "Source Sans 3",sans-serif;color:var(--ink);
+    background:#fff;border:1px solid var(--ink);border-radius:3px;padding:8px 10px}
+  .fld .hint{font-size:11.5px;color:var(--ink-3);margin-top:4px;line-height:1.4}
+  .modes{display:flex;border:1px solid var(--ink);border-radius:3px;overflow:hidden;margin-bottom:16px}
+  .modes button{flex:1;font:600 13px "Source Sans 3",sans-serif;background:#fff;color:var(--ink);
+    border:none;border-right:1px solid var(--wheat-2);padding:9px 6px;cursor:pointer}
+  .modes button:last-child{border-right:none}
+  .modes button.on{background:var(--ink);color:var(--paper)}
+  .go{width:100%;font:600 15px "Source Sans 3",sans-serif;background:var(--claret);color:#fff;
+    border:none;border-radius:3px;padding:11px;cursor:pointer;margin-top:4px}
+  .go:hover{background:var(--ink)}
+  .go:disabled{background:var(--ink-3);cursor:wait}
+
+  .answer{min-height:200px}
+  .pick{background:var(--raised);border:1px solid var(--teal);border-radius:6px;padding:20px 22px;margin-bottom:16px}
+  .pick .lbl{font-family:"Spline Sans Mono",monospace;font-size:10px;letter-spacing:.12em;color:var(--teal)}
+  .pick h2{font-family:"Newsreader",serif;font-weight:600;font-size:30px;margin:4px 0 6px;letter-spacing:-.01em}
+  .pick .why{font-size:14px;color:var(--ink-2);margin-bottom:14px}
+  .pick .figs{display:flex;flex-wrap:wrap;gap:22px;border-top:1px solid var(--wheat-2);padding-top:12px}
+  .pick .figs div{font-family:"Spline Sans Mono",monospace;font-size:15px;font-weight:600}
+  .pick .figs div b{display:block;font-size:9px;letter-spacing:.1em;color:var(--ink-2);font-weight:500}
+  .rows{border:1px solid var(--wheat-2);border-radius:6px;overflow:hidden;margin-bottom:16px}
+  .rows .rh{font-family:"Spline Sans Mono",monospace;font-size:10px;letter-spacing:.12em;color:var(--ink-2);
+    background:var(--raised);padding:9px 14px;border-bottom:1px solid var(--wheat-2)}
+  .rows .r{display:flex;gap:12px;align-items:baseline;padding:9px 14px;border-bottom:1px solid #F0E7DC;font-size:13.5px}
+  .rows .r:last-child{border-bottom:none}
+  .rows .r .n{flex:1;font-weight:600}
+  .rows .r .v{font-family:"Spline Sans Mono",monospace;font-size:12.5px;color:var(--ink-2)}
+  .rows .r .fit{font-family:"Spline Sans Mono",monospace;font-size:9px;letter-spacing:.1em}
+  .fit.y{color:var(--teal)} .fit.n{color:var(--claret)}
+  .warn{border:1px dashed var(--claret);background:var(--raised);border-radius:6px;padding:12px 14px;
+    font-size:13px;color:var(--ink-2);margin-bottom:16px}
+  .warn b{font-family:"Spline Sans Mono",monospace;font-size:10px;letter-spacing:.1em;color:var(--claret);display:block;margin-bottom:3px}
+  .curl{background:var(--ink);color:#E8DDD2;border-radius:6px;padding:14px 16px;font-family:"Spline Sans Mono",monospace;
+    font-size:11.5px;line-height:1.6;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+  .curl .c{color:#7FD4B0}
+  .curllbl{font-family:"Spline Sans Mono",monospace;font-size:10px;letter-spacing:.12em;color:var(--ink-2);
+    margin:22px 0 6px}
+  .curllbl a{font-size:11px}
+  .empty{color:var(--ink-3);font-size:14px;padding:40px 0;text-align:center}
+  .method{margin-top:48px;border-top:3px double var(--ink);padding:16px 0 60px;font-size:12.5px;
+    color:var(--ink-2);line-height:1.7;max-width:84ch}
+  .method b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <a href="/" class="mark">Per<span>Dollar</span></a>
+    <nav class="mnav">
+      <a href="/app.html">Price sheet</a>
+      <a href="/hosts.html">Same model, every host</a>
+      <a href="/try.html" class="on">Try the router</a>
+    </nav>
+  </header>
+
+  <section class="stand">
+    <h1>Which model should run this?</h1>
+    <p class="deck">Describe the job and your constraints. The router picks the cheapest model
+      capable enough — or, on a budget, the most capable one that still fits. Same engine your
+      coding agent would call.</p>
+  </section>
+
+  <div class="panel">
+    <div class="controls">
+      <div class="modes" id="modes">
+        <button data-m="decide" class="on">Cheapest that works</button>
+        <button data-m="budget">Stay in budget</button>
+      </div>
+
+      <div class="fld">
+        <label>TASK</label>
+        <select id="task"></select>
+        <div class="hint" id="taskHint"></div>
+      </div>
+
+      <div class="fld">
+        <label>DATA RESIDENCY</label>
+        <select id="residency">
+          <option value="any">No constraint</option>
+          <option value="eu-ok">EU preferred, global OK</option>
+          <option value="eu">Must stay in the EU</option>
+          <option value="eu-de">Must stay in Germany</option>
+        </select>
+        <div class="hint">A compliance constraint, so it is applied before cost.</div>
+      </div>
+
+      <div id="budgetFields" style="display:none">
+        <div class="fld">
+          <label>MONTHLY BUDGET ($)</label>
+          <input type="number" id="budget" value="500" min="1" />
+        </div>
+        <div class="fld">
+          <label>JOBS THIS MONTH</label>
+          <input type="number" id="volume" value="1200" min="1" />
+        </div>
+        <div class="fld">
+          <label>ALREADY SPENT ($)</label>
+          <input type="number" id="spent" value="0" min="0" step="0.01" />
+          <div class="hint">Raise this and watch the pick downgrade — the budget tightens itself.</div>
+        </div>
+      </div>
+
+      <div class="fld">
+        <label>CACHE HIT RATE</label>
+        <input type="number" id="cache" value="0" min="0" max="1" step="0.1" />
+        <div class="hint">0 to 1. Agent loops re-read context, which changes the ranking.</div>
+      </div>
+
+      <button class="go" id="go">Ask the router</button>
+    </div>
+
+    <div class="answer" id="answer">
+      <div class="empty">Choose a task and press <b>Ask the router</b>.</div>
+    </div>
+  </div>
+
+  <div class="curllbl">THE SAME QUESTION, AS A COMMAND YOU CAN RUN ANYWHERE — <a href="/api/decide">see the raw API</a></div>
+  <div class="curl" id="curl">—</div>
+
+  <footer class="method">
+    <b>What this is.</b> The router answers one question: given a task and your constraints,
+    which model should run it? It is the same engine an agent calls through the
+    <a href="/api/decide">decision API</a> or the MCP server, so what you see here is exactly
+    what a coding agent would receive. <b>Prices</b> come from the daily-verified price sheet,
+    with human verification outranking automated checks. <b>Capability</b> is the Artificial
+    Analysis Intelligence Index where published; models without a score are included only when
+    a capability floor is not set, and are never given an invented number. <b>Nothing is
+    stored</b> — this page calls a stateless endpoint and keeps no record of your query.
+  </footer>
+</div>
+
+<script>
+const TASKS = {
+  "agent-step":    "One step of a coding agent loop — reads accumulated context, returns a plan and a diff.",
+  "code-fix":      "Fix a bug: reads several files plus a failing test, returns a patch.",
+  "code-generate": "Write a new feature from a spec, with tests.",
+  "code-review":   "Review a pull request and comment on it.",
+  "script":        "Write a short self-contained script.",
+  "support-reply": "Answer a customer support ticket from policy and history.",
+  "summarize":     "Summarise a long document.",
+  "translate":     "Translate a page of text.",
+  "product-copy":  "Write a product description from attributes.",
+  "search-answer": "Rank and answer an on-site search query.",
+  "classify":      "Pick a label from a fixed set.",
+};
+
+let mode = "decide";
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const money = (v) => v >= 0.01 ? "$" + Number(v).toFixed(4) : "$" + Number(v).toFixed(6);
+
+$("task").innerHTML = Object.keys(TASKS).map(t => `<option value="${t}">${t}</option>`).join("");
+const setHint = () => $("taskHint").textContent = TASKS[$("task").value];
+$("task").addEventListener("change", () => { setHint(); buildUrl(); });
+setHint();
+
+document.querySelectorAll("#modes button").forEach(b => {
+  b.addEventListener("click", () => {
+    mode = b.dataset.m;
+    document.querySelectorAll("#modes button").forEach(x => x.classList.toggle("on", x === b));
+    $("budgetFields").style.display = mode === "budget" ? "block" : "none";
+    buildUrl();
+  });
+});
+["residency","cache","budget","volume","spent"].forEach(id =>
+  $(id).addEventListener("input", buildUrl));
+
+function buildUrl() {
+  const base = location.origin;
+  const p = new URLSearchParams({ task: $("task").value });
+  if ($("residency").value !== "any") p.set("residency", $("residency").value);
+  if (+$("cache").value > 0) p.set("cache_hit_rate", $("cache").value);
+  let path = "/api/decide";
+  if (mode === "budget") {
+    path = "/api/budget";
+    p.set("budget", $("budget").value);
+    p.set("volume", $("volume").value);
+    if (+$("spent").value > 0) p.set("spent_so_far", $("spent").value);
+  } else {
+    p.set("allow_unscored", "true");
+  }
+  const url = `${base}${path}?${p}`;
+  $("curl").innerHTML = `<span class="c">curl</span> "${esc(url)}"`;
+  return url;
+}
+buildUrl();
+
+$("go").addEventListener("click", async () => {
+  const btn = $("go");
+  btn.disabled = true; btn.textContent = "Asking…";
+  try {
+    const r = await fetch(buildUrl());
+    render(await r.json());
+  } catch (e) {
+    $("answer").innerHTML = `<div class="warn"><b>COULD NOT REACH THE ROUTER</b>${esc(e.message)}. If you are opening this file directly rather than on the site, the API is not running.</div>`;
+  }
+  btn.disabled = false; btn.textContent = "Ask the router";
+});
+
+function render(d) {
+  if (d.error) {
+    $("answer").innerHTML = `<div class="warn"><b>NO ANSWER</b>${esc(d.error)}${d.hint ? "<br/><br/>" + esc(d.hint) : ""}</div>`;
+    return;
+  }
+  const rec = d.recommended;
+  let html = `
+    <div class="pick">
+      <div class="lbl">${mode === "budget" ? (d.fits ? "BEST MODEL THAT FITS" : "NOTHING FITS — CLOSEST OPTION") : "USE THIS MODEL"}</div>
+      <h2>${esc(rec.name)}</h2>
+      <div class="why">${esc(d.verdict || d.reason || "")}</div>
+      <div class="figs">
+        <div><b>COST PER JOB</b>${money(rec.cost_per_job)}</div>
+        <div><b>CAPABILITY</b>${rec.capability ?? "not scored"}</div>
+        <div><b>RESIDENCY</b>${esc(rec.residency || "—")}</div>
+        ${d.budget ? `<div><b>PROJECTED MONTH</b>$${d.budget.projected_month_total} (${d.budget.projected_vs_budget_pct}%)</div>` : ""}
+      </div>
+    </div>`;
+
+  const list = d.alternatives || d.considered;
+  if (list && list.length > 1) {
+    html += `<div class="rows"><div class="rh">${mode === "budget" ? "WHAT ELSE FITS" : "ALSO CONSIDERED"}</div>` +
+      list.slice(0, 5).map(a => `
+        <div class="r">
+          <span class="n">${esc(a.name || a.id)}</span>
+          <span class="v">${money(a.cost_per_job)}${a.month_total != null ? ` · $${a.month_total}/mo` : ""}</span>
+          <span class="v">cap ${a.capability ?? "—"}</span>
+          ${a.fits != null ? `<span class="fit ${a.fits ? "y" : "n"}">${a.fits ? "FITS" : "OVER"}</span>` : ""}
+        </div>`).join("") + `</div>`;
+  }
+
+  if (d.warnings && d.warnings.length)
+    html += `<div class="warn"><b>WORTH KNOWING</b>${d.warnings.map(esc).join("<br/>")}</div>`;
+  if (d.pacing)
+    html += `<div class="warn"><b>PACING</b>Spending at ${esc(d.pacing.pace_vs_plan)} of plan — ${esc(d.pacing.note)}</div>`;
+
+  $("answer").innerHTML = html;
+}
+</script>
+</body>
+</html>
