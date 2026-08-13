@@ -11,7 +11,7 @@ import { decide, counterfactual, planBudget, euHostModels, TASK_CLASSES } from "
 import { record, summary, reset, burn } from "./ledger.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const FEED = join(HERE, "..", "api", "prices.json");
+const FEED = join(HERE, "..", "feed", "prices.json");
 const EU = join(HERE, "..", "data", "eu-hosts.json");
 const models = () => {
   const base = JSON.parse(readFileSync(FEED, "utf8")).models;

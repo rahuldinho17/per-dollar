@@ -152,7 +152,7 @@
     </div>
   </div>
 
-  <div class="curllbl">THE SAME QUESTION, AS A COMMAND YOU CAN RUN ANYWHERE — <a href="/api/decide">see the raw API</a></div>
+  <div class="curllbl">THE SAME QUESTION, AS A COMMAND YOU CAN RUN ANYWHERE — <a href="/api/decide?task=code-fix">see the raw API</a></div>
   <div class="curl" id="curl">—</div>
 
   <footer class="method">
@@ -230,7 +230,14 @@ $("go").addEventListener("click", async () => {
     const r = await fetch(buildUrl());
     render(await r.json());
   } catch (e) {
-    $("answer").innerHTML = `<div class="warn"><b>COULD NOT REACH THE ROUTER</b>${esc(e.message)}. If you are opening this file directly rather than on the site, the API is not running.</div>`;
+    // Functions may not be deployed; say so precisely instead of failing blankly.
+    let extra = "";
+    try {
+      const f = await fetch("/feed/prices.json");
+      if (f.ok) { const j = await f.json();
+        extra = ` The price feed is reachable (${j.models.length} models, as of ${j.as_of}), so the data is fine — it is the decision endpoint that is not responding. If you have just deployed, give it a minute.`; }
+    } catch { extra = " The price feed is also unreachable, so this is probably a deployment problem rather than a routing one."; }
+    $("answer").innerHTML = `<div class="warn"><b>COULD NOT REACH THE ROUTER</b>${esc(e.message)}.${esc(extra)}</div>`;
   }
   btn.disabled = false; btn.textContent = "Ask the router";
 });

@@ -76,7 +76,7 @@ function writePublicFeed(prices, ROOT) {
       return e;
     }),
   };
-  writeFileSync(join(ROOT, "api", "prices.json"), JSON.stringify(feed, null, 2) + "\n");
+  writeFileSync(join(ROOT, "feed", "prices.json"), JSON.stringify(feed, null, 2) + "\n");
 }
 
 const daysBetween = (a, b) => Math.abs(new Date(a) - new Date(b)) / 864e5;

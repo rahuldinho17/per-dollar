@@ -185,3 +185,21 @@ cat data/verify-queue.json                 # what needs a human
 Expect flags on JavaScript-rendered pricing pages (several providers render prices
 client-side, so a plain fetch sees nothing). Those need either a headless browser or a
 provider-specific extractor; until then they stay honestly flagged rather than assumed.
+
+## Endpoint layout (and a Vercel gotcha)
+
+Anything inside `api/` is treated by Vercel as a serverless function, so a **static**
+JSON file placed there stops being served. That is what broke `/api/prices.json`.
+
+The static feed therefore lives at **`/feed/prices.json`** and the functions read it
+from there. `vercel.json` rewrites `/api/prices.json` and `/api/prices` to it so older
+links keep working, and `functions.includeFiles` bundles `feed/`, `data/` and `router/`
+so the handlers can read them at runtime.
+
+| URL | What it is |
+|---|---|
+| `/feed/prices.json` | static price feed, updated daily |
+| `/api/decide?task=…` | which model to use, with residency |
+| `/api/budget?task=…&budget=…&volume=…` | best model that fits a budget |
+| `/api/route?task=…` | lower-level routing with all options |
+| `/try.html` | the same thing as a web form, no terminal needed |

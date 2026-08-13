@@ -15,7 +15,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 let pool = null;
 function models() {
   if (!pool) {
-    const base = JSON.parse(readFileSync(join(HERE, "prices.json"), "utf8")).models;
+    const base = JSON.parse(readFileSync(join(HERE, "..", "feed", "prices.json"), "utf8")).models;
     let eu = [];
     try { eu = euHostModels(JSON.parse(readFileSync(join(HERE, "..", "data", "eu-hosts.json"), "utf8"))); } catch {}
     pool = [...base, ...eu];

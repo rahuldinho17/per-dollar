@@ -19,7 +19,7 @@ import { decide, TASK_CLASSES } from "../router/engine.mjs";
 const HERE = dirname(fileURLToPath(import.meta.url));
 let feed = null;
 function models() {
-  if (!feed) feed = JSON.parse(readFileSync(join(HERE, "prices.json"), "utf8"));
+  if (!feed) feed = JSON.parse(readFileSync(join(HERE, "..", "feed", "prices.json"), "utf8"));
   return feed.models;
 }
 

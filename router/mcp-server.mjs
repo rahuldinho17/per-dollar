@@ -19,8 +19,8 @@ import { decide, counterfactual, jobCost, planBudget, euHostModels, TASK_CLASSES
 import { record, summary, burn } from "./ledger.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const FEED_URL = process.env.PERDOLLAR_FEED || "https://per-dollar.vercel.app/api/prices.json";
-const LOCAL_FEED = join(HERE, "..", "api", "prices.json");
+const FEED_URL = process.env.PERDOLLAR_FEED || "https://per-dollar.vercel.app/feed/prices.json";
+const LOCAL_FEED = join(HERE, "..", "feed", "prices.json");
 const EU_HOSTS = join(HERE, "..", "data", "eu-hosts.json");
 function withEuHosts(list) {
   try { return [...list, ...euHostModels(JSON.parse(readFileSync(EU_HOSTS, "utf8")))]; }

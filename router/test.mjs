@@ -6,7 +6,7 @@ import { dirname, join } from "node:path";
 import { decide, counterfactual, estimateCapability, jobCost, TASK_CLASSES } from "./engine.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const models = JSON.parse(readFileSync(join(HERE, "..", "api", "prices.json"), "utf8")).models;
+const models = JSON.parse(readFileSync(join(HERE, "..", "feed", "prices.json"), "utf8")).models;
 let pass = 0, fail = 0;
 const ok = (name, cond, detail = "") => {
   if (cond) { pass++; console.log(`  ok   ${name}`); }
