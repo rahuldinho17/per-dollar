@@ -166,3 +166,11 @@ that issue to the repo owner, so Monday never slips without any calendar to main
 The review itself needs web search and judgement, so it runs in a Claude session:
 open Claude, say "run the market radar", work through the accept/reject/defer, and
 close the issue. The reminder is automatic; the thinking stays human by design.
+
+
+## After the review: draft the public post
+
+The brief is internal, but one finding in it is usually worth an outside audience. Once the
+user has made their accept/reject calls, run the **radar-to-post** skill: it reads the newest
+brief, picks the single finding an outsider would stop for, and drafts a LinkedIn post. That
+turns the weekly review into distribution at no marginal cost. It drafts only — the user posts.

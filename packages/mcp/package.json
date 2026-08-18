@@ -1,0 +1,14 @@
+{
+  "name": "perdollar-mcp",
+  "version": "0.1.0",
+  "description": "MCP server: decide which LLM to run a task on, with data residency and budget constraints, and prove what it saved.",
+  "type": "module",
+  "bin": { "perdollar-mcp": "./bin.mjs" },
+  "files": ["bin.mjs", "engine.mjs", "ledger.mjs", "prices.json", "eu-hosts.json", "README.md"],
+  "keywords": ["mcp", "modelcontextprotocol", "llm", "pricing", "router", "cost", "gdpr", "eu", "data-residency", "finops"],
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/rahuldinho17/per-dollar.git" },
+  "homepage": "https://per-dollar.vercel.app",
+  "mcpName": "io.github.rahuldinho17/perdollar",
+  "engines": { "node": ">=20" }
+}

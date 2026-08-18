@@ -1,0 +1,32 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "name": "io.github.rahuldinho17/perdollar",
+  "description": "Decide which LLM to run a task on. Returns the cheapest model capable enough from the models you can reach, with data residency applied before cost, plus a ledger of what each decision saved against the model you would have used anyway. Prices are verified against provider pages daily.",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/rahuldinho17/per-dollar",
+    "source": "github"
+  },
+  "websiteUrl": "https://per-dollar.vercel.app",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "perdollar-mcp",
+      "version": "0.1.0",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "PERDOLLAR_FEED",
+          "description": "Override the price feed URL. Defaults to the public feed at per-dollar.vercel.app.",
+          "isRequired": false
+        },
+        {
+          "name": "PERDOLLAR_HOME",
+          "description": "Where the local savings ledger is written. Defaults to ~/.perdollar. Nothing is sent anywhere.",
+          "isRequired": false
+        }
+      ]
+    }
+  ]
+}

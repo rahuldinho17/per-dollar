@@ -1,3 +1,5 @@
+<!-- mcp-name: io.github.rahuldinho17/perdollar -->
+
 # PerDollar
 
 ## Pages
@@ -203,3 +205,20 @@ so the handlers can read them at runtime.
 | `/api/budget?task=…&budget=…&volume=…` | best model that fits a budget |
 | `/api/route?task=…` | lower-level routing with all options |
 | `/try.html` | the same thing as a web form, no terminal needed |
+
+## Using PerDollar with an existing router
+
+See `integrations/` — drop-in recipes for LiteLLM and vLLM Semantic Router. PerDollar stays
+out of the request path; you keep your gateway and gain verified prices, EU-host coverage and
+a reason attached to every decision.
+
+## Distribution
+
+- `server.json` + `packages/mcp/` — the MCP server packaged for the official registry
+  (`registry.modelcontextprotocol.io`). Build with `bash packages/mcp/build.sh`, publish to npm,
+  then `mcp-publisher publish`. The README carries the required `mcp-name` marker.
+- `integrations/` — recipes for using the feed with LiteLLM and vLLM Semantic Router. PerDollar
+  stays out of the request path; they keep their gateway and gain verified prices, EU-host
+  coverage and a reason attached to every decision.
+- `skills/radar-to-post/` — turns each weekly market-radar brief into a LinkedIn post. Run it
+  straight after the radar. It drafts; you post.
