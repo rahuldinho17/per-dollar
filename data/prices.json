@@ -1,8 +1,30 @@
 {
-  "as_of": "2026-08-13",
-  "as_of_display": "13 AUG 2026",
+  "as_of": "2026-08-18",
+  "as_of_display": "18 AUG 2026",
   "note": "Verification sweep 2026-08-03: 13 models confirmed directly against provider pricing pages. GPT-5.6 Terra and Luna corrected (Luna was 5x too high). DeepSeek V4 Pro added. Seven models still carry their 22 Jul verification; four remain 'tracked' pending first-party confirmation.",
   "models": [
+    {
+      "id": "grok46",
+      "inP": 2.0,
+      "outP": 6.0,
+      "verification": "tracked",
+      "source": "release tracker listing \u2014 not yet confirmed first-party",
+      "verified_at": null,
+      "tracked_at": "2026-08-18",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
+    },
+    {
+      "id": "gem37f",
+      "inP": 1.5,
+      "outP": 7.5,
+      "verification": "tracked",
+      "source": "release tracker listing \u2014 not yet confirmed first-party",
+      "verified_at": null,
+      "tracked_at": "2026-08-18",
+      "residency": "global",
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing"
+    },
     {
       "id": "opus5",
       "inP": 5,
@@ -149,7 +171,8 @@
       "tracked_at": "2026-07-22",
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false
+      "self_hosted": false,
+      "superseded_by": "grok46"
     },
     {
       "id": "inkling",
@@ -192,7 +215,8 @@
       "tracked_at": "2026-07-22",
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing",
-      "self_hosted": false
+      "self_hosted": false,
+      "superseded_by": "gem37f"
     },
     {
       "id": "glm52",

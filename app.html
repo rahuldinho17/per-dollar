@@ -487,6 +487,7 @@ const SOURCES = {
   "xAI":     "https://x.ai/api",
   "Moonshot AI": "https://platform.moonshot.ai/docs/pricing",
   "Thinking Machines": "https://thinkingmachines.ai/inkling/",
+  "xAI":     "https://docs.x.ai/docs/models",
 };
 
 const MODELS = [
@@ -504,6 +505,8 @@ const MODELS = [
   { id:"grok45",   name:"Grok 4.5",              provider:"xAI",       inP:2.0,  outP:6.0,  verbosity:1.0, iq:54,  trend:[1.0] },
   { id:"inkling",  name:"Inkling",               provider:"Thinking Machines", inP:1.87, outP:4.68, verbosity:0.95, iq:41, trend:[1.0] },
   { id:"gpt56lun", name:"GPT-5.6 Luna",          provider:"OpenAI",    inP:0.2,  outP:1.2,  verbosity:1.0, iq:51,  trend:[1.0] },
+  { id:"gem37f",   name:"Gemini 3.7 Flash",      provider:"Google",    inP:1.5,  outP:7.5,  verbosity:0.8,  iq:null, trend:[1.0] },
+  { id:"grok46",   name:"Grok 4.6",              provider:"xAI",       inP:2.0,  outP:6.0,  verbosity:1.0,  iq:null, trend:[1.0] },
   { id:"gem36f",   name:"Gemini 3.6 Flash",      provider:"Google",    inP:1.5,  outP:7.5,  verbosity:0.8, iq:null,  trend:[1.0] },
   { id:"glm52",    name:"GLM-5.2",               provider:"Z.AI",      inP:0.94, outP:3.0,  verbosity:0.95, iq:51, trend:[1.7,1.6,1.5,1.3,1.15,1.05,1.0] },
   { id:"haiku45",  name:"Claude Haiku 4.5",      provider:"Anthropic", inP:1.0,  outP:5.0,  verbosity:1.0, iq:null,  trend:[1.3,1.3,1.25,1.2,1.1,1.0,1.0] },
@@ -850,7 +853,7 @@ function render() {
     return `
     <tr class="${m.id === cheap.id ? "best" : ""}${bestVal && m.id === bestVal.id ? " bestval" : ""}${m.legacy ? " is-legacy" : ""}">
       <td class="l c-model">
-        <div class="mname">${esc(m.name)}${m.agent_status === "needs-human" ? `<span class="needsh" title="${esc(m.agent_note || "the agent could not confirm this price on the provider page")}">?</span>` : ""}${m.legacy ? `<span class="legacy" title="The provider has marked this model legacy — plan a migration before it is retired">LEGACY${m.retires ? " · RETIRES " + shortDate(m.retires).toUpperCase() : ""}</span>` : ""}${m.pv.hasPromo ? `<span class="pbadge${m.pv.usePromo ? "" : " off"}">PROMO</span>` : ""}</div>
+        <div class="mname">${esc(m.name)}${m.agent_status === "needs-human" ? `<span class="needsh" title="${esc(m.agent_note || "the agent could not confirm this price on the provider page")}">?</span>` : ""}${m.superseded_by ? `<span class="legacy" style="border-color:var(--ink-3);background:transparent;color:var(--ink-2)" title="A newer version of this model has shipped">SUPERSEDED</span>` : ""}${m.legacy ? `<span class="legacy" title="The provider has marked this model legacy — plan a migration before it is retired">LEGACY${m.retires ? " · RETIRES " + shortDate(m.retires).toUpperCase() : ""}</span>` : ""}${m.pv.hasPromo ? `<span class="pbadge${m.pv.usePromo ? "" : " off"}">PROMO</span>` : ""}</div>
         <div class="msub">${esc(m.provider.toUpperCase())} ·
           <a class="${badgeClass(m)}" href="${esc(src)}" target="_blank" rel="noopener"
              title="${esc(src)} — ${esc(m.source || "provider pricing page")}">${esc(badgeText(m))} · SOURCE ↗</a>${
@@ -970,6 +973,7 @@ renderStatic();
         if (u.iq !== undefined) m.iq = u.iq;
         if (u.legacy !== undefined) m.legacy = u.legacy;
         if (u.retires !== undefined) m.retires = u.retires;
+        if (u.superseded_by !== undefined) m.superseded_by = u.superseded_by;
         if (u.active_until !== undefined) m.active_until = u.active_until;
         if (u.cachedIn !== undefined) m.cachedIn = u.cachedIn;
         if (u.agent_checked_at) m.agent_checked_at = u.agent_checked_at;

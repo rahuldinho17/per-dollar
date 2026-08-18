@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   refresh:
@@ -20,6 +21,36 @@ jobs:
         run: node scripts/refresh-prices.mjs
       - name: Verify prices against provider pages
         run: node scripts/verify-agent.mjs || echo "verify-agent had trouble; prices unaffected"
+      - name: Raise an issue for anything needing a human
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const read = (p) => { try { return JSON.parse(fs.readFileSync(p, "utf8")); } catch { return []; } };
+            const pending = read("data/discovered.json").filter(d => d.status === "pending");
+            const flagged = read("data/verify-queue.json").filter(q => !q.resolved);
+            if (!pending.length && !flagged.length) { core.info("nothing needs a human today"); return; }
+
+            const iso = new Date().toISOString().slice(0,10);
+            const title = `Price data needs a human — ${iso}`;
+            const body = [
+              pending.length ? `### ${pending.length} new listing(s) discovered\n` +
+                pending.slice(0,20).map(d => `- \`${d.slug}\` — $${d.inP} in / $${d.outP} out (released ${d.released || "?"})`).join("\n") +
+                `\n\nTo publish: add the slug to \`scripts/openrouter-map.json\` and an entry to \`data/prices.json\`, then verify first-party.\n` : "",
+              flagged.length ? `### ${flagged.length} price(s) the verification agent could not confirm\n` +
+                flagged.slice(0,20).map(q => `- **${q.model}** — published ${q.published}. ${q.why}\n  ${q.url}`).join("\n") + "\n" : "",
+              `_Opened automatically by the daily refresh. Close once actioned._`,
+            ].filter(Boolean).join("\n");
+
+            const open = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: "open", labels: "price-review" });
+            const existing = open.data.find(i => i.title === title);
+            if (existing) { await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body }); return; }
+            await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo,
+              title, body, labels: ["price-review"] });
+
       - name: Commit if changed
         run: |
           git config user.name "perdollar-bot"

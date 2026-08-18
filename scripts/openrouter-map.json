@@ -21,5 +21,7 @@
   "glm52": "z-ai/glm-5.2",
   "mm3": "minimax/minimax-m3",
   "dsv4f": "deepseek/deepseek-v4-flash",
-  "dsv4pro": "deepseek/deepseek-v4-pro"
+  "dsv4pro": "deepseek/deepseek-v4-pro",
+  "gem37f": "google/gemini-3.7-flash",
+  "grok46": "x-ai/grok-4.6"
 }

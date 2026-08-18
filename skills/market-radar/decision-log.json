@@ -68,5 +68,33 @@
     "theme": "data-feed",
     "decision": "accept",
     "reason": "Build decision feed; deferral condition (real consumer) met via Kai."
+  },
+  {
+    "date": "2026-08-18",
+    "id": "MR-2026-W34-01",
+    "theme": "positioning",
+    "decision": "accept",
+    "reason": "EU AI Act on the site \u2014 shipped as an honest GDPR-vs-AI-Act distinction rather than a compliance claim."
+  },
+  {
+    "date": "2026-08-18",
+    "id": "MR-2026-W34-02",
+    "theme": "data-trust",
+    "decision": "accept",
+    "reason": "Add Gemini 3.7 Flash + Grok 4.6 and run the discovery post-mortem."
+  },
+  {
+    "date": "2026-08-18",
+    "id": "MR-2026-W34-03",
+    "theme": "defensibility",
+    "decision": "accept",
+    "reason": "Research spot-priced routers (The Grid) \u2014 know it before a prospect asks."
+  },
+  {
+    "date": "2026-08-18",
+    "id": "MR-2026-W34-04",
+    "theme": "gtm-copy",
+    "decision": "reject",
+    "reason": "Not rewriting the Kai follow-up around the AI Act; the existing message stands."
   }
 ]

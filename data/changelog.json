@@ -305,5 +305,19 @@
     "model": "opus48",
     "kind": "status",
     "note": "marked legacy (human check)"
+  },
+  {
+    "date": "2026-08-18",
+    "model": "gem37f",
+    "kind": "new_model",
+    "source": "release tracker",
+    "note": "added after the ledger was found two releases behind; prices are placeholders inherited from the prior version and MUST be verified first-party before use"
+  },
+  {
+    "date": "2026-08-18",
+    "model": "grok46",
+    "kind": "new_model",
+    "source": "release tracker",
+    "note": "added after the ledger was found two releases behind; prices are placeholders inherited from the prior version and MUST be verified first-party before use"
   }
 ]
