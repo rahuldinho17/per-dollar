@@ -94,5 +94,21 @@
     "theme": "defensibility",
     "signal": "vLLM Semantic Router already routes on privacy/data boundaries \u2014 'keep data within its boundaries', sensitive prompts to internal models. Adjacent to our residency claim, so 'nobody does residency' is too strong. Defensible narrower claim: nobody carries verified PRICING for EU-resident hosting. Also: every OSS router has better routing machinery and none has price provenance \u2014 position as the data layer they consume, not a competing router.",
     "raw_quote": "Keep data within its boundaries"
+  },
+  {
+    "date": "2026-08-18",
+    "who": "Market radar W34",
+    "type": "research",
+    "theme": "positioning",
+    "signal": "EU AI Act Article 50 in force 2 Aug 2026 \u2014 transparency duties, penalties to 3% of global turnover, extraterritorial (in scope if you reach EU users, wherever you sit). Turns residency routing from a niche differentiator into a deadline-backed obligation. Nothing on the site mentions it.",
+    "raw_quote": "reach into the EU through customers or outputs and you are in scope"
+  },
+  {
+    "date": "2026-08-18",
+    "who": "Ryan + Kai (no reply)",
+    "type": "signal",
+    "theme": "gtm",
+    "signal": "No reply from either 2 business days after sending. Too early to interpret. Plan: single follow-up on day 7-8 with the EU AI Act as new information rather than a nudge.",
+    "raw_quote": ""
   }
 ]
