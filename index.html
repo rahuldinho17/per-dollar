@@ -203,6 +203,7 @@
       <a class="navlink" href="#problem">The problem</a>
       <a class="navlink" href="#what">What it does</a>
       <a class="navlink" href="#why">Why not the others</a>
+      <a class="navlink" href="#coverage">Coverage</a>
       <a class="navlink" href="#compliance">Compliance</a>
       <a class="navlink" href="/app.html">Live price sheet</a>
       <a class="navlink" href="/hosts.html">Open-model hosts</a>
@@ -370,9 +371,10 @@
           residency is a hard filter applied before cost, so a Germany-only team is routed to
           German infrastructure rather than told to be careful.</p></div>
       <div class="dcard reveal"><h3><span class="mono">02</span>Stay inside a budget</h3>
-        <p>Give it $500 per developer per month and it returns the <em>most capable</em> model that
-          fits, not the cheapest. As the month's spend accumulates the ceiling falls and the pick
-          downgrades on its own — no alert to action, no throttle to configure.</p></div>
+        <p>An engineer no longer costs a salary. They cost a salary plus whatever their tools burn
+          in inference, and that half moves weekly. Give it $500 per developer per month and it
+          returns the <em>most capable</em> model that fits, not the cheapest — and as the month's
+          spend accumulates the ceiling falls and the pick downgrades on its own.</p></div>
       <div class="dcard reveal"><h3><span class="mono">03</span>Prove what it saved</h3>
         <p>Every routed task records what it cost and what the model your engineer would have
           reached for would have cost. The saving is an auditable number from your own traffic —
@@ -412,6 +414,27 @@
           <li>Residency applied before cost — over EU-resident hosts whose prices no aggregator carries</li>
         </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="coverage">
+  <div class="wrap">
+    <div class="kicker reveal">Coverage</div>
+    <h2 class="head reveal">A new model ships roughly <b>every ten hours.</b></h2>
+    <p class="sub reveal">Nobody can verify that. Sites tracking 300+ models are republishing
+      whatever the aggregators say, which is fine until a number is wrong and no one can tell you
+      who checked it. We track fewer models on purpose, and say who confirmed each price and when.</p>
+    <div class="grid3">
+      <div class="pcard reveal"><div class="n">WHAT WE ADD</div><h3>Models people actually route to</h3>
+        <p>Current frontier and budget tiers from the major labs, plus every EU-resident host we can
+          find. New releases enter a review queue, not the ledger.</p></div>
+      <div class="pcard reveal"><div class="n">WHAT WE SKIP</div><h3>The long tail</h3>
+        <p>Image, video and audio models, superseded versions, and anything we cannot source from
+          the provider's own page. Breadth we cannot verify is breadth we would not defend.</p></div>
+      <div class="pcard reveal"><div class="n">WHAT YOU SEE</div><h3>The label, always</h3>
+        <p>Verified by a human on a date, confirmed by the daily agent, tracked from a published
+          comparison, or source unconfirmed. Four states, never blurred into one.</p></div>
     </div>
   </div>
 </section>
@@ -512,6 +535,7 @@
       <a href="#problem">The problem</a>
       <a href="#what">What it does</a>
       <a href="#why">Why not the others</a>
+      <a href="#coverage">Coverage</a>
       <a href="#compliance">Compliance</a>
       <a href="/app.html">Live price sheet</a>
       <a href="/hosts.html">Open-model hosts</a>

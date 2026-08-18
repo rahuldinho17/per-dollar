@@ -110,5 +110,37 @@
     "theme": "gtm",
     "signal": "No reply from either 2 business days after sending. Too early to interpret. Plan: single follow-up on day 7-8 with the EU AI Act as new information rather than a nudge.",
     "raw_quote": ""
+  },
+  {
+    "date": "2026-08-18",
+    "who": "Alex Atallah (CEO, OpenRouter) via 20VC",
+    "type": "research",
+    "theme": "defensibility",
+    "signal": "Direct attack on the category: 'copycat routers that treat routing as a side feature are playing to exist rather than to win.' His criteria are latency, cost and shifting model quality \u2014 i.e. gateway infrastructure. PerDollar is deliberately NOT in the request path, so the critique lands on gateways, not on a decision/data layer. Worth noting he was selling at the time.",
+    "raw_quote": "playing to exist rather than to win"
+  },
+  {
+    "date": "2026-08-18",
+    "who": "Alex Atallah via 20VC",
+    "type": "research",
+    "theme": "positioning",
+    "signal": "GIFT: 'employee cost is no longer just a fixed salary \u2014 it increasingly includes the variable inference spend of the AI tools each employee deploys. Companies will need a cost-to-productivity lens.' That is exactly PerDollar's per-developer workload framing, articulated by the category's most credible voice. Adopt the language.",
+    "raw_quote": "cost-to-productivity lens"
+  },
+  {
+    "date": "2026-08-18",
+    "who": "Alex Atallah via 20VC",
+    "type": "research",
+    "theme": "data-trust",
+    "signal": "One new model every 10 hours. Verification cannot scale to the whole market \u2014 which makes a curated, verified set MORE valuable than a large unverified one, but only if the curation criteria are stated. Our ledger fell 2 models behind in a week at 26 models.",
+    "raw_quote": "One New Model Every 10 Hours"
+  },
+  {
+    "date": "2026-08-18",
+    "who": "Alex Atallah via 20VC",
+    "type": "research",
+    "theme": "vertical-depth",
+    "signal": "Sovereignty gap: US behind China on open weights, Chinese labs state-backed, and Chinese-origin models already 46% of US enterprise tokens on OpenRouter. We tag residency (where processed) but not provenance (who built/operates it). For an EU bank those are different questions.",
+    "raw_quote": ""
   }
 ]
