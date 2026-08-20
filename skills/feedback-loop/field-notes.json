@@ -142,5 +142,37 @@
     "theme": "vertical-depth",
     "signal": "Sovereignty gap: US behind China on open weights, Chinese labs state-backed, and Chinese-origin models already 46% of US enterprise tokens on OpenRouter. We tag residency (where processed) but not provenance (who built/operates it). For an EU bank those are different questions.",
     "raw_quote": ""
+  },
+  {
+    "date": "2026-08-20",
+    "who": "Bartosz Ocytko, Executive Principal Engineer, Zalando",
+    "type": "research",
+    "theme": "gtm",
+    "signal": "PUBLIC INVITATION. Zalando's agentic-engineering post ends with an open list of unsolved problems including 'auto-routing across models, incl. open-weight ones' and 'If you're a non-vendor engineering team tackling similar problems... feel free to get in touch.' European commerce, 250+ eng teams, LiteLLM proxy, explicit vendor independence. This is the ICP asking for the product, by name, in public.",
+    "raw_quote": "auto-routing across models, incl. open-weight ones"
+  },
+  {
+    "date": "2026-08-20",
+    "who": "Zalando engineering blog",
+    "type": "research",
+    "theme": "positioning",
+    "signal": "'Users rarely switch models unless nudged by hitting a limit or error.' Third independent confirmation of Ryan's thesis that model choice cannot be governed by policy \u2014 it has to be answered at the point of use. Zalando's answer today is a proxy that measures; they have no decision layer.",
+    "raw_quote": "users rarely switch models unless nudged by hitting a limit or error"
+  },
+  {
+    "date": "2026-08-20",
+    "who": "Zalando engineering blog",
+    "type": "research",
+    "theme": "data-trust",
+    "signal": "They found one user at <30% cache hit rate against an 80%+ expectation and wrote a parser to find the session. They auto-inject prompt-caching checkpoints via LiteLLM hooks and built a TUI that 'highlights gaps in usage of cached tokens'. Direct validation of the cache-hit-rate slider and the hosts.html finding that caching changes which host wins.",
+    "raw_quote": "highlights gaps in usage of cached tokens"
+  },
+  {
+    "date": "2026-08-20",
+    "who": "Zalando engineering blog",
+    "type": "research",
+    "theme": "defensibility",
+    "signal": "Third company (after ShopAgentic and Aries' clients) found to have built cost tracking internally: anonymised per-model cost via LiteLLM post-call hooks, plus a cost TUI. Consistent pattern \u2014 everyone builds the measurement, nobody builds the decision or the verified price source.",
+    "raw_quote": ""
   }
 ]
