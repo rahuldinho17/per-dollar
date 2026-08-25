@@ -198,5 +198,29 @@
     "theme": "defensibility",
     "signal": "CloudZero now publishes prices verified against provider docs on a named date, with a changelog. Verified provenance is no longer ours alone. What they lack: EU-resident coverage, cost per finished job, a callable decision.",
     "raw_quote": "Rates verified against OpenAI's API pricing... as of August 20, 2026"
+  },
+  {
+    "date": "2026-08-25",
+    "who": "Simon Taylor (Fintech Brainfood) via LinkedIn",
+    "type": "research",
+    "theme": "defensibility",
+    "signal": "Ramp launched Router.com GA the same day Stripe announced OpenRouter. Positioning is our line verbatim: 'each request sent to the cheapest model that clears your quality bar'. Free through 2026, adoption is a base URL change, 40% average savings claimed. On routing we cannot compete on distribution or price and should stop trying.",
+    "raw_quote": "each request sent to the cheapest model that clears your quality bar"
+  },
+  {
+    "date": "2026-08-25",
+    "who": "Reply in Simon Taylor's thread",
+    "type": "research",
+    "theme": "positioning",
+    "signal": "THE CLAIM TO OWN: 'The only metric that cannot be gamed is Accepted Work per Dollar, and neither Ramp nor OpenRouter govern using that metric.' That is exactly the outcome-recording ledger \u2014 cost per task that succeeded, not per task attempted. Named in public as the market's gap, by someone who is not us.",
+    "raw_quote": "The only metric that cannot be gamed is Accepted Work per Dollar"
+  },
+  {
+    "date": "2026-08-25",
+    "who": "Ramp data via Simon Taylor",
+    "type": "research",
+    "theme": "gtm",
+    "signal": "Corporate AI spend up 20.7x since June 2025; tokens went from rounding error to fastest-growing P&L line in 14 months. Useful sizing figure for any pitch, and it explains why fintechs are buying routers: 'whoever owns routing owns model procurement'.",
+    "raw_quote": "Whoever owns routing owns model procurement"
   }
 ]
