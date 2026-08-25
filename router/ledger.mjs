@@ -37,36 +37,76 @@ export function record(entry) {
 }
 
 /**
- * Observed pass rate per model per task class — the capability data nobody else
- * has, because it comes from real work rather than a benchmark. Feed it back
- * into estimateCapability() and third-party scores stop being load-bearing.
+ * Accepted Work per Dollar.
  *
- * Outcome is whatever the caller can honestly observe: tests passed, the diff was
- * accepted, no retry was needed. A task with no outcome recorded is ignored
- * rather than counted as a success.
+ * "Did the task succeed?" needs judgement and invites a model to grade its own
+ * homework. "Did the task need doing again?" does not — a retry or an escalation
+ * to a dearer model is an observable event, and it is the cheap, ungameable half
+ * of the same question. So we never claim to measure success. We measure work
+ * that did not need a do-over, and we report how much of the sample had any
+ * observable signal at all.
+ *
+ * Signals, strongest first:
+ *   tests_passed / tests_failed  objective, from the caller's own test run
+ *   escalated                    the workflow fell back to a dearer model — the
+ *                                cheaper one demonstrably did not finish the job
+ *   retried                      the same task was attempted again
+ *   committed / abandoned        the diff was kept or thrown away
+ *   none                         no signal; excluded from the metric, counted in coverage
  */
-export function passRates({ minSamples = 5 } = {}) {
+const CLEAN = new Set(["tests_passed", "committed"]);
+const DIRTY = new Set(["tests_failed", "escalated", "retried", "abandoned"]);
+
+export function acceptedWorkPerDollar({ since, minSamples = 5 } = {}) {
   const l = load();
-  const buckets = {};
-  for (const e of l.entries) {
-    if (e.outcome !== "success" && e.outcome !== "failure") continue;
+  const entries = (since ? l.entries.filter(e => e.at >= since) : l.entries);
+  if (!entries.length) return { entries: 0, note: "no routed tasks recorded yet" };
+
+  const signalled = entries.filter(e => CLEAN.has(e.signal) || DIRTY.has(e.signal) || (e.retries > 0));
+  const clean = signalled.filter(e => CLEAN.has(e.signal) && !(e.retries > 0));
+  const spentAll = entries.reduce((s, e) => s + (e.actual_cost || 0), 0);
+  const spentSignalled = signalled.reduce((s, e) => s + (e.actual_cost || 0), 0);
+
+  const byModel = {};
+  for (const e of signalled) {
     const k = `${e.used_id}::${e.task}`;
-    const b = (buckets[k] ||= { model: e.used_id, task: e.task, samples: 0, passes: 0, retries: 0 });
-    b.samples++;
-    if (e.outcome === "success") b.passes++;
-    b.retries += e.retries || 0;
+    const b = (byModel[k] ||= { model: e.used_id, task: e.task, tasks: 0, clean: 0, spent: 0 });
+    b.tasks++; b.spent += e.actual_cost || 0;
+    if (CLEAN.has(e.signal) && !(e.retries > 0)) b.clean++;
   }
-  return Object.values(buckets)
-    .filter(b => b.samples >= minSamples)
-    .map(b => ({ ...b, pass_rate: Math.round((b.passes / b.samples) * 100) / 100,
-                 avg_retries: Math.round((b.retries / b.samples) * 100) / 100 }))
-    .sort((a, b) => b.samples - a.samples);
+
+  return {
+    // Coverage first: a metric computed on 3 of 400 tasks is not a metric.
+    coverage: {
+      tasks_routed: entries.length,
+      with_observable_signal: signalled.length,
+      pct: Math.round((signalled.length / entries.length) * 100),
+      note: signalled.length < entries.length
+        ? "tasks with no observable signal are excluded, not assumed successful"
+        : "every task carried a signal",
+    },
+    accepted_work: clean.length,
+    spent_on_signalled: r(spentSignalled),
+    cost_per_accepted_task: clean.length ? r(spentSignalled / clean.length) : null,
+    first_pass_rate: signalled.length ? Math.round((clean.length / signalled.length) * 100) : null,
+    by_model: Object.values(byModel)
+      .filter(b => b.tasks >= minSamples)
+      .map(b => ({ ...b, spent: r(b.spent),
+        first_pass_rate: Math.round((b.clean / b.tasks) * 100),
+        cost_per_accepted_task: b.clean ? r(b.spent / b.clean) : null }))
+      .sort((a, b) => a.tasks - b.tasks * -1),
+    caveats: [
+      "measures work that did not need a do-over, not work that was correct — a wrong answer nobody retried counts as accepted",
+      "only meaningful where a task has an observable outcome; summarisation, translation and copy generally do not",
+      "a cheaper model that quietly produces worse output will look good here until someone checks the output itself",
+    ],
+    spent_total: r(spentAll),
+  };
 }
 
 /**
  * Month-to-date burn against a budget (T1.3). Feeds planBudget so today's routing
- * decision reflects what the month has already cost — the loop that makes budget
- * adherence automatic rather than advisory.
+ * decision reflects what the month has already cost.
  */
 export function burn({ budget, volume, month } = {}) {
   const l = load();
@@ -131,7 +171,7 @@ export function summary({ since } = {}) {
     models_used: byModel,
     decisions_with_reason: entries.filter(e => e.reason).length,
     outcomes_recorded: entries.filter(e => e.outcome).length,
-    observed_pass_rates: passRates(),
+    accepted_work_per_dollar: acceptedWorkPerDollar(),
     caveats: [
       "counterfactual costs assume the same input tokens on the default model, with output scaled by its answer-length factor",
       "it does not account for a retry a weaker model might have needed — measure quality separately before trusting the total",

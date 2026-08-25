@@ -139,3 +139,35 @@ verified pricing for EU-resident hosting**, so nobody else can name the cheapest
 
 The general lesson: every one of these projects has better routing machinery than we do, and
 none has price provenance, EU coverage or a counterfactual ledger. The moat is the dataset.
+
+## Accepted Work per Dollar — and what it does not claim
+
+"Did the task succeed?" needs judgement, and asking the model that ran it to answer is asking it
+to grade its own homework. "Did the task need doing again?" does not. A retry, or an escalation
+to a dearer model, is an observable event — and it is the cheap, ungameable half of the same
+question.
+
+So the ledger records a **signal**, not a verdict:
+
+| signal | how you know | counts as |
+|---|---|---|
+| `tests_passed` / `tests_failed` | the caller's own test run | clean / not |
+| `escalated` | the workflow fell back to a dearer model | not clean — the cheap one did not finish the job |
+| `retried` | the same task was attempted again | not clean |
+| `committed` / `abandoned` | the diff was kept or thrown away | clean / not |
+| `none` | nothing observable | **excluded**, never assumed successful |
+
+`acceptedWorkPerDollar()` then reports cost per task that needed no do-over, and — first, before
+any headline figure — **coverage**: how many of the routed tasks carried any signal at all. A
+metric computed on three of four hundred tasks is not a metric.
+
+Three things it explicitly does not measure:
+
+- **Correctness.** A wrong answer nobody retried counts as accepted.
+- **Tasks with no observable outcome.** Summarisation, translation and copy generally have none,
+  so the metric does not apply to them and does not pretend to.
+- **Silent quality loss.** A cheaper model producing quietly worse output looks good here until
+  somebody reads the output.
+
+It is a floor, not a verdict: it catches the failure mode that costs money (paying twice for the
+same task) without claiming to have judged the work.

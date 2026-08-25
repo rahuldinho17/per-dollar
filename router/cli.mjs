@@ -53,7 +53,7 @@ if (cmd === "route") {
   const r = record({ task: flag("task", "unspecified"), used_id: flag("used"), default_id: flag("default"),
     tokens_in: +flag("in"), tokens_out: +flag("out"),
     actual_cost: cf.used.cost, counterfactual_cost: cf.would_have_used.cost, saved: cf.saved,
-    outcome: flag("outcome"), retries: flag("retries") ? +flag("retries") : undefined,
+    signal: flag("signal"), outcome: flag("outcome"), retries: flag("retries") ? +flag("retries") : undefined,
     reason: flag("reason") });
   out({ ...cf, ledger: r });
 } else if (cmd === "savings") {
@@ -68,7 +68,7 @@ if (cmd === "route") {
                [--allow-unscored] [--include-legacy] [--in N] [--out N]
   budget <task> --budget N --volume N [--residency eu-de] [--allow-unscored]
   burn [--budget N]
-  report --used ID --default ID --in N --out N [--task NAME] [--outcome success|failure] [--retries N]
+  report --used ID --default ID --in N --out N [--task NAME] [--signal tests_passed|escalated|retried|...] [--retries N]
   savings [--since YYYY-MM-DD]
   reset
 
