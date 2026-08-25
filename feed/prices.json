@@ -15,7 +15,7 @@
       "input_per_mtok": 5,
       "output_per_mtok": 25,
       "verification": "verified",
-      "verified_at": "2026-08-13",
+      "verified_at": "2026-09-01",
       "source": "first-party pricing page",
       "capability": 61,
       "verbosity": 1.15,
@@ -82,7 +82,8 @@
         "input_per_mtok": 1,
         "output_per_mtok": 6,
         "ends": null
-      }
+      },
+      "cached_input_per_mtok": 0.2
     },
     {
       "id": "son5",
@@ -101,7 +102,8 @@
         "input_per_mtok": 2,
         "output_per_mtok": 10,
         "ends": null
-      }
+      },
+      "cached_input_per_mtok": 0.2
     },
     {
       "id": "son46",
@@ -122,15 +124,16 @@
       "id": "kimik3",
       "name": "Kimi K3",
       "provider": "Moonshot AI",
-      "input_per_mtok": 3,
-      "output_per_mtok": 15,
-      "verification": "tracked",
-      "verified_at": null,
+      "input_per_mtok": 3.0,
+      "output_per_mtok": 15.0,
+      "verification": "verified",
+      "verified_at": "2026-09-01",
       "source": "published provider comparison",
       "capability": 57,
       "verbosity": 1.0,
       "residency": "non-eu",
-      "residency_note": "operated outside the EU/US"
+      "residency_note": "operated outside the EU/US",
+      "cached_input_per_mtok": 0.3
     },
     {
       "id": "gem31p",
@@ -163,7 +166,8 @@
         "input_per_mtok": 0.1,
         "output_per_mtok": 0.6,
         "ends": null
-      }
+      },
+      "cached_input_per_mtok": 0.02
     },
     {
       "id": "gem36f",
@@ -225,15 +229,22 @@
       "id": "dsv4f",
       "name": "DeepSeek V4 Flash",
       "provider": "DeepSeek",
-      "input_per_mtok": 0.14,
-      "output_per_mtok": 0.28,
+      "input_per_mtok": 0.44,
+      "output_per_mtok": 1.32,
       "verification": "verified",
-      "verified_at": "2026-08-13",
+      "verified_at": "2026-09-01",
       "source": "first-party pricing page",
       "capability": null,
       "verbosity": 0.9,
       "residency": "non-eu",
-      "residency_note": "operated outside the EU/US"
+      "residency_note": "operated outside the EU/US",
+      "off_peak": {
+        "input_per_mtok": 0.22,
+        "output_per_mtok": 0.66,
+        "cached_input_per_mtok": 0.007
+      },
+      "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted.",
+      "cached_input_per_mtok": 0.014
     },
     {
       "id": "gem31fl",
@@ -253,15 +264,22 @@
       "id": "dsv4pro",
       "name": "DeepSeek V4 Pro",
       "provider": "DeepSeek",
-      "input_per_mtok": 0.435,
-      "output_per_mtok": 0.87,
+      "input_per_mtok": 1.32,
+      "output_per_mtok": 3.96,
       "verification": "verified",
-      "verified_at": "2026-08-03",
+      "verified_at": "2026-09-01",
       "source": "first-party pricing page",
       "capability": null,
       "verbosity": 0.95,
       "residency": "non-eu",
-      "residency_note": "operated outside the EU/US"
+      "residency_note": "operated outside the EU/US",
+      "off_peak": {
+        "input_per_mtok": 0.66,
+        "output_per_mtok": 1.98,
+        "cached_input_per_mtok": 0.022
+      },
+      "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted.",
+      "cached_input_per_mtok": 0.044
     },
     {
       "id": "grok46",

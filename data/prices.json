@@ -31,7 +31,7 @@
       "outP": 25,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-08-13",
+      "verified_at": "2026-09-01",
       "tracked_at": "2026-08-03",
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
@@ -119,15 +119,16 @@
     },
     {
       "id": "kimik3",
-      "inP": 3,
-      "outP": 15,
-      "verification": "tracked",
-      "source": "published provider comparison",
-      "verified_at": null,
+      "inP": 3.0,
+      "outP": 15.0,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-09-01",
       "tracked_at": "2026-07-22",
       "residency": "non-eu",
       "residency_note": "operated outside the EU/US",
-      "self_hosted": false
+      "self_hosted": false,
+      "cachedIn": 0.3
     },
     {
       "id": "gem31p",
@@ -207,15 +208,19 @@
     },
     {
       "id": "dsv4f",
-      "inP": 0.14,
-      "outP": 0.28,
+      "inP": 0.44,
+      "outP": 1.32,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-08-13",
-      "cachedIn": 0.0028,
+      "verified_at": "2026-09-01",
+      "cachedIn": 0.014,
       "residency": "non-eu",
       "residency_note": "operated outside the EU/US",
-      "self_hosted": false
+      "self_hosted": false,
+      "off_peak_in": 0.22,
+      "off_peak_out": 0.66,
+      "off_peak_cached_in": 0.007,
+      "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted."
     },
     {
       "id": "gem31fl",
@@ -231,15 +236,19 @@
     },
     {
       "id": "dsv4pro",
-      "inP": 0.435,
-      "outP": 0.87,
-      "cachedIn": 0.003625,
+      "inP": 1.32,
+      "outP": 3.96,
+      "cachedIn": 0.044,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-08-03",
+      "verified_at": "2026-09-01",
       "residency": "non-eu",
       "residency_note": "operated outside the EU/US",
-      "self_hosted": false
+      "self_hosted": false,
+      "off_peak_in": 0.66,
+      "off_peak_out": 1.98,
+      "off_peak_cached_in": 0.022,
+      "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted."
     }
   ],
   "last_change": "2026-09-01",

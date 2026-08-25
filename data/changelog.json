@@ -463,5 +463,43 @@
     "kind": "retired",
     "source": "human verification",
     "note": "not on OpenAI pricing page"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.14,
+    "new": 0.44,
+    "kind": "hike",
+    "source": "api-docs.deepseek.com/quick_start/pricing",
+    "note": "DeepSeek moved to peak/off-peak billing. Headline is now the PEAK rate (0.44); off-peak is 0.22. Previous 0.14 was the pre-16-Aug flat rate."
+  },
+  {
+    "date": "2026-09-01",
+    "model": "dsv4f",
+    "dimension": "outP",
+    "old": 0.28,
+    "new": 1.32,
+    "kind": "hike",
+    "source": "api-docs.deepseek.com/quick_start/pricing"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "dsv4pro",
+    "dimension": "inP",
+    "old": 0.435,
+    "new": 1.32,
+    "kind": "hike",
+    "source": "api-docs.deepseek.com/quick_start/pricing",
+    "note": "DeepSeek moved to peak/off-peak billing. Headline is now the PEAK rate (1.32); off-peak is 0.66. Previous 0.435 was the pre-16-Aug flat rate."
+  },
+  {
+    "date": "2026-09-01",
+    "model": "dsv4pro",
+    "dimension": "outP",
+    "old": 0.87,
+    "new": 3.96,
+    "kind": "hike",
+    "source": "api-docs.deepseek.com/quick_start/pricing"
   }
 ]

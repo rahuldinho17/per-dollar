@@ -448,6 +448,14 @@
         OpenRouter State of AI, OpenAI usage report).
       </details>
 
+      <details><summary>Time-of-day pricing</summary>
+        Some providers now bill differently by hour. DeepSeek splits peak (01:00–04:00 and
+        06:00–10:00 UTC, Monday to Friday) from off-peak at half the rate. <b>We publish the peak
+        rate</b>, so a bill can come in lower than quoted but never higher. The off-peak figures
+        are in the public feed under <span class="kf">off_peak</span>. If your workload runs
+        mostly outside European mornings, your real cost is closer to half what the table shows.
+      </details>
+
       <details><summary>Promotions, legacy models and price direction</summary>
         Promotional prices sit alongside standard list prices, never in place of them; rankings
         use the effective price because that is what this month's invoice says, and the standard-prices
@@ -498,7 +506,7 @@ const MODELS = [
   { id:"gpt56ter", name:"GPT-5.6 Terra",         provider:"OpenAI",    inP:2.0,  outP:12.0, verbosity:1.05, iq:55, trend:[1.0] },
   { id:"son5",     name:"Claude Sonnet 5",       provider:"Anthropic", inP:2.0,  outP:10.0, verbosity:1.1, iq:null,  trend:[1.0,1.0] },
   { id:"son46",    name:"Claude Sonnet 4.6",     provider:"Anthropic", inP:3.0,  outP:15.0, verbosity:1.1, legacy:true, retires:null, iq:null,  trend:[1.4,1.35,1.3,1.2,1.1,1.05,1.0] },
-  { id:"kimik3",   name:"Kimi K3",               provider:"Moonshot AI", inP:3, outP:15, verbosity:1.0, iq:57, trend:[1.0] },
+  { id:"kimik3",   name:"Kimi K3",               provider:"Moonshot AI", inP:3.0, outP:15.0, verbosity:1.0, iq:57, trend:[1.0] },
   { id:"gem31p",   name:"Gemini 3.1 Pro",        provider:"Google",    inP:2.0,  outP:12.0, verbosity:0.85, iq:null, trend:[1.45,1.4,1.3,1.2,1.1,1.0,1.0] },
   { id:"gpt56lun", name:"GPT-5.6 Luna",          provider:"OpenAI",    inP:0.2,  outP:1.2,  verbosity:1.0, iq:51,  trend:[1.0] },
   { id:"gem37f",   name:"Gemini 3.7 Flash",      provider:"Google",    inP:0.75,  outP:3.75,  verbosity:0.8,  iq:null, trend:[1.0] },
@@ -507,8 +515,8 @@ const MODELS = [
   { id:"haiku45",  name:"Claude Haiku 4.5",      provider:"Anthropic", inP:1.0,  outP:5.0,  verbosity:1.0, iq:null,  trend:[1.3,1.3,1.25,1.2,1.1,1.0,1.0] },
   { id:"mm3",      name:"MiniMax M3",            provider:"MiniMax",   inP:0.3,  outP:1.2,  verbosity:0.95, iq:null, trend:[2.1,2.1,2.05,2.0,2.0,2.0,1.0] },
   { id:"gem3f",    name:"Gemini 3 Flash",        provider:"Google",    inP:0.5,  outP:3.0,  verbosity:0.8, iq:null,  trend:[1.5,1.45,1.35,1.25,1.1,1.0,1.0] },
-  { id:"dsv4pro",  name:"DeepSeek V4 Pro",        provider:"DeepSeek",  inP:0.435, outP:0.87, verbosity:0.95, iq:null, trend:[1.0] },
-  { id:"dsv4f",    name:"DeepSeek V4 Flash",     provider:"DeepSeek",  inP:0.14, outP:0.28, verbosity:0.9, iq:null,  trend:[2.6,2.3,2.0,1.7,1.4,1.15,1.0] },
+  { id:"dsv4pro",  name:"DeepSeek V4 Pro",        provider:"DeepSeek",  inP:1.32, outP:3.96, verbosity:0.95, iq:null, trend:[1.0] },
+  { id:"dsv4f",    name:"DeepSeek V4 Flash",     provider:"DeepSeek",  inP:0.44, outP:1.32, verbosity:0.9, iq:null,  trend:[2.6,2.3,2.0,1.7,1.4,1.15,1.0] },
   { id:"gem31fl",  name:"Gemini 3.1 Flash-Lite", provider:"Google",    inP:0.25,  outP:1.5,  verbosity:0.75, iq:null, trend:[1.1,1.05,1.0] },
 ];
 
