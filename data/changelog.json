@@ -340,7 +340,7 @@
     "source": "platform.claude.com/docs pricing"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "gpt56sol",
     "dimension": "inP",
     "old": 5,
@@ -350,7 +350,7 @@
     "note": "OpenAI cut Sol on 21 Aug; corroborated independently"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "gpt56sol",
     "dimension": "outP",
     "old": 30,
@@ -359,7 +359,7 @@
     "source": "first-party pricing page"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "gem37f",
     "dimension": "inP",
     "old": 1.5,
@@ -369,7 +369,7 @@
     "note": "replaces placeholder inherited from 3.6"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "gem37f",
     "dimension": "outP",
     "old": 7.5,
@@ -378,7 +378,7 @@
     "source": "first-party pricing page"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "gem36f",
     "dimension": "inP",
     "old": 1.5,
@@ -388,7 +388,7 @@
     "note": "replaces placeholder"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "gem36f",
     "dimension": "outP",
     "old": 7.5,
@@ -397,7 +397,7 @@
     "source": "first-party pricing page"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "mm3",
     "dimension": "inP",
     "old": 0.6,
@@ -407,7 +407,7 @@
     "note": "promo price is now the standard price \u2014 promo fields cleared"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "mm3",
     "dimension": "outP",
     "old": 2.4,
@@ -416,56 +416,56 @@
     "source": "first-party pricing page"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "g41nano",
     "kind": "retired",
     "source": "human verification",
     "note": "retired from OpenAI pricing page"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "g41mini",
     "kind": "retired",
     "source": "human verification",
     "note": "retired from OpenAI pricing page"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "inkling",
     "kind": "retired",
     "source": "human verification",
     "note": "not on Thinking Machines site; original source was a third-party comparison"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "glm52",
     "kind": "retired",
     "source": "human verification",
     "note": "not on z.ai pricing page"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "grok45",
     "kind": "retired",
     "source": "human verification",
     "note": "not on xAI docs \u2014 superseded by 4.6"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "gpt54",
     "kind": "retired",
     "source": "human verification",
     "note": "not on OpenAI pricing page"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "gpt55",
     "kind": "retired",
     "source": "human verification",
     "note": "not on OpenAI pricing page"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "dsv4f",
     "dimension": "inP",
     "old": 0.14,
@@ -475,7 +475,7 @@
     "note": "DeepSeek moved to peak/off-peak billing. Headline is now the PEAK rate (0.44); off-peak is 0.22. Previous 0.14 was the pre-16-Aug flat rate."
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "dsv4f",
     "dimension": "outP",
     "old": 0.28,
@@ -484,7 +484,7 @@
     "source": "api-docs.deepseek.com/quick_start/pricing"
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "dsv4pro",
     "dimension": "inP",
     "old": 0.435,
@@ -494,7 +494,7 @@
     "note": "DeepSeek moved to peak/off-peak billing. Headline is now the PEAK rate (1.32); off-peak is 0.66. Previous 0.435 was the pre-16-Aug flat rate."
   },
   {
-    "date": "2026-09-01",
+    "date": "2026-08-25",
     "model": "dsv4pro",
     "dimension": "outP",
     "old": 0.87,

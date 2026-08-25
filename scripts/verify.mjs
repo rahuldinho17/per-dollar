@@ -19,7 +19,13 @@ import { dirname, join } from "node:path";
 const ROOT = process.env.DATA_ROOT || join(dirname(fileURLToPath(import.meta.url)), "..");
 const PRICES = join(ROOT, "data", "prices.json");
 const CHANGELOG = join(ROOT, "data", "changelog.json");
+// The date must come from the clock, never from a human typing one. A verification
+// stamp that says a check happened on a day it did not is worse than a stale stamp.
 const today = new Date().toISOString().slice(0, 10);
+if (process.argv.includes("--date")) {
+  console.error("refusing --date: verification stamps are read from the system clock, never supplied.");
+  process.exit(1);
+}
 const days = (a, b) => Math.round(Math.abs(new Date(a) - new Date(b)) / 864e5);
 
 const SOURCES = {

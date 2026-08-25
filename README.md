@@ -153,6 +153,11 @@ items from the project so far.
 date by hand into `data/prices.json`. A mis-stamped verification date is worse than
 a stale one: it asserts a check that did not happen on that day.
 
+This has now gone wrong twice, both times because a date was typed rather than read
+(29 Jul stamped for a 3 Aug sweep; 1 Sep stamped for a 25 Aug sweep). `verify.mjs`
+refuses a `--date` flag for that reason. If you find yourself about to type a date
+into a data file, stop and run the script instead.
+
 ### Reviewing promos
 
 `node scripts/verify.mjs --promos` lists every model carrying a promotional price with
