@@ -338,5 +338,130 @@
     "new": 10.0,
     "kind": "correction",
     "source": "platform.claude.com/docs pricing"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "gpt56sol",
+    "dimension": "inP",
+    "old": 5,
+    "new": 4.0,
+    "kind": "correction",
+    "source": "first-party pricing page",
+    "note": "OpenAI cut Sol on 21 Aug; corroborated independently"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "gpt56sol",
+    "dimension": "outP",
+    "old": 30,
+    "new": 20.0,
+    "kind": "correction",
+    "source": "first-party pricing page"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "gem37f",
+    "dimension": "inP",
+    "old": 1.5,
+    "new": 0.75,
+    "kind": "correction",
+    "source": "first-party pricing page",
+    "note": "replaces placeholder inherited from 3.6"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "gem37f",
+    "dimension": "outP",
+    "old": 7.5,
+    "new": 3.75,
+    "kind": "correction",
+    "source": "first-party pricing page"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "gem36f",
+    "dimension": "inP",
+    "old": 1.5,
+    "new": 0.75,
+    "kind": "correction",
+    "source": "first-party pricing page",
+    "note": "replaces placeholder"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "gem36f",
+    "dimension": "outP",
+    "old": 7.5,
+    "new": 3.75,
+    "kind": "correction",
+    "source": "first-party pricing page"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "mm3",
+    "dimension": "inP",
+    "old": 0.6,
+    "new": 0.3,
+    "kind": "correction",
+    "source": "first-party pricing page",
+    "note": "promo price is now the standard price \u2014 promo fields cleared"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "mm3",
+    "dimension": "outP",
+    "old": 2.4,
+    "new": 1.2,
+    "kind": "correction",
+    "source": "first-party pricing page"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "g41nano",
+    "kind": "retired",
+    "source": "human verification",
+    "note": "retired from OpenAI pricing page"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "g41mini",
+    "kind": "retired",
+    "source": "human verification",
+    "note": "retired from OpenAI pricing page"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "inkling",
+    "kind": "retired",
+    "source": "human verification",
+    "note": "not on Thinking Machines site; original source was a third-party comparison"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "glm52",
+    "kind": "retired",
+    "source": "human verification",
+    "note": "not on z.ai pricing page"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "grok45",
+    "kind": "retired",
+    "source": "human verification",
+    "note": "not on xAI docs \u2014 superseded by 4.6"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "gpt54",
+    "kind": "retired",
+    "source": "human verification",
+    "note": "not on OpenAI pricing page"
+  },
+  {
+    "date": "2026-09-01",
+    "model": "gpt55",
+    "kind": "retired",
+    "source": "human verification",
+    "note": "not on OpenAI pricing page"
   }
 ]

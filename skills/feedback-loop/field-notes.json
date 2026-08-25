@@ -222,5 +222,13 @@
     "theme": "gtm",
     "signal": "Corporate AI spend up 20.7x since June 2025; tokens went from rounding error to fastest-growing P&L line in 14 months. Useful sizing figure for any pitch, and it explains why fintechs are buying routers: 'whoever owns routing owns model procurement'.",
     "raw_quote": "Whoever owns routing owns model procurement"
+  },
+  {
+    "date": "2026-09-01",
+    "who": "Zalando (Bartosz Ocytko)",
+    "type": "signal",
+    "theme": "gtm",
+    "signal": "No response to the message sent last week answering their public call for auto-routing. Three warm technical contacts (Ryan, Kai, Zalando) now unresponsive. Not a product signal \u2014 a distribution one. The common factor: all three were asked to evaluate something rather than given a result.",
+    "raw_quote": ""
   }
 ]

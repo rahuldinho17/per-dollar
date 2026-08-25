@@ -14,7 +14,9 @@ const ok = (name, cond, detail = "") => {
 };
 
 console.log("feed");
-ok("models load", models.length > 20, `(${models.length})`);
+// Deliberately curated, not exhaustive: seven models were retired on 1 Sep when they
+// left their providers' pricing pages. Assert a sane floor, not a growing count.
+ok("models load", models.length >= 15, `(${models.length})`);
 ok("prices are positive", models.every(m => m.input_per_mtok > 0 && m.output_per_mtok > 0));
 ok("verification present", models.every(m => m.verification));
 
