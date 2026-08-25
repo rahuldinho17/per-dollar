@@ -174,5 +174,29 @@
     "theme": "defensibility",
     "signal": "Third company (after ShopAgentic and Aries' clients) found to have built cost tracking internally: anonymised per-model cost via LiteLLM post-call hooks, plus a cost TUI. Consistent pattern \u2014 everyone builds the measurement, nobody builds the decision or the verified price source.",
     "raw_quote": ""
+  },
+  {
+    "date": "2026-08-25",
+    "who": "Market radar W35",
+    "type": "research",
+    "theme": "data-trust",
+    "signal": "Residency endpoints reportedly add a flat 10% uplift on models released on/after 5 Mar 2026. PerDollar treats residency as a filter, not a price dimension \u2014 so EU-constrained costs may be ~10% understated on the core differentiator. Needs first-party confirmation before changing numbers.",
+    "raw_quote": "any regional data-residency endpoint... adds a flat 10% uplift"
+  },
+  {
+    "date": "2026-08-25",
+    "who": "Market radar W35",
+    "type": "research",
+    "theme": "data-trust",
+    "signal": "Claude Sonnet 5 reported at $2 input (introductory rate made permanent) against our human-verified $3. Exactly the promo-becomes-permanent case the README flags for manual re-verification. A wrong verified price is worse than an unverified one.",
+    "raw_quote": "making Sonnet 5's introductory $2 permanent rather than letting it lapse to $3"
+  },
+  {
+    "date": "2026-08-25",
+    "who": "Market radar W35",
+    "type": "research",
+    "theme": "defensibility",
+    "signal": "CloudZero now publishes prices verified against provider docs on a named date, with a changelog. Verified provenance is no longer ours alone. What they lack: EU-resident coverage, cost per finished job, a callable decision.",
+    "raw_quote": "Rates verified against OpenAI's API pricing... as of August 20, 2026"
   }
 ]
