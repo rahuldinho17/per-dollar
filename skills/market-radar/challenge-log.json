@@ -1,0 +1,47 @@
+[
+  {
+    "date": "2026-08-25",
+    "id": "MR-2026-W35-01",
+    "radar": "accept-proposed",
+    "challenger": "condition",
+    "reason": "Single secondary source; verify first-party or do not model it.",
+    "user_decision": "accept",
+    "later_grade": ""
+  },
+  {
+    "date": "2026-08-25",
+    "id": "MR-2026-W35-02",
+    "radar": "accept-proposed",
+    "challenger": "endorse",
+    "reason": "Confirmed and worse than stated \u2014 human verified the wrong figure 3 days after the announcement.",
+    "user_decision": "accept",
+    "later_grade": ""
+  },
+  {
+    "date": "2026-08-25",
+    "id": "MR-2026-W35-04",
+    "radar": "accept-proposed",
+    "challenger": "challenge",
+    "reason": "Demo obsolete now Sonnet 5 is $2/$10 \u2014 no longer a tie broken by output.",
+    "user_decision": "accept",
+    "later_grade": ""
+  },
+  {
+    "date": "2026-08-25",
+    "id": "MR-2026-W35-05",
+    "radar": "accept-proposed",
+    "challenger": "challenge",
+    "reason": "Retire the competitor's line yes; leading with AWpD no \u2014 zero coverage, cannot demonstrate it.",
+    "user_decision": "accept",
+    "later_grade": ""
+  },
+  {
+    "date": "2026-08-25",
+    "id": "MR-2026-W35-06",
+    "radar": "accept-proposed",
+    "challenger": "condition",
+    "reason": "Right competitor, but no comparison table against a free better-distributed product.",
+    "user_decision": "accept",
+    "later_grade": ""
+  }
+]

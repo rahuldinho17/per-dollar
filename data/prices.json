@@ -1,6 +1,6 @@
 {
-  "as_of": "2026-08-18",
-  "as_of_display": "18 AUG 2026",
+  "as_of": "2026-08-25",
+  "as_of_display": "25 AUG 2026",
   "note": "Verification sweep 2026-08-03: 13 models confirmed directly against provider pricing pages. GPT-5.6 Terra and Luna corrected (Luna was 5x too high). DeepSeek V4 Pro added. Seven models still carry their 22 Jul verification; four remain 'tracked' pending first-party confirmation.",
   "models": [
     {
@@ -113,18 +113,19 @@
     },
     {
       "id": "son5",
-      "inP": 3,
-      "outP": 15,
+      "inP": 2.0,
+      "outP": 10.0,
       "verification": "verified",
       "source": "first-party pricing page",
-      "verified_at": "2026-08-13",
+      "verified_at": "2026-08-25",
       "tracked_at": "2026-07-22",
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
       "promoIn": 2,
       "promoOut": 10,
-      "promoEnds": null
+      "promoEnds": null,
+      "cachedIn": 0.2
     },
     {
       "id": "son46",
@@ -332,6 +333,6 @@
       "self_hosted": false
     }
   ],
-  "last_change": "2026-08-13",
+  "last_change": "2026-08-25",
   "verified_sweep": "2026-08-13"
 }

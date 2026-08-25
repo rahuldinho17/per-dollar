@@ -217,7 +217,7 @@
     <div class="eyebrow reveal">The independent decision layer for AI model choice</div>
     <h1 class="reveal">Which model should <b>run this task?</b></h1>
     <p class="lede reveal">Your team defaults to the biggest model because nobody can police the
-      choice. PerDollar answers it per task instead — the cheapest verifiable model capable enough, from the
+      choice. PerDollar answers it per task instead — the cheapest model that gets the work accepted, from the
       ones you can actually reach, inside your budget and inside your jurisdiction. Then it records
       what that decision saved.</p>
     <div class="cta-row reveal">
@@ -367,7 +367,7 @@
       in the request path, so nothing slows down and no prompt leaves your infrastructure.</p>
     <div class="grid2">
       <div class="dcard reveal"><h3><span class="mono">01</span>Decide — with jurisdiction first</h3>
-        <p>The cheapest model capable enough for this task, from the models you can reach. Data
+        <p>The cheapest model that will get this task accepted first time, from the models you can reach. Data
           residency is a hard filter applied before cost, so a Germany-only team is routed to
           German infrastructure rather than told to be careful.</p></div>
       <div class="dcard reveal"><h3><span class="mono">02</span>Stay inside a budget</h3>
@@ -375,10 +375,11 @@
           in inference, and that half moves weekly. Give it $500 per developer per month and it
           returns the <em>most capable</em> model that fits, not the cheapest — and as the month's
           spend accumulates the ceiling falls and the pick downgrades on its own.</p></div>
-      <div class="dcard reveal"><h3><span class="mono">03</span>Prove what it saved</h3>
-        <p>Every routed task records what it cost and what the model your engineer would have
-          reached for would have cost. The saving is an auditable number from your own traffic —
-          no A/B test, no eval harness, no vendor claim.</p></div>
+      <div class="dcard reveal"><h3><span class="mono">03</span>Count the work that stuck</h3>
+        <p>Every routed task records what it cost, what your engineer's default would have cost,
+          and whether it needed doing again — a retry or an escalation is an observable fact, not
+          a judgement. Cheap output that gets redone twice is not cheap, and nothing else measures
+          that.</p></div>
       <div class="dcard reveal"><h3><span class="mono">04</span>On prices you can check</h3>
         <p>Every price links to the provider's own page and says who confirmed it and when. Where we
           cannot source a number we say so rather than publish it. Corrections to our own errors
@@ -398,8 +399,8 @@
         <div class="vlbl">Vendor and IDE routers</div>
         <div class="vstat">Optimising their margin</div>
         <ul>
-          <li>Cursor Router decides inside Cursor, for requests made in Cursor — not your support bot, catalogue or search</li>
-          <li>A gateway that sells inference has a reason to prefer its own cheap capacity</li>
+          <li>Free routers from Ramp and Cursor decide inside their own product, on their own definition of a quality bar, and report their own savings figure</li>
+          <li>A gateway that sells inference, or a card company that monetises spend, has a reason to prefer particular answers</li>
           <li>Savings are vendor-stated from vendor A/B tests, not measured on your traffic</li>
           <li>No concept of data residency, which is the binding constraint for European buyers</li>
         </ul>

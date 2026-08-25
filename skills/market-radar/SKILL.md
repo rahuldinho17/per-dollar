@@ -168,6 +168,14 @@ open Claude, say "run the market radar", work through the accept/reject/defer, a
 close the issue. The reminder is automatic; the thinking stays human by design.
 
 
+## Before the user decides: run the challenger
+
+Do not present suggestions as a finished list. Once the brief is written, run the
+**radar-challenger** skill, which argues against each proposal independently and reports what
+the radar missed. Present both, then ask for decisions. Fourteen suggestions produced one
+rejection before the challenger existed, which is a proposer-and-reviewer problem, not a sign
+of good proposals.
+
 ## After the review: draft the public post
 
 The brief is internal, but one finding in it is usually worth an outside audience. Once the

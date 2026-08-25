@@ -319,5 +319,24 @@
     "kind": "new_model",
     "source": "release tracker",
     "note": "added after the ledger was found two releases behind; prices are placeholders inherited from the prior version and MUST be verified first-party before use"
+  },
+  {
+    "date": "2026-08-25",
+    "model": "son5",
+    "dimension": "inP",
+    "old": 3,
+    "new": 2.0,
+    "kind": "correction",
+    "source": "platform.claude.com/docs pricing",
+    "note": "Anthropic made the $2/$10 introductory rate permanent on 2026-08-10 and cancelled the 1 Sep rise to $3/$15. Our 13 Aug human verification recorded the superseded figure \u2014 three days after the announcement."
+  },
+  {
+    "date": "2026-08-25",
+    "model": "son5",
+    "dimension": "outP",
+    "old": 15,
+    "new": 10.0,
+    "kind": "correction",
+    "source": "platform.claude.com/docs pricing"
   }
 ]
