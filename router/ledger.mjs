@@ -95,8 +95,37 @@ export function acceptedWorkPerDollar({ since, minSamples = 5 } = {}) {
         first_pass_rate: Math.round((b.clean / b.tasks) * 100),
         cost_per_accepted_task: b.clean ? r(b.spent / b.clean) : null }))
       .sort((a, b) => a.tasks - b.tasks * -1),
+    // Navigara's warning: "activity is exactly what inflates when work gets cheaper
+    // to produce". Tasks are activity, so a team could improve this metric by
+    // splitting work into smaller pieces. Report the denominator's shape so that
+    // is visible rather than hidden.
+    task_size: (() => {
+      // Chronological for the trend, sorted only for the median — sorting first
+      // would measure spread rather than change over time.
+      const chron = signalled
+        .map(e => ({ at: e.at, n: (e.tokens_in || 0) + (e.tokens_out || 0) }))
+        .filter(x => x.n).sort((a, b) => a.at.localeCompare(b.at));
+      if (!chron.length) return null;
+      const sorted = chron.map(x => x.n).sort((a, b) => a - b);
+      const med = sorted[Math.floor(sorted.length / 2)];
+      const avg = a => a.reduce((s, v) => s + v, 0) / (a.length || 1);
+      const half = Math.floor(chron.length / 2);
+      const earlier = chron.slice(0, half).map(x => x.n);
+      const later = chron.slice(half).map(x => x.n);
+      const pct = earlier.length && later.length
+        ? Math.round((avg(later) / avg(earlier) - 1) * 100) : null;
+      return {
+        median_tokens: med,
+        change_vs_earlier: pct == null ? null : (pct >= 0 ? "+" : "") + pct + "%",
+        warning: pct != null && pct < -15
+          ? "tasks are getting smaller — cost per accepted task will improve without the work getting cheaper. Do not quote the headline without this."
+          : null,
+        note: "tasks are activity; a shrinking denominator flatters the metric",
+      };
+    })(),
     caveats: [
       "measures work that did not need a do-over, not work that was correct — a wrong answer nobody retried counts as accepted",
+      "tasks are activity: splitting work into smaller pieces improves this metric without improving anything. Read task_size alongside it",
       "only meaningful where a task has an observable outcome; summarisation, translation and copy generally do not",
       "a cheaper model that quietly produces worse output will look good here until someone checks the output itself",
     ],

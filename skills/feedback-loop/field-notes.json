@@ -230,5 +230,37 @@
     "theme": "gtm",
     "signal": "No response to the message sent last week answering their public call for auto-routing. Three warm technical contacts (Ryan, Kai, Zalando) now unresponsive. Not a product signal \u2014 a distribution one. The common factor: all three were asked to evaluate something rather than given a result.",
     "raw_quote": ""
+  },
+  {
+    "date": "2026-08-25",
+    "who": "Navigara (navigara.com)",
+    "type": "research",
+    "theme": "defensibility",
+    "signal": "DIRECT COMPETITOR AT THE FEATURE LEVEL: they ship 'Token Spend Intelligence \u2014 route each task to the cheapest model that can do it, and price the rest' as one feature of an engineering-analytics platform. Third time routing has appeared as a feature inside a bigger product (Ramp, Cursor, now Navigara). Standalone routing keeps failing the 'feature not a company' test.",
+    "raw_quote": "Route each task to the cheapest model that can do it, and price the rest"
+  },
+  {
+    "date": "2026-08-25",
+    "who": "Navigara",
+    "type": "research",
+    "theme": "positioning",
+    "signal": "THE FRAMING TO STEAL: they answer 'what did the AI buy' rather than 'what did it cost'. $124,880 spend becomes '+56 engineers of capacity nobody had to hire' at '$2,230 per AI-added engineer'. Their own line: 'A percentage is hard to sign off. Capacity is not.' PerDollar reports savings; savings is a smaller idea than capacity.",
+    "raw_quote": "A percentage is hard to sign off. Capacity is not."
+  },
+  {
+    "date": "2026-08-25",
+    "who": "Navigara",
+    "type": "research",
+    "theme": "data-trust",
+    "signal": "WARNING ABOUT OUR OWN METRIC: 'Pull requests are the wrong denominator: activity is exactly what inflates when work gets cheaper to produce.' Accepted Work per Dollar counts tasks, and tasks are activity \u2014 a team could halve cost per accepted task by splitting work into more, smaller tasks. AWpD is gameable in exactly the way they describe.",
+    "raw_quote": "activity is exactly what inflates when work gets cheaper to produce"
+  },
+  {
+    "date": "2026-08-25",
+    "who": "Uber COO via Fortune, cited by Navigara",
+    "type": "research",
+    "theme": "gtm",
+    "signal": "PROOF POINT: Fortune, May 2026 \u2014 'Uber burned through its entire 2026 AI budget in four months. Now its COO is questioning whether it's worth it.' COO Andrew Macdonald on tying AI spend to outcomes: 'That link is not there yet.' The single best public evidence that this problem is real and unsolved at scale.",
+    "raw_quote": "That link is not there yet"
   }
 ]
