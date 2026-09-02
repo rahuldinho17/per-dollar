@@ -13,17 +13,17 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "24"
       - name: Fetch current prices
         run: node scripts/refresh-prices.mjs
       - name: Verify prices against provider pages
         run: node scripts/verify-agent.mjs || echo "verify-agent had trouble; prices unaffected"
       - name: Raise an issue for anything needing a human
         if: always()
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const fs = require("fs");
@@ -55,10 +55,11 @@ jobs:
         run: |
           git config user.name "perdollar-bot"
           git config user.email "bot@users.noreply.github.com"
-          if ! git diff --quiet -- data/; then
-            git add data/ api/
+          if ! git diff --quiet -- data/ feed/; then
+            git add data/ feed/
             git commit -m "chore: daily price refresh ($(date -u +%F))"
             git push
           else
-            echo "No price changes today."
+            echo "::error::refresh ran but data/ and feed/ are unchanged. as_of should advance on every successful run, so this means the script did not write, or it wrote somewhere nothing stages."
+            exit 1
           fi

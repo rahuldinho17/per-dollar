@@ -227,3 +227,14 @@ a reason attached to every decision.
   coverage and a reason attached to every decision.
 - `skills/radar-to-post/` — turns each weekly market-radar brief into a LinkedIn post. Run it
   straight after the radar. It drafts; you post.
+
+### A failure mode worth remembering
+
+The feed lived at `api/prices.json` until Vercel started treating everything in `api/` as a
+serverless function. It moved to `feed/prices.json`, every reader was repointed — and the
+workflow's commit step still said `git add data/ api/`. So for a week the cron ran green every
+morning, regenerated the public feed, and threw it away. The site served a stale feed while the
+Actions tab showed nothing but success.
+
+The lesson is not "check the paths". It is that a green pipeline proves the steps ran, not that
+they did anything. When a job's whole purpose is to change a file, assert the file changed.
