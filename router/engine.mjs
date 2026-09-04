@@ -158,9 +158,14 @@ export function decide(opts = {}) {
   // Residency first. For an EU buyer "must stay in Germany" is binding and cost
   // optimisation happens strictly inside it — the reverse of how every other
   // router works. RESIDENCY_ALLOWS[requested] lists what satisfies the request.
+  // Kai, who sells to these buyers: the constraint is negative. "They don't want
+  // the US involved for compliance reasons... in most cases the EU only claim is
+  // already fine. Some are so security focused that they want DE. But that is rare."
+  // So no-us is the primary axis, eu the common answer, eu-de the edge case.
   const RESIDENCY_ALLOWS = {
-    "eu-de": ["eu-de", "self"],
+    "no-us": ["eu-de", "eu-fr", "eu", "self", "non-eu"],   // anywhere but a US-operated API
     "eu":    ["eu-de", "eu-fr", "eu", "self"],
+    "eu-de": ["eu-de", "self"],
     "eu-ok": ["eu-de", "eu-fr", "eu", "self", "global"],
     "any":   null,
   };

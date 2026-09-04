@@ -16,14 +16,18 @@
     },
     {
       "id": "gem37f",
-      "inP": 0.75,
-      "outP": 3.75,
+      "inP": 1.5,
+      "outP": 7.5,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-25",
       "tracked_at": "2026-08-18",
       "residency": "global",
-      "residency_note": "regional endpoints available; confirm the contract covers EU processing"
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing",
+      "promoIn": 0.75,
+      "promoOut": 3.75,
+      "promoEnds": "2026-12-31",
+      "promo_kind": "introductory"
     },
     {
       "id": "opus5",
@@ -159,8 +163,8 @@
     },
     {
       "id": "gem36f",
-      "inP": 0.75,
-      "outP": 3.75,
+      "inP": 1.5,
+      "outP": 7.5,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-25",
@@ -168,7 +172,11 @@
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing",
       "self_hosted": false,
-      "superseded_by": "gem37f"
+      "superseded_by": "gem37f",
+      "promoIn": 0.75,
+      "promoOut": 3.75,
+      "promoEnds": "2026-12-31",
+      "promo_kind": "introductory"
     },
     {
       "id": "haiku45",

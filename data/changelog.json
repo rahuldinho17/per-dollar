@@ -501,5 +501,19 @@
     "new": 3.96,
     "kind": "hike",
     "source": "api-docs.deepseek.com/quick_start/pricing"
+  },
+  {
+    "date": "2026-09-02",
+    "model": "gem37f",
+    "kind": "promo_price",
+    "source": "Google pricing documentation (reported)",
+    "note": "Gemini Flash line is on an introductory window through 31 Dec 2026 with a doubling scheduled. Published rate is now the post-window standard; the introductory rate sits in the promo fields. Needs first-party confirmation of the exact standard rate."
+  },
+  {
+    "date": "2026-09-02",
+    "model": "gem36f",
+    "kind": "promo_price",
+    "source": "Google pricing documentation (reported)",
+    "note": "Gemini Flash line is on an introductory window through 31 Dec 2026 with a doubling scheduled. Published rate is now the post-window standard; the introductory rate sits in the promo fields. Needs first-party confirmation of the exact standard rate."
   }
 ]

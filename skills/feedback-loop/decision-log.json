@@ -33,5 +33,47 @@
     "theme": "data-feed",
     "decision": "defer",
     "reason": "Feed v2 (history + MCP) deferred until a real feed consumer exists."
+  },
+  {
+    "date": "2026-09-02",
+    "id": "FL-2026-M09-01",
+    "theme": "gtm",
+    "decision": "accept",
+    "reason": "Freeze positioning 30 days; spend the time on conversations. Messaging graded no-effect 4/4."
+  },
+  {
+    "date": "2026-09-02",
+    "id": "FL-2026-M09-02",
+    "theme": "positioning",
+    "decision": "accept",
+    "reason": "Adopt capacity framing \u2014 developer-months, not dollars saved."
+  },
+  {
+    "date": "2026-09-02",
+    "id": "FL-2026-M09-03",
+    "theme": "data-trust",
+    "decision": "accept",
+    "reason": "Automate introductory/promo-window detection; Gemini's was missed by human and agent."
+  },
+  {
+    "date": "2026-09-02",
+    "id": "FL-2026-M09-04",
+    "theme": "partnership",
+    "decision": "accept",
+    "reason": "Approach Navigara \u2014 they need verified prices and EU coverage, we need customers and an output metric."
+  },
+  {
+    "date": "2026-09-02",
+    "id": "FL-2026-M09-05",
+    "theme": "positioning",
+    "decision": "accept",
+    "reason": "Flip the residency axis: 'no US processing' primary, EU default, DE edge (Kai)."
+  },
+  {
+    "date": "2026-09-02",
+    "id": "FL-2026-M09-06",
+    "theme": "vertical-depth",
+    "decision": "accept",
+    "reason": "Verify Scaleway and IONOS first-party; demote the other seven (Kai)."
   }
 ]
