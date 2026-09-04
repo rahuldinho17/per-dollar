@@ -294,5 +294,13 @@
     "theme": "positioning",
     "signal": "RESIDENCY TAXONOMY IS WRONG WAY ROUND. The driver is negative, not positive: 'primarily if they don't want the US involved for compliance reasons'. EU-only satisfies most prospects; Germany-only is rare. We built eu-de as the headline demo and it is the least common case. The primary axis should be 'no US processing', with EU as the common answer and DE as the edge.",
     "raw_quote": "in most cases the EU only claim is already fine"
+  },
+  {
+    "date": "2026-09-02",
+    "who": "Navigara research",
+    "type": "research",
+    "theme": "partnership",
+    "signal": "Jirka Bachel, Founder/CEO, ex-CTO, $2.5M seed from Rockaway (Czech). Active on their Product Hunt thread now. His founding story is our problem in his own words: a CFO asked whether Claude was producing real value for ~$150k/month and the honest answer was 'we think so'. Co-founder Peter, ex-Director of Engineering at Kiwi.com, is the second route.",
+    "raw_quote": "just producing invoices, and the honest answer was 'we think so'"
   }
 ]
