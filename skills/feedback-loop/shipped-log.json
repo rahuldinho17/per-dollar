@@ -6,9 +6,9 @@
     "change": "Hero reframed to 'system of record for commerce AI spend'",
     "hypothesis": "Owning a workflow (not 'AI cost tool') sharpens positioning vs horizontal incumbents",
     "success_metric": "prospects echo the framing back; higher reply rate on outreach",
-    "grade": "too-early",
-    "outcome": "",
-    "lesson": ""
+    "grade": "no-effect",
+    "outcome": "graded 2026-09-02",
+    "lesson": "Repositioned twice since; never echoed back by a prospect."
   },
   {
     "id": "MR-2026-W30-02",
@@ -18,8 +18,8 @@
     "hypothesis": "Turning incumbents' visibility-not-decisions weakness into our line wins the comparison",
     "success_metric": "objection 'why not Ramp' handled without founder scrambling on calls",
     "grade": "too-early",
-    "outcome": "",
-    "lesson": ""
+    "outcome": "graded 2026-09-02",
+    "lesson": "Written pre-Ramp-Router; right comparison, untested."
   },
   {
     "id": "MR-2026-W30-03",
@@ -28,9 +28,9 @@
     "change": "Public /api/prices.json feed",
     "hypothesis": "An independent verified price record is the asset incumbents can't backfill; also what Kai asked for",
     "success_metric": "a feed consumer (esp. ShopAgentic) integrates or references it",
-    "grade": "too-early",
-    "outcome": "",
-    "lesson": ""
+    "grade": "worked",
+    "outcome": "graded 2026-09-02",
+    "lesson": "Became the artefact every outreach leads with; Kai asked for it by name."
   },
   {
     "id": "MR-2026-W30-04",
@@ -39,9 +39,9 @@
     "change": "Catalogue enrichment + on-site search task profiles",
     "hypothesis": "Speaking exact commerce workloads beats any horizontal tool's generic view",
     "success_metric": "used in a real audit; resonates on a merchant call",
-    "grade": "too-early",
-    "outcome": "",
-    "lesson": ""
+    "grade": "no-effect",
+    "outcome": "graded 2026-09-02",
+    "lesson": "Superseded by workload framing within three weeks."
   },
   {
     "id": "MR-2026-W30-05",
@@ -50,9 +50,9 @@
     "change": "Outreach principle: lead with validated switches, not visibility",
     "hypothesis": "Competing on 'decisions' not 'visibility' avoids the lost fight with CloudZero",
     "success_metric": "higher call-booking rate from outreach",
-    "grade": "too-early",
-    "outcome": "",
-    "lesson": ""
+    "grade": "no-effect",
+    "outcome": "graded 2026-09-02",
+    "lesson": "Never tested; pitch changed before anyone heard it."
   },
   {
     "id": "FL-2026-M07-05",
@@ -61,9 +61,9 @@
     "change": "Offer reworked to free-estimate teaser -> paid audit; guarantee scoped to individuals only",
     "hypothesis": "Preview-over-guarantee removes risk before payment and fits enterprise positioning better than a money-back guarantee",
     "success_metric": "enterprise prospects (Ryan/agency) engage with the free estimate; no 'guarantee = small vendor' reaction",
-    "grade": "too-early",
-    "outcome": "",
-    "lesson": ""
+    "grade": "no-effect",
+    "outcome": "graded 2026-09-02",
+    "lesson": "Zero requests. The audit is dead."
   },
   {
     "id": "FL-2026-M07-01",
@@ -72,9 +72,9 @@
     "change": "Capability-per-dollar: AA Intelligence Index scores + VALUE column + 'cheapest model clearing a capability bar' filter",
     "hypothesis": "Buyers pick on value not price; answering 'cheapest model good enough for my task' closes the gap incumbents can't",
     "success_metric": "a prospect uses the capability floor on a call; audit recommendations cite it",
-    "grade": "too-early",
-    "outcome": "",
-    "lesson": ""
+    "grade": "worked",
+    "outcome": "graded 2026-09-02",
+    "lesson": "Enabled the product's core sentence; floors still heuristic."
   },
   {
     "id": "FL-2026-M07-02",
@@ -83,9 +83,9 @@
     "change": "Re-verification pass (scripts/verify.mjs): provider-grouped checklist + stamp command",
     "hypothesis": "Turning stale 'VERIFIED 22 JUL' badges into 'verified this week' removes the freshness objection",
     "success_metric": "no prospect questions data freshness on a call; sweep run weekly",
-    "grade": "too-early",
-    "outcome": "",
-    "lesson": ""
+    "grade": "worked",
+    "outcome": "graded 2026-09-02",
+    "lesson": "Caught GLM-5.2, Luna and Terra errors directly. Highest-value build."
   },
   {
     "id": "FL-2026-M07-03",
@@ -94,9 +94,9 @@
     "change": "Field-note capture in Drive (structured sheet) + impact view wiring",
     "hypothesis": "Logged calls compound: month-2 review gets real outcome data instead of recollection",
     "success_metric": ">=8 notes logged by next review",
-    "grade": "too-early",
-    "outcome": "",
-    "lesson": ""
+    "grade": "worked",
+    "outcome": "graded 2026-09-02",
+    "lesson": "33 notes; this review exists because of it."
   },
   {
     "id": "MR-2026-W33-01",
@@ -149,8 +149,8 @@
     "change": "/api/decide \u2014 decision feed with residency",
     "hypothesis": "A decision feed beats a data feed; PPT ships data",
     "success_metric": "one external consumer calls it \u2014 ShopAgentic first",
-    "grade": "too-early",
-    "outcome": "",
-    "lesson": ""
+    "grade": "worked",
+    "outcome": "graded 2026-09-02",
+    "lesson": "Every message opens with a URL returning a real answer."
   }
 ]

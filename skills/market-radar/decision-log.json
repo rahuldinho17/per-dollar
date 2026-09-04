@@ -96,5 +96,33 @@
     "theme": "gtm-copy",
     "decision": "reject",
     "reason": "Not rewriting the Kai follow-up around the AI Act; the existing message stands."
+  },
+  {
+    "date": "2026-09-02",
+    "id": "MR-2026-W36-01",
+    "theme": "data-trust",
+    "decision": "proposed",
+    "reason": "Gemini Flash prices are introductory \u2014 reclassify as promo with a 31 Dec end date."
+  },
+  {
+    "date": "2026-09-02",
+    "id": "MR-2026-W36-02",
+    "theme": "data-trust",
+    "decision": "proposed",
+    "reason": "Frontier index rose 12->16; stop hardcoding the figure."
+  },
+  {
+    "date": "2026-09-02",
+    "id": "MR-2026-W36-03",
+    "theme": "vertical-depth",
+    "decision": "proposed",
+    "reason": "Add Gemini 3.8 Flash, Fable 5.1, GLM-5.3 Flash; find why discovery missed them."
+  },
+  {
+    "date": "2026-09-02",
+    "id": "MR-2026-W36-04",
+    "theme": "defensibility",
+    "decision": "proposed",
+    "reason": "Retire 'prices keep falling' \u2014 they move both ways."
   }
 ]

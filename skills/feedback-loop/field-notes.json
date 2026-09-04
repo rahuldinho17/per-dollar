@@ -262,5 +262,13 @@
     "theme": "gtm",
     "signal": "PROOF POINT: Fortune, May 2026 \u2014 'Uber burned through its entire 2026 AI budget in four months. Now its COO is questioning whether it's worth it.' COO Andrew Macdonald on tying AI spend to outcomes: 'That link is not there yet.' The single best public evidence that this problem is real and unsolved at scale.",
     "raw_quote": "That link is not there yet"
+  },
+  {
+    "date": "2026-09-02",
+    "who": "Monthly review",
+    "type": "research",
+    "theme": "gtm",
+    "signal": "First real grading: 5 worked, 4 no-effect, 5 too-early. Every 'worked' item is provenance or capability. Every 'no-effect' item is positioning or messaging. Building the honest thing works; rewriting the pitch does not, because positioning cannot be validated without someone to position against.",
+    "raw_quote": ""
   }
 ]
