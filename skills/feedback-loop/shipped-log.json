@@ -127,9 +127,9 @@
     "change": "EU host dataset expanded to 9 hosts / 18 offerings",
     "hypothesis": "The only dataset no competitor carries",
     "success_metric": "a residency query returns a usable answer in every EU variant",
-    "grade": "too-early",
-    "outcome": "",
-    "lesson": ""
+    "grade": "worked",
+    "outcome": "graded 2026-09-02 on Kai feedback",
+    "lesson": "First external validation: Scaleway and IONOS confirmed fast and reliable in production. But only 2 of 9 hosts are used in practice \u2014 breadth was the wrong instinct, depth on those two is the right one."
   },
   {
     "id": "MR-2026-W33-04",

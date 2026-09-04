@@ -270,5 +270,29 @@
     "theme": "gtm",
     "signal": "First real grading: 5 worked, 4 no-effect, 5 too-early. Every 'worked' item is provenance or capability. Every 'no-effect' item is positioning or messaging. Building the honest thing works; rewriting the pitch does not, because positioning cannot be validated without someone to position against.",
     "raw_quote": ""
+  },
+  {
+    "date": "2026-08-30",
+    "who": "Kai-Thomas Krause (CPTO, ShopAgentic)",
+    "type": "call",
+    "theme": "vertical-depth",
+    "signal": "EU HOST QUALITY CONFIRMED, first external validation: 'they are pretty good. We focus just on scaleway and Ionos and both are serving fast with low latency and good throughput.' Note the shape \u2014 two hosts matter in practice, not nine. Depth on Scaleway and IONOS beats breadth across nine.",
+    "raw_quote": "both are serving fast with low latency and good throughput"
+  },
+  {
+    "date": "2026-08-30",
+    "who": "Kai-Thomas Krause",
+    "type": "call",
+    "theme": "product-defect",
+    "signal": "CACHING ANGLE PARTIALLY INVALIDATED. He has not looked at cached rates because (a) 'our inputs vary quite a bit' so hit rates would be low, and (b) 'as those are open source model in the pretty cheap area I was too lazy to care for the cost here'. The 6.3x cache-driven host spread we treat as a demo moment does not matter when the models are already cheap. Caching matters at the frontier, not the budget end.",
+    "raw_quote": "I was too lazy to care for the cost here"
+  },
+  {
+    "date": "2026-08-30",
+    "who": "Kai-Thomas Krause",
+    "type": "call",
+    "theme": "positioning",
+    "signal": "RESIDENCY TAXONOMY IS WRONG WAY ROUND. The driver is negative, not positive: 'primarily if they don't want the US involved for compliance reasons'. EU-only satisfies most prospects; Germany-only is rare. We built eu-de as the headline demo and it is the least common case. The primary axis should be 'no US processing', with EU as the common answer and DE as the edge.",
+    "raw_quote": "in most cases the EU only claim is already fine"
   }
 ]
