@@ -1,13 +1,42 @@
 {
-  "$schema": "https://per-dollar.vercel.app/feed/prices.json",
+  "$schema": "https://per-dollar.vercel.app/api/schema.json",
   "feed": "perdollar-prices",
   "version": "1.0",
-  "as_of": "2026-08-25",
+  "as_of": "2026-09-06",
   "currency": "USD",
   "unit": "per_million_tokens",
   "license": "Free to use with attribution to PerDollar (per-dollar.vercel.app).",
-  "disclaimer": "Standard-tier first-party API list prices. Verification tiers: 'verified' = a human checked the provider's own page on verified_at; 'agent-verified' = an automated daily check found this exact price on that page; 'tracked' = from a published comparison, unconfirmed; 'unsourced' = the price is not on the page we cite and we do not stand behind it. Promotional prices are separate from standard. Not financial advice; confirm against the provider before relying on a figure.",
+  "disclaimer": "Standard-tier first-party API list prices. 'verified' = checked against the provider's own pricing page; 'tracked' = from a published comparison, pending first-party confirmation. Promotional prices are separate from standard. Not financial advice.",
   "models": [
+    {
+      "id": "grok46",
+      "name": "grok46",
+      "provider": "?",
+      "input_per_mtok": 2,
+      "output_per_mtok": 6,
+      "verification": "verified",
+      "verified_at": "2026-08-25",
+      "source": "first-party pricing page",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
+    },
+    {
+      "id": "gem37f",
+      "name": "gem37f",
+      "provider": "?",
+      "input_per_mtok": 1.5,
+      "output_per_mtok": 7.5,
+      "verification": "verified",
+      "verified_at": "2026-08-25",
+      "source": "first-party pricing page",
+      "residency": "global",
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing",
+      "promo": {
+        "input_per_mtok": 0.75,
+        "output_per_mtok": 3.75,
+        "ends": "2026-12-31"
+      }
+    },
     {
       "id": "opus5",
       "name": "Claude Opus 5",
@@ -17,8 +46,6 @@
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": 61,
-      "verbosity": 1.15,
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
@@ -26,27 +53,28 @@
       "id": "gpt56sol",
       "name": "GPT-5.6 Sol",
       "provider": "OpenAI",
-      "input_per_mtok": 4.0,
-      "output_per_mtok": 20.0,
+      "input_per_mtok": 4,
+      "output_per_mtok": 20,
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": 59,
-      "verbosity": 1.0,
       "residency": "us",
-      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "promo": {
+        "input_per_mtok": 2,
+        "output_per_mtok": 10,
+        "ends": null
+      }
     },
     {
       "id": "fable5",
       "name": "Claude Fable 5",
       "provider": "Anthropic",
-      "input_per_mtok": 10.0,
-      "output_per_mtok": 50.0,
+      "input_per_mtok": 10,
+      "output_per_mtok": 50,
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": 60,
-      "verbosity": 1.15,
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
@@ -54,98 +82,71 @@
       "id": "opus48",
       "name": "Claude Opus 4.8",
       "provider": "Anthropic",
-      "input_per_mtok": 5.0,
-      "output_per_mtok": 25.0,
+      "input_per_mtok": 5,
+      "output_per_mtok": 25,
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": 56,
-      "verbosity": 1.15,
       "residency": "us",
-      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "legacy": true
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "gpt56ter",
       "name": "GPT-5.6 Terra",
       "provider": "OpenAI",
-      "input_per_mtok": 2.0,
-      "output_per_mtok": 12.0,
+      "input_per_mtok": 2,
+      "output_per_mtok": 12,
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": 55,
-      "verbosity": 1.05,
       "residency": "us",
-      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "promo": {
-        "input_per_mtok": 1,
-        "output_per_mtok": 6,
-        "ends": null
-      },
-      "cached_input_per_mtok": 0.2
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "son5",
       "name": "Claude Sonnet 5",
       "provider": "Anthropic",
-      "input_per_mtok": 2.0,
-      "output_per_mtok": 10.0,
+      "input_per_mtok": 2,
+      "output_per_mtok": 10,
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 1.1,
       "residency": "us",
-      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "promo": {
-        "input_per_mtok": 2,
-        "output_per_mtok": 10,
-        "ends": null
-      },
-      "cached_input_per_mtok": 0.2
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "son46",
       "name": "Claude Sonnet 4.6",
       "provider": "Anthropic",
-      "input_per_mtok": 3.0,
-      "output_per_mtok": 15.0,
+      "input_per_mtok": 3,
+      "output_per_mtok": 15,
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 1.1,
       "residency": "us",
-      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "legacy": true
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "kimik3",
       "name": "Kimi K3",
       "provider": "Moonshot AI",
-      "input_per_mtok": 3.0,
-      "output_per_mtok": 15.0,
+      "input_per_mtok": 3,
+      "output_per_mtok": 15,
       "verification": "verified",
       "verified_at": "2026-08-25",
-      "source": "published provider comparison",
-      "capability": 57,
-      "verbosity": 1.0,
+      "source": "first-party pricing page",
       "residency": "non-eu",
-      "residency_note": "operated outside the EU/US",
-      "cached_input_per_mtok": 0.3
+      "residency_note": "operated outside the EU/US"
     },
     {
       "id": "gem31p",
       "name": "Gemini 3.1 Pro",
       "provider": "Google",
-      "input_per_mtok": 2.0,
-      "output_per_mtok": 12.0,
+      "input_per_mtok": 2,
+      "output_per_mtok": 12,
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 0.85,
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing"
     },
@@ -158,42 +159,35 @@
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": 51,
-      "verbosity": 1.0,
       "residency": "us",
-      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "promo": {
-        "input_per_mtok": 0.1,
-        "output_per_mtok": 0.6,
-        "ends": null
-      },
-      "cached_input_per_mtok": 0.02
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
     {
       "id": "gem36f",
       "name": "Gemini 3.6 Flash",
       "provider": "Google",
-      "input_per_mtok": 0.75,
-      "output_per_mtok": 3.75,
+      "input_per_mtok": 1.5,
+      "output_per_mtok": 7.5,
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 0.8,
       "residency": "global",
-      "residency_note": "regional endpoints available; confirm the contract covers EU processing"
+      "residency_note": "regional endpoints available; confirm the contract covers EU processing",
+      "promo": {
+        "input_per_mtok": 0.75,
+        "output_per_mtok": 3.75,
+        "ends": "2026-12-31"
+      }
     },
     {
       "id": "haiku45",
       "name": "Claude Haiku 4.5",
       "provider": "Anthropic",
-      "input_per_mtok": 1.0,
-      "output_per_mtok": 5.0,
+      "input_per_mtok": 1,
+      "output_per_mtok": 5,
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 1.0,
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
     },
@@ -206,8 +200,6 @@
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 0.95,
       "residency": "non-eu",
       "residency_note": "operated outside the EU/US"
     },
@@ -216,12 +208,10 @@
       "name": "Gemini 3 Flash",
       "provider": "Google",
       "input_per_mtok": 0.5,
-      "output_per_mtok": 3.0,
+      "output_per_mtok": 3,
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 0.8,
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing"
     },
@@ -234,17 +224,13 @@
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 0.9,
       "residency": "non-eu",
       "residency_note": "operated outside the EU/US",
-      "off_peak": {
-        "input_per_mtok": 0.22,
-        "output_per_mtok": 0.66,
-        "cached_input_per_mtok": 0.007
-      },
-      "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted.",
-      "cached_input_per_mtok": 0.014
+      "promo": {
+        "input_per_mtok": 0.0811,
+        "output_per_mtok": 0.1621,
+        "ends": null
+      }
     },
     {
       "id": "gem31fl",
@@ -255,8 +241,6 @@
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 0.75,
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing"
     },
@@ -269,52 +253,13 @@
       "verification": "verified",
       "verified_at": "2026-08-25",
       "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 0.95,
       "residency": "non-eu",
       "residency_note": "operated outside the EU/US",
-      "off_peak": {
-        "input_per_mtok": 0.66,
-        "output_per_mtok": 1.98,
-        "cached_input_per_mtok": 0.022
-      },
-      "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted.",
-      "cached_input_per_mtok": 0.044
-    },
-    {
-      "id": "grok46",
-      "name": "Grok 4.6",
-      "provider": "xAI",
-      "input_per_mtok": 2.0,
-      "output_per_mtok": 6.0,
-      "verification": "verified",
-      "verified_at": "2026-08-25",
-      "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 1.0,
-      "residency": "us",
-      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement"
-    },
-    {
-      "id": "gem37f",
-      "name": "Gemini 3.7 Flash",
-      "provider": "Google",
-      "input_per_mtok": 0.75,
-      "output_per_mtok": 3.75,
-      "verification": "verified",
-      "verified_at": "2026-08-25",
-      "source": "first-party pricing page",
-      "capability": null,
-      "verbosity": 1.0,
-      "residency": "global",
-      "residency_note": "regional endpoints available; confirm the contract covers EU processing"
+      "promo": {
+        "input_per_mtok": 0.7078,
+        "output_per_mtok": 1.4157,
+        "ends": null
+      }
     }
-  ],
-  "last_change": "2026-08-25",
-  "fields": {
-    "verification": "verified = a human checked the provider's own page on verified_at; agent-verified = an automated daily check found this exact price on that page; tracked = from a published comparison, unconfirmed; unsourced = the price is not on the page we cite and we do not stand behind it",
-    "capability": "Artificial Analysis Intelligence Index (~61 max); null where the model has no published score \u2014 never estimated",
-    "verbosity": "answer-length multiplier vs a neutral baseline; output tokens scale by this",
-    "residency": "us | global | non-eu | self \u2014 where the API operator processes data"
-  }
+  ]
 }

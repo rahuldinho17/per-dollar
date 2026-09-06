@@ -5,7 +5,7 @@
     "model": "dsv4f",
     "published": "$0.14/$0.28",
     "reported": "$0.007/$0.22",
-    "why": "Multiple independent sources give $0.14 cache-miss / $0.0028 cache-hit / $0.28 output. Neither reported figure matches either lane. DeepSeek also split into peak/off-peak tiers on 16 Aug, so the page now has several columns \u2014 which one was read?",
+    "why": "Multiple independent sources give $0.14 cache-miss / $0.0028 cache-hit / $0.28 output. Neither reported figure matches either lane. DeepSeek also split into peak/off-peak tiers on 16 Aug, so the page now has several columns — which one was read?",
     "url": "https://api-docs.deepseek.com/quick_start/pricing",
     "resolution_date": "2026-08-25",
     "resolution": "DeepSeek repriced; peak rate published, off-peak recorded"
@@ -16,7 +16,7 @@
     "model": "dsv4pro",
     "published": "$0.435/$0.87",
     "reported": "$0.022/$1.98",
-    "why": "Sources give $0.435 cache-miss / $0.003625 cache-hit / $0.87 output. The reported input is ~6x the cache-hit rate and the output ~2.3x the standard \u2014 consistent with the new peak tier, where cache reads reportedly rose 7.84x and output ~2.94x. Likely a peak-tier row rather than the standard rate.",
+    "why": "Sources give $0.435 cache-miss / $0.003625 cache-hit / $0.87 output. The reported input is ~6x the cache-hit rate and the output ~2.3x the standard — consistent with the new peak tier, where cache reads reportedly rose 7.84x and output ~2.94x. Likely a peak-tier row rather than the standard rate.",
     "url": "https://api-docs.deepseek.com/quick_start/pricing",
     "resolution_date": "2026-08-25",
     "resolution": "DeepSeek repriced; peak rate published, off-peak recorded"
@@ -30,7 +30,7 @@
     "why": "Anthropic's own docs and several trackers give $5/$25, and every Claude tier runs output at 5x input ($1/$5, $2/$10, $10/$50). $5/$15 would break that pattern. Most likely the Sonnet 4.6 row was read by mistake.",
     "url": "https://platform.claude.com/docs/en/about-claude/pricing",
     "resolution_date": "2026-08-25",
-    "resolution": "confirmed $5/$25 \u2014 our value was already correct"
+    "resolution": "confirmed $5/$25 — our value was already correct"
   },
   {
     "date": "2026-08-25",
@@ -42,5 +42,37 @@
     "url": "https://platform.moonshot.ai/docs/pricing",
     "resolution_date": "2026-08-25",
     "resolution": "reported figure was the cache-hit lane; standard $3/$15 confirmed"
+  },
+  {
+    "date": "2026-09-06",
+    "model": "kimik3",
+    "published": "$3/$15",
+    "url": "https://platform.moonshot.ai/docs/pricing",
+    "why": "model name found but no prices near it — the page is probably rendered client-side",
+    "resolved": false
+  },
+  {
+    "date": "2026-09-06",
+    "model": "mm3",
+    "published": "$0.3/$1.2",
+    "url": "https://www.minimax.io/price",
+    "why": "model name found but no prices near it — the page is probably rendered client-side",
+    "resolved": false
+  },
+  {
+    "date": "2026-09-06",
+    "model": "dsv4f",
+    "published": "$0.44/$1.32",
+    "url": "https://api-docs.deepseek.com/quick_start/pricing",
+    "why": "model name found but no prices near it — the page is probably rendered client-side",
+    "resolved": false
+  },
+  {
+    "date": "2026-09-06",
+    "model": "dsv4pro",
+    "published": "$1.32/$3.96",
+    "url": "https://api-docs.deepseek.com/quick_start/pricing",
+    "why": "model name found but no prices near it — the page is probably rendered client-side",
+    "resolved": false
   }
 ]

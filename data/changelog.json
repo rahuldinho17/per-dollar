@@ -217,14 +217,14 @@
     "model": "gpt56ter",
     "kind": "correction",
     "source": "human re-verification",
-    "note": "promo removed \u2014 1/6 was not a promotional rate (likely a batch or cached tier)"
+    "note": "promo removed — 1/6 was not a promotional rate (likely a batch or cached tier)"
   },
   {
     "date": "2026-08-11",
     "model": "gpt56lun",
     "kind": "correction",
     "source": "human re-verification",
-    "note": "promo removed \u2014 0.1/0.6 was not a promotional rate (likely a batch or cached tier)"
+    "note": "promo removed — 0.1/0.6 was not a promotional rate (likely a batch or cached tier)"
   },
   {
     "date": "2026-08-11",
@@ -260,7 +260,7 @@
     "old": 0.94,
     "new": 1.4,
     "kind": "correction",
-    "note": "reverting our own 22 Jul correction \u2014 first-party z.ai pricing is 1.40/4.40, the comparison feed was wrong"
+    "note": "reverting our own 22 Jul correction — first-party z.ai pricing is 1.40/4.40, the comparison feed was wrong"
   },
   {
     "date": "2026-08-13",
@@ -325,17 +325,17 @@
     "model": "son5",
     "dimension": "inP",
     "old": 3,
-    "new": 2.0,
+    "new": 2,
     "kind": "correction",
     "source": "platform.claude.com/docs pricing",
-    "note": "Anthropic made the $2/$10 introductory rate permanent on 2026-08-10 and cancelled the 1 Sep rise to $3/$15. Our 13 Aug human verification recorded the superseded figure \u2014 three days after the announcement."
+    "note": "Anthropic made the $2/$10 introductory rate permanent on 2026-08-10 and cancelled the 1 Sep rise to $3/$15. Our 13 Aug human verification recorded the superseded figure — three days after the announcement."
   },
   {
     "date": "2026-08-25",
     "model": "son5",
     "dimension": "outP",
     "old": 15,
-    "new": 10.0,
+    "new": 10,
     "kind": "correction",
     "source": "platform.claude.com/docs pricing"
   },
@@ -344,7 +344,7 @@
     "model": "gpt56sol",
     "dimension": "inP",
     "old": 5,
-    "new": 4.0,
+    "new": 4,
     "kind": "correction",
     "source": "first-party pricing page",
     "note": "OpenAI cut Sol on 21 Aug; corroborated independently"
@@ -354,7 +354,7 @@
     "model": "gpt56sol",
     "dimension": "outP",
     "old": 30,
-    "new": 20.0,
+    "new": 20,
     "kind": "correction",
     "source": "first-party pricing page"
   },
@@ -404,7 +404,7 @@
     "new": 0.3,
     "kind": "correction",
     "source": "first-party pricing page",
-    "note": "promo price is now the standard price \u2014 promo fields cleared"
+    "note": "promo price is now the standard price — promo fields cleared"
   },
   {
     "date": "2026-08-25",
@@ -448,7 +448,7 @@
     "model": "grok45",
     "kind": "retired",
     "source": "human verification",
-    "note": "not on xAI docs \u2014 superseded by 4.6"
+    "note": "not on xAI docs — superseded by 4.6"
   },
   {
     "date": "2026-08-25",
@@ -515,5 +515,351 @@
     "kind": "promo_price",
     "source": "Google pricing documentation (reported)",
     "note": "Gemini Flash line is on an introductory window through 31 Dec 2026 with a doubling scheduled. Published rate is now the post-window standard; the introductory rate sits in the promo fields. Needs first-party confirmation of the exact standard rate."
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "gpt56sol",
+    "dimension": "inP",
+    "old": 4,
+    "new": 2,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "gpt56sol",
+    "dimension": "outP",
+    "old": 20,
+    "new": 10,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "gpt56ter",
+    "dimension": "inP",
+    "old": 1,
+    "new": 2,
+    "kind": "promo_end"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "gpt56ter",
+    "dimension": "outP",
+    "old": 6,
+    "new": 12,
+    "kind": "promo_end"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "son5",
+    "dimension": "inP",
+    "old": 2,
+    "new": 2,
+    "kind": "promo_end"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "son5",
+    "dimension": "outP",
+    "old": 10,
+    "new": 10,
+    "kind": "promo_end"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "gpt56lun",
+    "dimension": "inP",
+    "old": 0.1,
+    "new": 0.2,
+    "kind": "promo_end"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "gpt56lun",
+    "dimension": "outP",
+    "old": 0.6,
+    "new": 1.2,
+    "kind": "promo_end"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.44,
+    "new": 0.0811,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "outP",
+    "old": 1.32,
+    "new": 0.1621,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "inP",
+    "old": 1.32,
+    "new": 0.7078,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "outP",
+    "old": 3.96,
+    "new": 1.4157,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6-astra",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6-astra:batch",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6-astra-pro",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6-astra-pro:batch",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "qwen/qwen3.8-max-0902",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "google/gemini-3.8-flash",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "google/gemini-3.8-flash:batch",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "anthropic/claude-fable-5.1",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "anthropic/claude-fable-5.1:batch",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "qwen/qwen3.8-flash",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "z-ai/glm-5.3-flash",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "z-ai/glm-5.3-flash:batch",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "deepseek/deepseek-v4-flash-vision-exp",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "z-ai/glm-5.3",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "qwen/qwen3.8-27b",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "google/gemini-3.7-flash:batch",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "qwen/qwen3.8-2.4t-a95b",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "qwen/qwen3.8-2.4t-a95b:batch",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "deepseek/deepseek-v4-pro-0813",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "deepseek/deepseek-v4-pro-0813:batch",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "nvidia/nemotron-3.5-lightning",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "nvidia/nemotron-3.5-lightning:free",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "deepseek/deepseek-v4-flash-0731",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "deepseek/deepseek-v4-flash-0731:batch",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "thinkingmachines/inkling-small",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "thinkingmachines/inkling-small:batch",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "thinkingmachines/inkling-small:free",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "qwen/qwen3.7-flash",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "anthropic/claude-opus-5",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "source": "openrouter-api",
+    "model": "anthropic/claude-opus-5:batch",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-06",
+    "model": "kimik3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-06",
+    "model": "mm3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-06",
+    "model": "dsv4f",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-06",
+    "model": "dsv4pro",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
   }
 ]

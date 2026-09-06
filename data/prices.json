@@ -1,12 +1,12 @@
 {
-  "as_of": "2026-08-25",
-  "as_of_display": "25 AUG 2026",
-  "note": "Verification sweep 2026-08-25. Seven models retired as no longer listed on their provider's own page. Four prices held pending clarification \u2014 see data/verify-queue.json.",
+  "as_of": "2026-09-06",
+  "as_of_display": "6 SEPT 2026",
+  "note": "Verification sweep 2026-08-25. Seven models retired as no longer listed on their provider's own page. Four prices held pending clarification — see data/verify-queue.json.",
   "models": [
     {
       "id": "grok46",
-      "inP": 2.0,
-      "outP": 6.0,
+      "inP": 2,
+      "outP": 6,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-25",
@@ -39,64 +39,14 @@
       "tracked_at": "2026-08-03",
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false
+      "self_hosted": false,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
     },
     {
       "id": "gpt56sol",
-      "inP": 4.0,
-      "outP": 20.0,
-      "verification": "verified",
-      "source": "first-party pricing page",
-      "verified_at": "2026-08-25",
-      "tracked_at": "2026-07-22",
-      "residency": "us",
-      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false
-    },
-    {
-      "id": "fable5",
-      "inP": 10.0,
-      "outP": 50.0,
-      "verification": "verified",
-      "source": "first-party pricing page",
-      "verified_at": "2026-08-25",
-      "tracked_at": "2026-07-22",
-      "residency": "us",
-      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false
-    },
-    {
-      "id": "opus48",
-      "inP": 5.0,
-      "outP": 25.0,
-      "verification": "verified",
-      "source": "first-party pricing page",
-      "verified_at": "2026-08-25",
-      "legacy": true,
-      "residency": "us",
-      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false
-    },
-    {
-      "id": "gpt56ter",
-      "inP": 2.0,
-      "outP": 12.0,
-      "verification": "verified",
-      "source": "first-party pricing page",
-      "verified_at": "2026-08-25",
-      "tracked_at": "2026-07-22",
-      "cachedIn": 0.2,
-      "residency": "us",
-      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false,
-      "promoIn": 1,
-      "promoOut": 6,
-      "promoEnds": null
-    },
-    {
-      "id": "son5",
-      "inP": 2.0,
-      "outP": 10.0,
+      "inP": 4,
+      "outP": 20,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-25",
@@ -105,26 +55,93 @@
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
       "promoIn": 2,
+      "promo_tracked_at": "2026-09-06",
       "promoOut": 10,
-      "promoEnds": null,
-      "cachedIn": 0.2
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
     },
     {
-      "id": "son46",
-      "inP": 3.0,
-      "outP": 15.0,
+      "id": "fable5",
+      "inP": 10,
+      "outP": 50,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-08-25",
+      "tracked_at": "2026-07-22",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
+    },
+    {
+      "id": "opus48",
+      "inP": 5,
+      "outP": 25,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-25",
       "legacy": true,
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false
+      "self_hosted": false,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
+    },
+    {
+      "id": "gpt56ter",
+      "inP": 2,
+      "outP": 12,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-08-25",
+      "tracked_at": "2026-07-22",
+      "cachedIn": 0.2,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false,
+      "promoIn": null,
+      "promoOut": null,
+      "promoEnds": null,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
+    },
+    {
+      "id": "son5",
+      "inP": 2,
+      "outP": 10,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-08-25",
+      "tracked_at": "2026-07-22",
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false,
+      "promoIn": null,
+      "promoOut": null,
+      "promoEnds": null,
+      "cachedIn": 0.2,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
+    },
+    {
+      "id": "son46",
+      "inP": 3,
+      "outP": 15,
+      "verification": "verified",
+      "source": "first-party pricing page",
+      "verified_at": "2026-08-25",
+      "legacy": true,
+      "residency": "us",
+      "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
+      "self_hosted": false,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
     },
     {
       "id": "kimik3",
-      "inP": 3.0,
-      "outP": 15.0,
+      "inP": 3,
+      "outP": 15,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-25",
@@ -132,18 +149,23 @@
       "residency": "non-eu",
       "residency_note": "operated outside the EU/US",
       "self_hosted": false,
-      "cachedIn": 0.3
+      "cachedIn": 0.3,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "needs-human",
+      "agent_note": "model name found but no prices near it — the page is probably rendered client-side"
     },
     {
       "id": "gem31p",
-      "inP": 2.0,
-      "outP": 12.0,
+      "inP": 2,
+      "outP": 12,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-25",
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing",
-      "self_hosted": false
+      "self_hosted": false,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
     },
     {
       "id": "gpt56lun",
@@ -157,9 +179,11 @@
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
-      "promoIn": 0.1,
-      "promoOut": 0.6,
-      "promoEnds": null
+      "promoIn": null,
+      "promoOut": null,
+      "promoEnds": null,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
     },
     {
       "id": "gem36f",
@@ -176,18 +200,22 @@
       "promoIn": 0.75,
       "promoOut": 3.75,
       "promoEnds": "2026-12-31",
-      "promo_kind": "introductory"
+      "promo_kind": "introductory",
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
     },
     {
       "id": "haiku45",
-      "inP": 1.0,
-      "outP": 5.0,
+      "inP": 1,
+      "outP": 5,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-25",
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
-      "self_hosted": false
+      "self_hosted": false,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
     },
     {
       "id": "mm3",
@@ -201,18 +229,23 @@
       "verified_at": "2026-08-25",
       "residency": "non-eu",
       "residency_note": "operated outside the EU/US",
-      "self_hosted": false
+      "self_hosted": false,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "needs-human",
+      "agent_note": "model name found but no prices near it — the page is probably rendered client-side"
     },
     {
       "id": "gem3f",
       "inP": 0.5,
-      "outP": 3.0,
+      "outP": 3,
       "verification": "verified",
       "source": "first-party pricing page",
       "verified_at": "2026-08-25",
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing",
-      "self_hosted": false
+      "self_hosted": false,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
     },
     {
       "id": "dsv4f",
@@ -228,7 +261,13 @@
       "off_peak_in": 0.22,
       "off_peak_out": 0.66,
       "off_peak_cached_in": 0.007,
-      "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted."
+      "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted.",
+      "promoIn": 0.0811,
+      "promo_tracked_at": "2026-09-06",
+      "promoOut": 0.1621,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "needs-human",
+      "agent_note": "model name found but no prices near it — the page is probably rendered client-side"
     },
     {
       "id": "gem31fl",
@@ -240,7 +279,9 @@
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing",
       "self_hosted": false,
-      "audio_in": 0.5
+      "audio_in": 0.5,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "confirmed"
     },
     {
       "id": "dsv4pro",
@@ -256,9 +297,16 @@
       "off_peak_in": 0.66,
       "off_peak_out": 1.98,
       "off_peak_cached_in": 0.022,
-      "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted."
+      "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted.",
+      "promoIn": 0.7078,
+      "promo_tracked_at": "2026-09-06",
+      "promoOut": 1.4157,
+      "agent_checked_at": "2026-09-06",
+      "agent_status": "needs-human",
+      "agent_note": "model name found but no prices near it — the page is probably rendered client-side"
     }
   ],
   "last_change": "2026-08-25",
-  "verified_sweep": "2026-08-25"
+  "verified_sweep": "2026-08-25",
+  "agent_swept_at": "2026-09-06"
 }
