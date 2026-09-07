@@ -861,5 +861,69 @@
     "kind": "flagged_for_review",
     "source": "verify-agent",
     "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-07",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.0811,
+    "new": 0.0886,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-07",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "outP",
+    "old": 0.1621,
+    "new": 0.1772,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-07",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "inP",
+    "old": 0.7078,
+    "new": 0.9553,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-07",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "outP",
+    "old": 1.4157,
+    "new": 1.9105,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-07",
+    "model": "kimik3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-07",
+    "model": "mm3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-07",
+    "model": "dsv4f",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-07",
+    "model": "dsv4pro",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
   }
 ]
