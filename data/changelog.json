@@ -925,5 +925,33 @@
     "kind": "flagged_for_review",
     "source": "verify-agent",
     "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-08",
+    "model": "kimik3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-08",
+    "model": "mm3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-08",
+    "model": "dsv4f",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-08",
+    "model": "dsv4pro",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
   }
 ]
