@@ -1,6 +1,6 @@
 {
-  "as_of": "2026-09-08",
-  "as_of_display": "8 SEPT 2026",
+  "as_of": "2026-09-09",
+  "as_of_display": "9 SEPT 2026",
   "note": "Verification sweep 2026-08-25. Seven models retired as no longer listed on their provider's own page. Four prices held pending clarification — see data/verify-queue.json.",
   "models": [
     {
@@ -40,7 +40,7 @@
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -57,7 +57,7 @@
       "promoIn": 2,
       "promo_tracked_at": "2026-09-06",
       "promoOut": 10,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -71,7 +71,7 @@
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -85,7 +85,7 @@
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -103,7 +103,7 @@
       "promoIn": null,
       "promoOut": null,
       "promoEnds": null,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -121,7 +121,7 @@
       "promoOut": null,
       "promoEnds": null,
       "cachedIn": 0.2,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -135,7 +135,7 @@
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -150,7 +150,7 @@
       "residency_note": "operated outside the EU/US",
       "self_hosted": false,
       "cachedIn": 0.3,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "needs-human",
       "agent_note": "model name found but no prices near it — the page is probably rendered client-side"
     },
@@ -164,7 +164,7 @@
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing",
       "self_hosted": false,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -182,7 +182,7 @@
       "promoIn": null,
       "promoOut": null,
       "promoEnds": null,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -201,7 +201,7 @@
       "promoOut": 3.75,
       "promoEnds": "2026-12-31",
       "promo_kind": "introductory",
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -214,7 +214,7 @@
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -230,7 +230,7 @@
       "residency": "non-eu",
       "residency_note": "operated outside the EU/US",
       "self_hosted": false,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "needs-human",
       "agent_note": "model name found but no prices near it — the page is probably rendered client-side"
     },
@@ -244,7 +244,7 @@
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing",
       "self_hosted": false,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -265,7 +265,7 @@
       "promoIn": 0.0886,
       "promo_tracked_at": "2026-09-07",
       "promoOut": 0.1772,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "needs-human",
       "agent_note": "model name found but no prices near it — the page is probably rendered client-side"
     },
@@ -280,7 +280,7 @@
       "residency_note": "regional endpoints available; confirm the contract covers EU processing",
       "self_hosted": false,
       "audio_in": 0.5,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "confirmed"
     },
     {
@@ -301,12 +301,12 @@
       "promoIn": 0.9553,
       "promo_tracked_at": "2026-09-07",
       "promoOut": 1.9105,
-      "agent_checked_at": "2026-09-08",
+      "agent_checked_at": "2026-09-09",
       "agent_status": "needs-human",
       "agent_note": "model name found but no prices near it — the page is probably rendered client-side"
     }
   ],
   "last_change": "2026-08-25",
   "verified_sweep": "2026-08-25",
-  "agent_swept_at": "2026-09-08"
+  "agent_swept_at": "2026-09-09"
 }
