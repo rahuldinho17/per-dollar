@@ -995,5 +995,33 @@
     "kind": "flagged_for_review",
     "source": "verify-agent",
     "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-10",
+    "source": "openrouter-api",
+    "model": "deepseek/deepseek-v4.1-flash",
+    "kind": "discovered",
+    "note": "new listing from tracked vendor, awaiting verification"
+  },
+  {
+    "date": "2026-09-10",
+    "model": "kimik3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-10",
+    "model": "mm3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-10",
+    "model": "dsv4f",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "page shows $0.6, $1.2, $1.98, $3.96 near the model name; we publish $0.44/$1.32"
   }
 ]
