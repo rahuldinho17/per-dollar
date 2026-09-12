@@ -1062,5 +1062,80 @@
     "kind": "flagged_for_review",
     "source": "verify-agent",
     "note": "page shows $0.6, $1.2, $1.98, $3.96 near the model name; we publish $0.44/$1.32"
+  },
+  {
+    "date": "2026-09-12",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "inP",
+    "old": 2.34,
+    "new": 2.3027,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-12",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "outP",
+    "old": 11.7,
+    "new": 11.5502,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-12",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.0886,
+    "new": 0.0668,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-12",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "outP",
+    "old": 0.1772,
+    "new": 0.1336,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-12",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "inP",
+    "old": 0.9553,
+    "new": 0.8093,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-12",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "outP",
+    "old": 1.9105,
+    "new": 1.6185,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-12",
+    "model": "kimik3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-12",
+    "model": "mm3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-12",
+    "model": "dsv4f",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "page shows $0.6, $1.2, $1.98, $3.96 near the model name; we publish $0.44/$1.32"
   }
 ]
