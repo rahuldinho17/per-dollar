@@ -1265,5 +1265,61 @@
     "kind": "flagged_for_review",
     "source": "verify-agent",
     "note": "page shows $0.003, $0.006, $0.022, $0.044, $0.15, $0.3, $0.6, $0.66 near the model name; we publish $1.6/$3.96 (output matched, input did not)"
+  },
+  {
+    "date": "2026-09-15",
+    "model": "kimik3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-15",
+    "model": "gem31p",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-15",
+    "model": "gem36f",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "page shows $1 near the model name; we publish $1.5/$7.5"
+  },
+  {
+    "date": "2026-09-15",
+    "model": "mm3",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "model name found but no prices near it — the page is probably rendered client-side"
+  },
+  {
+    "date": "2026-09-15",
+    "model": "gem3f",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "page shows $3 near the model name; we publish $0.5/$3 (output matched, input did not)"
+  },
+  {
+    "date": "2026-09-15",
+    "model": "dsv4f",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "page shows $0.6, $1.2, $1.98, $3.96 near the model name; we publish $0.44/$1.32"
+  },
+  {
+    "date": "2026-09-15",
+    "model": "gem31fl",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "page shows $1 near the model name; we publish $0.25/$1.5"
+  },
+  {
+    "date": "2026-09-15",
+    "model": "dsv4pro",
+    "kind": "flagged_for_review",
+    "source": "verify-agent",
+    "note": "page shows $0.003, $0.006, $0.022, $0.044, $0.15, $0.3, $0.6, $0.66 near the model name; we publish $1.6/$3.96 (output matched, input did not)"
   }
 ]
