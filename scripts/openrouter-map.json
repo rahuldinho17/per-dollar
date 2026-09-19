@@ -23,5 +23,6 @@
   "dsv4f": "deepseek/deepseek-v4-flash",
   "dsv4pro": "deepseek/deepseek-v4-pro",
   "gem37f": "google/gemini-3.7-flash",
-  "grok46": "x-ai/grok-4.6"
+  "grok46": "x-ai/grok-4.6",
+  "opus5": "anthropic/claude-opus-5"
 }

@@ -3,14 +3,16 @@
 // Principles (see docs/pricing-pipeline-design.md):
 //  - never guess: a model whose slug isn't found is left untouched
 //  - append-only history: every change is appended to data/changelog.json
-//  - honest provenance: auto-updated prices are marked "auto-tracked", not "verified"
+//  - no human in the loop: this step only records what OpenRouter lists today
+//    (model.or_check); scripts/verify-agent.mjs runs next and decides, per model,
+//    whether today's price is confirmed and against which source
 //  - a promo is a price with a lifespan: fetched prices below standard are parked
 //    in promo fields, not recorded as permanent cuts; a return to standard is a
 //    promo_end, not a hike
 //  - NEW: discovery. Models from tracked vendors that we don't yet carry are
 //    written to data/discovered.json as a review queue and surfaced on the site
-//    as "awaiting verification" — never auto-published, because the API gives us
-//    prices but not display names, answer-length factors, or a human check.
+//    as "not yet tracked" — never auto-published, because the API gives us
+//    prices but not display names, answer-length factors or capability scores.
 //
 // Run locally:  node scripts/refresh-prices.mjs
 // Run by CI:    .github/workflows/refresh-prices.yml (daily cron)
@@ -18,6 +20,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { writePublicFeed } from "./feed.mjs";
 
 const ROOT = process.env.DATA_ROOT || join(dirname(fileURLToPath(import.meta.url)), "..");
 const PRICES_PATH = join(ROOT, "data", "prices.json");
@@ -29,7 +32,7 @@ const API = "https://openrouter.ai/api/v1/models";
 const EPSILON = 1e-6;      // ignore float noise
 const PROMO_BAND = 0.95;   // fetched < 95% of standard => promo, not a permanent cut
 const MAX_CUT   = 5;      // a 5x cut is plausible in this market
-const MAX_HIKE  = 1.25;   // a >25% rise is rare enough that a human should look at it
+const MAX_HIKE  = 1.25;   // a >25% rise is applied only once the provider page shows it too
 const DISCOVERY_TTL_DAYS = 60;      // drop stale unreviewed discoveries
 const DISCOVERY_MAX_AGE_DAYS = 45;  // only queue genuinely NEW listings
 const DISCOVERY_CAP = 40;           // a queue nobody can read is not a queue
@@ -43,41 +46,6 @@ const TRACKED_VENDORS = [
 ];
 
 const today = new Date().toISOString().slice(0, 10);
-
-const DISPLAY = {
-  gpt56sol:["GPT-5.6 Sol","OpenAI"], fable5:["Claude Fable 5","Anthropic"],
-  gpt55:["GPT-5.5","OpenAI"], opus48:["Claude Opus 4.8","Anthropic"],
-  gpt56ter:["GPT-5.6 Terra","OpenAI"], gpt54:["GPT-5.4","OpenAI"],
-  son5:["Claude Sonnet 5","Anthropic"], son46:["Claude Sonnet 4.6","Anthropic"],
-  kimik3:["Kimi K3","Moonshot AI"], gem31p:["Gemini 3.1 Pro","Google"],
-  grok45:["Grok 4.5","xAI"], inkling:["Inkling","Thinking Machines"],
-  gpt56lun:["GPT-5.6 Luna","OpenAI"], gem36f:["Gemini 3.6 Flash","Google"],
-  glm52:["GLM-5.2","Z.AI"], haiku45:["Claude Haiku 4.5","Anthropic"],
-  mm3:["MiniMax M3","MiniMax"], gem3f:["Gemini 3 Flash","Google"],
-  g41mini:["GPT-4.1 Mini","OpenAI"], dsv4f:["DeepSeek V4 Flash","DeepSeek"],
-  g41nano:["GPT-4.1 Nano","OpenAI"], dsv4pro:["DeepSeek V4 Pro","DeepSeek"], opus5:["Claude Opus 5","Anthropic"], gem31fl:["Gemini 3.1 Flash-Lite","Google"],
-};
-
-function writePublicFeed(prices, ROOT) {
-  const feed = {
-    "$schema": "https://per-dollar.vercel.app/api/schema.json",
-    feed: "perdollar-prices", version: "1.0",
-    as_of: prices.as_of, currency: "USD", unit: "per_million_tokens",
-    license: "Free to use with attribution to PerDollar (per-dollar.vercel.app).",
-    disclaimer: "Standard-tier first-party API list prices. 'verified' = checked against the provider's own pricing page; 'tracked' = from a published comparison, pending first-party confirmation. Promotional prices are separate from standard. Not financial advice.",
-    models: prices.models.map((m) => {
-      const [name, provider] = DISPLAY[m.id] || [m.id, "?"];
-      const e = { id: m.id, name, provider,
-        input_per_mtok: m.inP, output_per_mtok: m.outP,
-        verification: m.verification || "verified",
-        verified_at: m.verified_at ?? null, source: m.source ?? null,
-        residency: m.residency ?? null, residency_note: m.residency_note ?? null };
-      if (m.promoIn != null) e.promo = { input_per_mtok: m.promoIn, output_per_mtok: m.promoOut, ends: m.promoEnds ?? null };
-      return e;
-    }),
-  };
-  writeFileSync(join(ROOT, "feed", "prices.json"), JSON.stringify(feed, null, 2) + "\n");
-}
 
 const daysBetween = (a, b) => Math.abs(new Date(a) - new Date(b)) / 864e5;
 
@@ -117,7 +85,9 @@ async function main() {
   for (const model of prices.models) {
     const slug = map[model.id];
     const remote = slug && bySlug.get(slug);
-    if (!remote) { missing.push(model.id); continue; }
+    if (!remote) { missing.push(model.id); model.or_check = { date: today, listed: false }; continue; }
+    model.or_check = { date: today, listed: true,
+      inP: perMillion(remote.pricing?.prompt), outP: perMillion(remote.pricing?.completion) };
 
     for (const [dim, key, promoKey] of [["inP", "prompt", "promoIn"], ["outP", "completion", "promoOut"]]) {
       const next = perMillion(remote.pricing?.[key]);
@@ -144,21 +114,20 @@ async function main() {
 
       const ratio = std > 0 ? next / std : Infinity;
       if (ratio > MAX_HIKE || ratio < 1 / MAX_CUT) {
-        anomalies.push({ id: model.id, dim, prev: std, next,
-          why: ratio > MAX_HIKE ? `+${Math.round((ratio - 1) * 100)}% — check the slug maps to the right SKU` : `${Math.round((1 - ratio) * 100)}% cut — unusually large` });
+        // Too large to apply on OpenRouter's word alone (it is often a wrong slug).
+        // Park it; the price check applies it only if the provider's own page
+        // shows the new price too.
+        const why = ratio > MAX_HIKE ? `+${Math.round((ratio - 1) * 100)}% — possibly the wrong SKU` : `${Math.round((1 - ratio) * 100)}% cut — unusually large`;
+        anomalies.push({ id: model.id, dim, prev: std, next, why });
+        model.pending_price = { ...(model.pending_price || {}), [dim]: next, seen_at: today, why };
         continue;
       }
 
       log({ model: model.id, dimension: dim, old: std, new: next, kind: next < std ? "cut" : "hike" });
       model[dim] = next;
       model[promoKey] = null;
-      // A machine changed this number, so the human verification no longer applies to it.
-      // Keeping verified_at/source here silently launders a scrape into a human check —
-      // the exact provenance corruption this product exists to prevent.
-      model.verification = "auto-tracked";
-      model.tracked_at = today;
-      model.verified_at = null;
-      model.source = "openrouter-api";
+      model.price_changed_at = today;
+      if (model.pending_price) { delete model.pending_price[dim]; if (model.pending_price.inP == null && model.pending_price.outP == null) delete model.pending_price; }
     }
   }
 
@@ -201,7 +170,7 @@ async function main() {
       });
       newFinds++;
       changelog.push({ date: today, source: "openrouter-api", model: slug,
-        kind: "discovered", note: "new listing from tracked vendor, awaiting verification" });
+        kind: "discovered", note: "new listing from a tracked vendor, not yet in the price sheet" });
     }
   }
 
@@ -215,6 +184,7 @@ async function main() {
 
   // ---- 3. write ------------------------------------------------------------
   prices.as_of = today;
+  if (changes) prices.last_change = today;
   prices.as_of_display = new Date(today).toLocaleDateString("en-GB",
     { day: "numeric", month: "short", year: "numeric" }).toUpperCase();
 
@@ -259,7 +229,7 @@ async function main() {
     }
   }
   if (anomalies.length) {
-    console.log("ANOMALIES held for human review (not applied):");
+    console.log("LARGE MOVES parked until the provider page confirms them (not applied):");
     for (const a of anomalies) console.log(`  ${a.id}.${a.dim}: ${a.prev} -> ${a.next}  (${a.why})`);
   }
 }

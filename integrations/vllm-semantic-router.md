@@ -17,7 +17,7 @@ cost_source:
     input:  input_per_mtok
     output: output_per_mtok
   trust:              # ignore anything unconfirmed
-    verification: [verified, agent-verified]
+    verification: [confirmed]
 ```
 
 Each entry also carries `capability` (Artificial Analysis Intelligence Index, null when the

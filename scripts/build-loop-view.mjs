@@ -106,7 +106,7 @@ const loop = {
   },
   product: {
     models_tracked: prices.models.length,
-    verified: prices.models.filter((m) => m.verification === "verified").length,
+    verified: prices.models.filter((m) => m.verification === "confirmed").length,
     price_events: changelog.length,
   },
   themes: themeCounts,

@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PerDollar — the price sheet for AI work</title>
-<meta name="description" content="Token prices translated into the cost of completed work. Pick a budget and a task; see what every major model delivers, with verified prices and explicit assumptions." />
+<meta name="description" content="Token prices translated into the cost of completed work. Pick a budget and a task; see what every major model delivers, with prices checked daily by a bot and explicit assumptions." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;600&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -48,7 +48,7 @@
   .status.paused { color: var(--claret); }
   .status.paused b { color: var(--claret); }
   .msub .tracked { color: var(--claret); }
-  .msub .agentv { color: var(--teal); }
+  .msub .botok { color: var(--teal); }
   .needsh { display: inline-block; width: 14px; height: 14px; line-height: 14px; text-align: center;
     border-radius: 50%; background: var(--claret); color: var(--paper); font-size: 9px;
     font-weight: 700; margin-left: 6px; vertical-align: 1px; cursor: help; }
@@ -306,7 +306,7 @@
       <a href="/hosts.html">Same model, every host</a>
       <a href="/try.html">Try the router</a>
     </nav>
-    <div class="status" id="statusline">CHECKED <b>25 AUG 2026</b> · 19 MODELS<br/>18 CONFIRMED AGAINST PROVIDER PAGES</div>
+    <div class="status" id="statusline">LOADING TODAY'S BOT CHECK…</div>
   </header>
 
   <section class="stand">
@@ -419,16 +419,15 @@
       </details>
 
       <details><summary>Where the prices come from</summary>
-        Standard-tier, first-party API list rates, in four levels of confidence.
-        <b>Verified</b> — a human opened the provider's own page on the date shown.
-        <b>Agent-verified</b> — an automated check found that exact price on the provider's page
-        that day; it can only ever confirm, never edit a price, and a human stamp always outranks it.
-        <b>Tracked</b> — from a published comparison, not yet confirmed.
-        <b>Source unconfirmed</b> — the price is not on the page we cite, so we do not stand
-        behind it. A <b>?</b> beside a model means the agent could not confirm it and a human
-        should look. Every row links to its source. An
-        automated job re-checks daily and writes an append-only history; corrections to our own
-        errors are published as corrections, not silently fixed.
+        Standard-tier, first-party API list rates, checked automatically by a bot once a day —
+        no one checks them by hand. The date on every row is the day the bot last checked it.
+        <b>Provider page</b> — the bot found that exact price beside the model's name on the
+        provider's own pricing page. <b>Via OpenRouter</b> — the provider's page could not be read
+        automatically (many are rendered in the browser), but the price matches what OpenRouter
+        lists that day. <b>Not confirmed</b>, marked <b>?</b> — the bot checked but could not
+        confirm the price; hover for why and when it was last confirmed. The bot never guesses:
+        an unreadable page is never counted as a confirmation, and a large price move is applied
+        only once the provider's own page shows it. Every check writes to an append-only history.
       </details>
 
       <details><summary>Capability and value</summary>
@@ -679,21 +678,29 @@ function shortDate(iso) {
   if (!iso) return "";
   const d = new Date(iso);
   return isNaN(d) ? String(iso).toUpperCase()
-    : d.toLocaleDateString("en-GB", { day: "numeric", month: "short" }).toUpperCase();
+    : d.toLocaleDateString("en-GB", { day: "numeric", month: "short" }).toUpperCase().replace("SEPT", "SEP");
 }
+// Every date on the sheet is the date the daily bot last checked that price.
+// No human checks prices; the badge says what the bot managed to confirm.
 function badgeText(m) {
-  if (m.verification === "unsourced")      return "SOURCE UNCONFIRMED";
-  if (m.verification === "auto-tracked")   return "AUTO-TRACKED " + shortDate(m.tracked_at);
-  if (m.verification === "tracked")        return "TRACKED " + shortDate(m.tracked_at) + " · UNVERIFIED";
-  if (m.verification === "agent-verified") return "AGENT-VERIFIED " + shortDate(m.agent_checked_at);
-  // A human check is the strongest claim; show when the agent last re-confirmed it.
-  return "VERIFIED " + shortDate(m.verified_at || DATA_AS_OF) +
-    (m.agent_status === "confirmed" && m.agent_checked_at ? " · AGENT " + shortDate(m.agent_checked_at) : "");
+  if (!m.checked_at) return "AWAITING FIRST BOT CHECK";
+  const when = "BOT-CHECKED " + shortDate(m.checked_at);
+  if (m.verification === "confirmed")
+    return when + (m.check_source === "openrouter" ? " · VIA OPENROUTER" : " · PROVIDER PAGE");
+  return when + " · NOT CONFIRMED";
 }
 function badgeClass(m) {
-  if (m.verification === "verified") return "";
-  if (m.verification === "agent-verified") return "agentv";
-  return "tracked";
+  return m.verification === "confirmed" && m.checked_at ? "botok" : "tracked";
+}
+function badgeTitle(m, src) {
+  if (!m.checked_at) return "The daily bot has not checked this price yet.";
+  if (m.verification === "confirmed")
+    return m.check_source === "openrouter"
+      ? `The bot could not read the provider's page on ${shortDate(m.checked_at)}, but this price matches OpenRouter's listing that day. Provider page: ${src}`
+      : `The bot found this exact price on the provider's own page on ${shortDate(m.checked_at)}: ${src}`;
+  return `The bot could not confirm this price on ${shortDate(m.checked_at)}` +
+    (m.check_note ? ` — ${m.check_note}` : "") +
+    (m.confirmed_at ? `. Last confirmed ${shortDate(m.confirmed_at)}.` : ".");
 }
 
 function trendChange(m) {
@@ -854,10 +861,10 @@ function render() {
     return `
     <tr class="${m.id === cheap.id ? "best" : ""}${bestVal && m.id === bestVal.id ? " bestval" : ""}${m.legacy ? " is-legacy" : ""}">
       <td class="l c-model">
-        <div class="mname">${esc(m.name)}${m.agent_status === "needs-human" ? `<span class="needsh" title="${esc(m.agent_note || "the agent could not confirm this price on the provider page")}">?</span>` : ""}${m.superseded_by ? `<span class="legacy" style="border-color:var(--ink-3);background:transparent;color:var(--ink-2)" title="A newer version of this model has shipped">SUPERSEDED</span>` : ""}${m.legacy ? `<span class="legacy" title="The provider has marked this model legacy — plan a migration before it is retired">LEGACY${m.retires ? " · RETIRES " + shortDate(m.retires).toUpperCase() : ""}</span>` : ""}${m.pv.hasPromo ? `<span class="pbadge${m.pv.usePromo ? "" : " off"}">PROMO</span>` : ""}</div>
+        <div class="mname">${esc(m.name)}${m.checked_at && m.verification !== "confirmed" ? `<span class="needsh" title="${esc(badgeTitle(m, src))}">?</span>` : ""}${m.superseded_by ? `<span class="legacy" style="border-color:var(--ink-3);background:transparent;color:var(--ink-2)" title="A newer version of this model has shipped">SUPERSEDED</span>` : ""}${m.legacy ? `<span class="legacy" title="The provider has marked this model legacy — plan a migration before it is retired">LEGACY${m.retires ? " · RETIRES " + shortDate(m.retires).toUpperCase() : ""}</span>` : ""}${m.pv.hasPromo ? `<span class="pbadge${m.pv.usePromo ? "" : " off"}">PROMO</span>` : ""}</div>
         <div class="msub">${esc(m.provider.toUpperCase())} ·
           <a class="${badgeClass(m)}" href="${esc(src)}" target="_blank" rel="noopener"
-             title="${esc(src)} — ${esc(m.source || "provider pricing page")}">${esc(badgeText(m))} · SOURCE ↗</a>${
+             title="${esc(badgeTitle(m, src))}">${esc(badgeText(m))} · SOURCE ↗</a>${
           m.pv.hasPromo ? ` · ${m.promoEnds ? "PROMO ENDS " + esc(String(m.promoEnds).toUpperCase()) : "PROMO END UNANNOUNCED"}` : ""}</div>
       </td>
       <td class="num c-in" data-label="IN $/M">${m.pv.inEff.toFixed(2)}${alt("in", m.pv.inAlt?.toFixed(2))}</td>
@@ -968,8 +975,10 @@ renderStatic();
         m.promoIn = u.promoIn ?? null; m.promoOut = u.promoOut ?? null;
         m.promoEnds = u.promoEnds ?? null;
         if (u.verification) m.verification = u.verification;
-        if (u.tracked_at) m.tracked_at = u.tracked_at;
-        if (u.verified_at) m.verified_at = u.verified_at;
+        m.checked_at = u.checked_at ?? null;
+        m.check_source = u.check_source ?? null;
+        m.confirmed_at = u.confirmed_at ?? null;
+        m.check_note = u.check_note ?? null;
         if (u.source) m.source = u.source;
         if (u.iq !== undefined) m.iq = u.iq;
         if (u.legacy !== undefined) m.legacy = u.legacy;
@@ -977,14 +986,21 @@ renderStatic();
         if (u.superseded_by !== undefined) m.superseded_by = u.superseded_by;
         if (u.active_until !== undefined) m.active_until = u.active_until;
         if (u.cachedIn !== undefined) m.cachedIn = u.cachedIn;
-        if (u.agent_checked_at) m.agent_checked_at = u.agent_checked_at;
-        if (u.agent_status) m.agent_status = u.agent_status;
-        if (u.agent_note) m.agent_note = u.agent_note;
       }
     });
-    DATA_AS_OF = d.as_of || DATA_AS_OF;
-    const ver = d.models.filter(m => m.verification === "verified").length;
-    const ageDays = Math.floor((Date.now() - new Date(d.as_of)) / 864e5);
+    // The date that matters is when the bot last ran its daily check.
+    const lastCheck = d.checked_at;
+    const el0 = document.getElementById("statusline");
+    if (!lastCheck) {           // migrated data the bot has not run on yet
+      el0.className = "status aging";
+      el0.innerHTML = `<span class="dot"></span>AWAITING THE FIRST DAILY BOT CHECK<br/>${d.models.length} MODELS · RUNS 05:17 UTC`;
+      render(); return;
+    }
+    DATA_AS_OF = lastCheck || DATA_AS_OF;
+    const ok = d.models.filter(m => m.verification === "confirmed" && m.checked_at === lastCheck).length;
+    const notOk = d.models.length - ok;
+    const ageDays = Math.floor((Date.now() - new Date(lastCheck)) / 864e5);
+    const checkedDisplay = shortDate(lastCheck) + " " + String(lastCheck).slice(0, 4);
     const el = document.getElementById("statusline");
 
     // Two different questions, previously conflated into one alarming line:
@@ -993,21 +1009,22 @@ renderStatic();
     // Checking daily and finding nothing changed is the system working. Only a
     // genuinely paused pipeline is a problem, and then we say so plainly rather
     // than hedging with "may be".
-    const checked = ageDays <= 0 ? "CHECKED TODAY"
-                  : ageDays === 1 ? "CHECKED YESTERDAY"
-                  : `CHECKED ${ageDays} DAYS AGO`;
+    const checked = ageDays <= 0 ? "BOT-CHECKED TODAY"
+                  : ageDays === 1 ? "BOT-CHECKED YESTERDAY"
+                  : `BOT-CHECKED ${ageDays} DAYS AGO`;
+    const summary = `${ok} CONFIRMED BY THE DAILY BOT` + (notOk ? ` · ${notOk} NOT CONFIRMED` : "");
     let cls = "status", head, tail;
     if (ageDays <= 3) {
       head = `<span class="dot"></span>${checked} · ${d.models.length} MODELS`;
-      tail = `${ver} CONFIRMED AGAINST PROVIDER PAGES`;
+      tail = summary;
     } else if (ageDays <= 7) {
       cls = "status aging";
       head = `<span class="dot"></span>${checked} · ${d.models.length} MODELS`;
-      tail = `${ver} CONFIRMED AGAINST PROVIDER PAGES`;
+      tail = summary;
     } else {
       cls = "status paused";
-      head = `<span class="dot"></span>AUTOMATIC REFRESH PAUSED`;
-      tail = `LAST CHECKED <b>${esc(d.as_of_display || d.as_of)}</b>`;
+      head = `<span class="dot"></span>DAILY BOT CHECK PAUSED`;
+      tail = `LAST BOT CHECK <b>${esc(checkedDisplay)}</b>`;
     }
     // A quiet market is reassurance, not decay — say it out loud.
     if (d.last_change && ageDays <= 7) {
@@ -1015,13 +1032,13 @@ renderStatic();
       if (cd > 0) tail += ` · NO PRICE CHANGES IN ${cd} DAY${cd === 1 ? "" : "S"}`;
     }
     el.className = cls;
-    // discovery queue: models the cron found but a human hasn't verified yet
+    // discovery: new listings the bot found that are not in the sheet yet
     try {
       const dr = await fetch("/data/discovered.json", { cache: "no-store" });
       if (dr.ok) {
         const q = await dr.json();
         const pending = Array.isArray(q) ? q.filter(x => x.status === "pending").length : 0;
-        if (pending) tail = `${Math.min(pending, 99)} NEW LISTING${pending > 1 ? "S" : ""} AWAITING VERIFICATION`;
+        if (pending) tail += ` · ${Math.min(pending, 99)} NEW LISTING${pending > 1 ? "S" : ""} NOT YET TRACKED`;
       }
     } catch (e) { /* discovery file optional */ }
     el.innerHTML = head + "<br/>" + tail;

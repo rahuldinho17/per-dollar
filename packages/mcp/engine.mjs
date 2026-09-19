@@ -114,6 +114,9 @@ export function euHostModels(euHosts, { estimateCapabilityFrom = [] } = {}) {
     });
 }
 
+// "confirmed" is the current value; the others are accepted from older feeds.
+const CONFIRMED = new Set(["confirmed", "verified", "agent-verified"]);
+
 export function jobCost(model, tokensIn, tokensOut, cacheHitRate = 0) {
   const std = model.input_per_mtok;
   const cached = model.cached_input_per_mtok ?? std;   // conservative when unpublished
@@ -134,7 +137,7 @@ export function jobCost(model, tokensIn, tokensOut, cacheHitRate = 0) {
  *   minCapability   - override the task's floor
  *   excludeLegacy   - drop models the provider has marked legacy (default true)
  *   cacheHitRate    - 0..1, materially changes the ranking on agent workloads
- *   requireVerified - only price rows a human confirmed first-party
+ *   requireVerified - only price rows the daily bot confirmed on its latest check
  */
 export function decide(opts = {}) {
   const {
@@ -174,7 +177,7 @@ export function decide(opts = {}) {
         return false;
       }
     }
-    if (requireVerified && m.verification !== "verified") { excluded.push({ id: m.id, reason: "price not first-party verified" }); return false; }
+    if (requireVerified && !CONFIRMED.has(m.verification)) { excluded.push({ id: m.id, reason: "price not confirmed by the daily check" }); return false; }
     if (excludeLegacy && m.legacy) { excluded.push({ id: m.id, reason: "provider marked legacy" }); return false; }
     if (floor > 0) {
       if (m.capability == null) {
@@ -227,7 +230,7 @@ export function decide(opts = {}) {
       residency: pick.model.residency ?? null,
       residency_note: pick.model.residency_note ?? null,
       cost_per_job: round(pick.cost),
-      verification: pick.model.verification, verified_at: pick.model.verified_at ?? null,
+      verification: pick.model.verification, checked_at: pick.model.checked_at ?? null,
     },
     reason: (() => {
       const need = cls?.why ?? "this task";

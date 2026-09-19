@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PerDollar — the independent decision layer for AI model choice</title>
-<meta name="description" content="Which model should run this task? An independent router over daily-verified prices, with data residency as a hard constraint, budget adherence, and a ledger that proves what it saved." />
+<meta name="description" content="Which model should run this task? An independent router over prices a bot checks daily, with data residency as a hard constraint, budget adherence, and a ledger that proves what it saved." />
 <meta property="og:title" content="PerDollar — the cost of AI work, per completed job" />
 <meta property="og:description" content="For commerce teams running AI on support, catalog, and search: see what each model costs per finished job, and where your bill is overspending." />
 <meta property="og:type" content="website" />
@@ -252,7 +252,7 @@
     </div>
 
     <div class="trust reveal" id="trustline">
-      <span>Prices verified <span class="mono">13 Aug 2026</span></span>
+      <span>Prices checked daily by a bot</span>
       <span>·</span><span><span class="mono">24</span> models + EU-resident hosts</span>
       <span>·</span><span>Residency: <span class="mono">any · EU · Germany</span></span>
     </div>
@@ -342,7 +342,7 @@
           <li>Tell you what you <em>spent</em>, after the fact — not what to switch to</li>
           <li>Route or rank on their own generic benchmarks, not your workloads</li>
           <li>Built for the whole company; commerce jobs are one unlabelled slice</li>
-          <li>No verified, independent price record you can audit</li>
+          <li>No independent, daily-checked price record you can audit</li>
         </ul>
       </div>
       <div class="vcard good reveal">
@@ -352,7 +352,7 @@
           <li>Names the switch and the saving, per commerce workload</li>
           <li>Costs your support / catalogue / search jobs on <em>your</em> real traffic</li>
           <li>Every recommendation validated on a sample before you commit</li>
-          <li>An independent, daily-verified price record with history no dashboard keeps</li>
+          <li>An independent price record, checked by a bot every day, with history no dashboard keeps</li>
         </ul>
       </div>
     </div>
@@ -543,7 +543,7 @@
       <a href="/feed/prices.json">Price feed</a>
       <a href="/try.html">Try the router</a>
     </div>
-    <div class="fine">Prices are standard-tier, first-party API list rates, refreshed daily and labelled with who verified them and when; where we cannot source a price we say so rather than publish it. Capability scores are an independent third-party index and rate the model in general, not your task — a model that clears the bar can still fail your workload, which is why the ledger records outcomes and every switch should be sampled before it is trusted. We sell no inference and take no share of what you spend. © 2026 PerDollar.</div>
+    <div class="fine">Prices are standard-tier, first-party API list rates, checked automatically every day and labelled with the date of that check and whether the bot could confirm the price; where it could not, we say so. Capability scores are an independent third-party index and rate the model in general, not your task — a model that clears the bar can still fail your workload, which is why the ledger records outcomes and every switch should be sampled before it is trusted. We sell no inference and take no share of what you spend. © 2026 PerDollar.</div>
   </div>
 </footer>
 
@@ -556,12 +556,14 @@
       if (!r.ok) return;
       const d = await r.json();
       const n = Array.isArray(d.models) ? d.models.length : 0;
-      const ageDays = (Date.now() - new Date(d.as_of)) / 864e5;
+      const last = d.checked_at;
+      if (!last) return;          // keep the static line until the bot has run
+      const ageDays = Math.floor((Date.now() - new Date(last)) / 864e5);
       const el = document.getElementById("trustline");
       if (!el || !n) return;
       const freshness = ageDays > 7
-        ? `Prices last checked <span class="mono">${d.as_of_display || d.as_of}</span>`
-        : `Prices checked <span class="mono">${ageDays <= 0 ? "today" : ageDays === 1 ? "yesterday" : ageDays + " days ago"}</span>`;
+        ? `Prices last bot-checked <span class="mono">${last}</span>`
+        : `Prices bot-checked <span class="mono">${ageDays <= 0 ? "today" : ageDays === 1 ? "yesterday" : ageDays + " days ago"}</span>`;
       el.innerHTML =
         `<span>${freshness}</span><span>·</span>` +
         `<span><span class="mono">${n}</span> models tracked daily</span><span>·</span>` +

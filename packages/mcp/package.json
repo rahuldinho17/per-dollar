@@ -1,6 +1,6 @@
 {
   "name": "perdollar-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP server: decide which LLM to run a task on, with data residency and budget constraints, and prove what it saved.",
   "type": "module",
   "bin": { "perdollar-mcp": "./bin.mjs" },

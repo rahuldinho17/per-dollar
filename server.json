@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
   "name": "io.github.rahuldinho17/perdollar",
   "description": "Decide which LLM to run a task on. Returns the cheapest model capable enough from the models you can reach, with data residency applied before cost, plus a ledger of what each decision saved against the model you would have used anyway. Prices are verified against provider pages daily.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "url": "https://github.com/rahuldinho17/per-dollar",
     "source": "github"
@@ -13,7 +13,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "perdollar-mcp",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "transport": { "type": "stdio" },
       "environmentVariables": [
         {

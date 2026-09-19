@@ -8,7 +8,8 @@
     "route": "node router/cli.mjs route",
     "savings": "node router/cli.mjs savings",
     "refresh": "node scripts/refresh-prices.mjs",
-    "verify": "node scripts/verify.mjs",
+    "check-prices": "node scripts/verify-agent.mjs",
+    "test:check": "node scripts/check.test.mjs",
     "test": "node router/test.mjs"
   },
   "engines": { "node": ">=20" }

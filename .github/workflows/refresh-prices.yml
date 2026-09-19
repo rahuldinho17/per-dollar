@@ -19,37 +19,30 @@ jobs:
           node-version: "24"
       - name: Fetch current prices
         run: node scripts/refresh-prices.mjs
-      - name: Verify prices against provider pages
-        run: node scripts/verify-agent.mjs || echo "verify-agent had trouble; prices unaffected"
-      - name: Raise an issue for anything needing a human
+      - name: Check every price (automatic, daily)
+        # If the check itself breaks, still commit the refresh; checked_at then
+        # stays on the last good day and the sheet shows that date, not today's.
+        continue-on-error: true
+        run: node scripts/verify-agent.mjs
+      - name: Open an issue when new models appear
         if: always()
         uses: actions/github-script@v8
         with:
           script: |
+            // Prices need no human. This only tells you about brand-new models from
+            // tracked labs, which are not added to the sheet automatically.
             const fs = require("fs");
-            const read = (p) => { try { return JSON.parse(fs.readFileSync(p, "utf8")); } catch { return []; } };
-            const pending = read("data/discovered.json").filter(d => d.status === "pending");
-            const flagged = read("data/verify-queue.json").filter(q => !q.resolved);
-            if (!pending.length && !flagged.length) { core.info("nothing needs a human today"); return; }
-
-            const iso = new Date().toISOString().slice(0,10);
-            const title = `Price data needs a human — ${iso}`;
-            const body = [
-              pending.length ? `### ${pending.length} new listing(s) discovered\n` +
-                pending.slice(0,20).map(d => `- \`${d.slug}\` — $${d.inP} in / $${d.outP} out (released ${d.released || "?"})`).join("\n") +
-                `\n\nTo publish: add the slug to \`scripts/openrouter-map.json\` and an entry to \`data/prices.json\`, then verify first-party.\n` : "",
-              flagged.length ? `### ${flagged.length} price(s) the verification agent could not confirm\n` +
-                flagged.slice(0,20).map(q => `- **${q.model}** — published ${q.published}. ${q.why}\n  ${q.url}`).join("\n") + "\n" : "",
-              `_Opened automatically by the daily refresh. Close once actioned._`,
-            ].filter(Boolean).join("\n");
-
-            const open = await github.rest.issues.listForRepo({
-              owner: context.repo.owner, repo: context.repo.repo,
-              state: "open", labels: "price-review" });
+            let pending = [];
+            try { pending = JSON.parse(fs.readFileSync("data/discovered.json", "utf8")).filter(d => d.status === "pending"); } catch {}
+            if (!pending.length) { core.info("no new models"); return; }
+            const title = "New models found on OpenRouter";
+            const body = `${pending.length} model(s) from tracked labs are not in the price sheet yet:\n\n` +
+              pending.slice(0, 20).map(d => `- \`${d.slug}\` — $${d.inP} in / $${d.outP} out (released ${d.released || "?"})`).join("\n") +
+              `\n\nTo add one: its slug in \`scripts/openrouter-map.json\` and an entry in \`data/prices.json\`. The daily check dates and confirms it from then on.\n\n_Updated automatically by the daily run._`;
+            const open = await github.rest.issues.listForRepo({ owner: context.repo.owner, repo: context.repo.repo, state: "open", labels: "new-models" });
             const existing = open.data.find(i => i.title === title);
-            if (existing) { await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body }); return; }
-            await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo,
-              title, body, labels: ["price-review"] });
+            if (existing) await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body });
+            else await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body, labels: ["new-models"] });
 
       - name: Commit if changed
         run: |
@@ -60,6 +53,6 @@ jobs:
             git commit -m "chore: daily price refresh ($(date -u +%F))"
             git push
           else
-            echo "::error::refresh ran but data/ and feed/ are unchanged. as_of should advance on every successful run, so this means the script did not write, or it wrote somewhere nothing stages."
+            echo "::error::the daily check ran but data/ and feed/ are unchanged. checked_at should advance on every successful run, so this means the script did not write, or it wrote somewhere nothing stages."
             exit 1
           fi

@@ -203,7 +203,7 @@ function render(L) {
     ["Hit rate", m.hit_rate == null ? "n/a" : m.hit_rate + "%", m.hit_rate == null ? "grey" : "teal",
       m.graded ? `${m.worked}/${m.graded} graded` : "nothing graded yet"],
     ["Awaiting verdict", m.awaiting_grade, "amber", "graded at next review"],
-    ["Models tracked", p.models_tracked ?? "—", "", `${p.verified ?? 0} human-verified`],
+    ["Models tracked", p.models_tracked ?? "—", "", `${p.verified ?? 0} confirmed by the daily bot`],
     ["Price events captured", p.price_events ?? "—", "", "append-only history"],
   ];
   document.getElementById("strip").innerHTML = cells.map(([k,v,cls,s]) => `

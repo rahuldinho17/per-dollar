@@ -22,7 +22,7 @@ Token prices are abstractions; jobs are not. 1,000 tokens from different models 
 
 ## Data notes
 
-- Prices: standard-tier first-party API list rates, verified July 2026
+- Prices: standard-tier first-party API list rates, checked daily by a bot
 - Task list: usage-weighted, drawn from published studies (Anthropic Economic Index, OpenRouter State of AI, OpenAI usage report)
 - Token footprints and verbosity factors: launch estimates, to be replaced by an empirical benchmark suite
 
@@ -57,9 +57,9 @@ A GitHub Actions cron (`.github/workflows/refresh-prices.yml`) runs daily at
 05:17 UTC: it pulls current prices from the OpenRouter models API, applies
 changes, appends them to `data/changelog.json`, and commits — Vercel redeploys
 automatically. Safety rails: models not found on OpenRouter are left untouched;
-changes larger than 5x are held as anomalies for human review (visible in the
-Action log) rather than published; auto-updated prices display as AUTO-TRACKED
-until re-verified against first-party pages. Check the slugs in
+very large moves are parked until the provider's own page shows them; the daily
+check then stamps every row with the date it checked it (see "Daily automatic
+price check" below). Check the slugs in
 `scripts/openrouter-map.json` against openrouter.ai/models after the first run.
 Manual run: Actions tab → "Refresh prices (daily)" → Run workflow.
 
@@ -70,8 +70,10 @@ below-standard fetched price as a permanent cut: it parks it in promoIn/promoOut
 (changelog kind promo_price), and a return to standard is logged as promo_end,
 not a hike. The site shows both prices side by side with a PROMO badge; rankings
 default to the effective price and the "plan with standard prices" toggle
-re-ranks at list price. If a provider makes a promo permanent, promote it by
-re-verifying the standard price manually.
+re-ranks at list price. If a provider makes a promo permanent, OpenRouter's
+listing stays at the lower price and the provider page shows it; the promo is then
+the standard price and the daily check stops confirming the old standard row, which
+shows as not confirmed until the entry is updated.
 
 ## Model discovery
 
@@ -80,10 +82,10 @@ Anthropic, Google, DeepSeek, MiniMax, Z.AI, xAI, Moonshot, Mistral, Qwen, Meta,
 Cohere) that appears on OpenRouter but isn't in `openrouter-map.json` is written
 to `data/discovered.json` with status `pending` and logged in the Action output.
 It is never auto-published: the API supplies a price but not a display name, an
-answer-length factor, or a human check. The site surfaces the queue as
-"N new listings awaiting verification". To publish one, add its slug to
-`openrouter-map.json` and an entry to `data/prices.json`, then re-verify against
-the provider's own pricing page.
+answer-length factor, or a capability score. The site surfaces the queue as
+"N new listings not yet tracked". To publish one, add its slug to
+`openrouter-map.json` and an entry to `data/prices.json`; the next daily check
+dates and confirms it automatically.
 
 ## Same model, every host (`hosts.html`)
 
@@ -95,8 +97,8 @@ rates. Hosts publishing no cached rate are charged at standard (conservative),
 which is why the spread widens as the slider rises.
 
 Host prices are compiled from published provider comparisons (Jun–Jul 2026) and
-marked `tracked`, not `verified` — first-party confirmation is pending and no
-number should be quoted to a customer before that check.
+marked `tracked` — they are not yet part of the daily automatic check, and no
+number should be quoted to a customer without checking the host's page.
 
 ### Discovery tuning
 
@@ -132,66 +134,58 @@ GitHub-issue reminder (product-review.yml) keeps it turning. First review:
 skills/feedback-loop/reviews/2026-07.md. Seeded with the real field notes and shipped
 items from the project so far.
 
-## Impact view & re-verification
+## Impact view
 
 - `impact.html` — what the feedback loop changed, week by week, with loop velocity
   (median days signal→ship), hit rate, and every change traced to its trigger. Built from
   `data/loop.json` via `node scripts/build-loop-view.mjs`.
-- `scripts/verify.mjs` — the re-verification pass. `node scripts/verify.mjs` prints a
-  provider-grouped checklist (one pricing page per visit); `node scripts/verify.mjs --stamp all`
-  marks them verified today. Run weekly, and before customer calls: the cron keeps prices
-  current, but only a human makes them *verified*.
 - Capability data: the ledger now carries Artificial Analysis Intelligence Index (v4.1)
   scores where published, a VALUE column (capability per euro of job cost), and a minimum
   capability filter answering "cheapest model that clears the bar". Models with no published
   score show "no score" and are excluded when a floor is set — never given an invented number.
 
-### Date discipline
+## Daily automatic price check (no human in the loop)
 
-`verified_at` must always be the date a human actually checked the price. Use
-`node scripts/verify.mjs --stamp ...`, which reads the system date — never write a
-date by hand into `data/prices.json`. A mis-stamped verification date is worse than
-a stale one: it asserts a check that did not happen on that day.
+Prices are checked by a bot once a day and by no one else. The GitHub Action
+`refresh-prices.yml` runs at 05:17 UTC:
 
-This has now gone wrong twice, both times because a date was typed rather than read
-(29 Jul stamped for a 3 Aug sweep; 1 Sep stamped for a 25 Aug sweep). `verify.mjs`
-refuses a `--date` flag for that reason. If you find yourself about to type a date
-into a data file, stop and run the script instead.
+1. `scripts/refresh-prices.mjs` reads OpenRouter's model list, records what it lists
+   for each model today (`or_check`), applies ordinary price moves, parks promotional
+   prices in the promo fields, and parks unusually large moves (`pending_price`)
+   rather than applying them.
+2. `scripts/verify-agent.mjs` then checks every model and stamps it with today's
+   date (`checked_at`) and one result:
+   - `confirmed`, `check_source: "provider-page"` — the exact price was found beside the
+     model name on the provider's own pricing page;
+   - `confirmed`, `check_source: "openrouter"` — the provider page could not be read
+     automatically, but the price matches OpenRouter's listing today;
+   - `unconfirmed` — neither; `check_note` says why and `confirmed_at` says when it
+     was last confirmed. The price sheet shows these with a `?`.
+   A parked large move is applied only when the provider's own page shows the new
+   price. An unreadable page never counts as a confirmation.
+3. Both steps rewrite `feed/prices.json`, preserving the fields the pipeline does not
+   own (capability, answer-length factor, legacy flags, cached and off-peak rates).
+4. The action commits `data/` and `feed/`, and fails loudly if nothing changed —
+   `checked_at` advances on every successful run, so an unchanged commit means the
+   check did not write.
 
-### Reviewing promos
-
-`node scripts/verify.mjs --promos` lists every model carrying a promotional price with
-its discount ratio, and flags the patterns that mean we have mislabelled a pricing
-*tier* as a promotion — an exact 50/50 discount is the batch-API signature, ~10% is a
-cached-input rate, and an uneven input/output split usually means two different SKUs.
-Then either `--promo-confirm <ids> --ends YYYY-MM-DD` or `--promo-clear <ids>`; both
-write to the changelog, clears as corrections.
-
-## Daily verification agent
-
-`scripts/verify-agent.mjs` runs after each price refresh. For every model it fetches the
-provider's own pricing page and looks for the price we publish.
-
-- **Found** → the row becomes `agent-verified` with the date. A human `verified` stamp
-  always outranks this and is never overwritten; the badge just notes the agent
-  re-confirmed it.
-- **Not found, or different** → the row is flagged with `?`, an explanation is written to
-  `data/verify-queue.json`, and the changelog records it. **The agent never edits a price.**
-
-Two rules make it trustworthy. It can only confirm, never change — a disagreement is a
-question for a human, not a silent update. And silence is not consent: an unparseable page
-is *flagged*, never verified, because an agent that marks things verified when it finds
-nothing to contradict would destroy the only thing this product sells.
+The price sheet's status line and every row's date come from `checked_at`. If the
+action stops running, the sheet says "DAILY BOT CHECK PAUSED" after seven days rather
+than implying freshness it doesn't have.
 
 ```
 node scripts/verify-agent.mjs --dry        # report without writing
 node scripts/verify-agent.mjs --id gpt55   # one model
-cat data/verify-queue.json                 # what needs a human
+node scripts/check.test.mjs                # tests for the check's rules
 ```
 
-Expect flags on JavaScript-rendered pricing pages (several providers render prices
-client-side, so a plain fetch sees nothing). Those need either a headless browser or a
-provider-specific extractor; until then they stay honestly flagged rather than assumed.
+**Dates are never typed.** Every date in `data/prices.json` is written by these scripts
+from the clock of the machine running them. Two earlier mis-stamps (29 Jul for a 3 Aug
+sweep; 1 Sep for a 25 Aug sweep) both came from typed dates.
+
+**Known limit.** Several providers render prices in the browser, so a plain fetch sees
+nothing; those rows are confirmed via OpenRouter or shown as not confirmed. A headless
+browser or provider-specific extractors would raise the provider-page share.
 
 ## Endpoint layout (and a Vercel gotcha)
 

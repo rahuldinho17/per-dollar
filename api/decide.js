@@ -33,7 +33,7 @@ export default function handler(req, res) {
   if (!q.task) {
     return res.status(200).json({
       service: "perdollar-decide",
-      what: "Given a task and your constraints, returns which model to run it on and why. Prices are human-verified; residency is a hard filter applied before cost.",
+      what: "Given a task and your constraints, returns which model to run it on and why. Prices are checked daily by a bot; residency is a hard filter applied before cost.",
       usage: "GET /api/decide?task=code-fix&residency=eu-de",
       tasks: Object.keys(TASK_CLASSES),
       residency: {

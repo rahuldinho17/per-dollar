@@ -40,7 +40,7 @@ Read these, in order, and hold them while assessing:
 
 **The thesis to judge against**, as it currently stands: PerDollar is the independent decision
 and provenance layer for model choice. It sells no inference, stays out of the request path, and
-competes on jurisdiction, verified pricing and measured outcomes — not on routing, breadth or
+competes on jurisdiction, daily bot-checked pricing and measured outcomes — not on routing, breadth or
 price. Anything that pulls toward being a gateway, a comparison table, or a bigger catalogue is
 drifting.
 

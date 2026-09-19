@@ -21,12 +21,12 @@ litellm.register_model({
         "litellm_provider": m["provider"].lower(),
     }
     for m in feed["models"]
-    # only trust prices a human or the daily agent actually confirmed
-    if m["verification"] in ("verified", "agent-verified")
+    # only trust prices the daily bot confirmed on its latest check
+    if m["verification"] == "confirmed"
 })
 ```
 
-Run it on a schedule. `feed["as_of"]` tells you when the data was last checked, so you can
+Run it on a schedule. `feed["checked_at"]` (and each model's `checked_at`) tells you when the bot last checked, so you can
 alarm if it stops moving.
 
 ## Choose the model before you call
