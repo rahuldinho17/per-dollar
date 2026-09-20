@@ -963,5 +963,23 @@
     "kind": "confirmed",
     "source": "daily price check",
     "note": "confirmed via provider-page"
+  },
+  {
+    "date": "2026-09-20",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.0434,
+    "new": 0.0364,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-20",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "outP",
+    "old": 0.0868,
+    "new": 0.0728,
+    "kind": "promo_price"
   }
 ]

@@ -8,7 +8,7 @@
     "context_length": 1048576,
     "released": "2026-09-18",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -20,7 +20,7 @@
     "context_length": 1048576,
     "released": "2026-09-10",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -32,7 +32,7 @@
     "context_length": 1050000,
     "released": "2026-09-04",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -44,7 +44,7 @@
     "context_length": 1050000,
     "released": "2026-09-04",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -56,7 +56,7 @@
     "context_length": 1050000,
     "released": "2026-09-04",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -68,7 +68,7 @@
     "context_length": 1050000,
     "released": "2026-09-04",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -80,7 +80,7 @@
     "context_length": 1000000,
     "released": "2026-09-03",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -92,7 +92,7 @@
     "context_length": 1048576,
     "released": "2026-09-02",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -104,7 +104,7 @@
     "context_length": 1048576,
     "released": "2026-09-02",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -116,7 +116,7 @@
     "context_length": 1000000,
     "released": "2026-09-01",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -128,7 +128,7 @@
     "context_length": 1000000,
     "released": "2026-09-01",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -140,7 +140,7 @@
     "context_length": 1000000,
     "released": "2026-08-26",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -152,7 +152,7 @@
     "context_length": 1310720,
     "released": "2026-08-26",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -164,7 +164,7 @@
     "context_length": 1048576,
     "released": "2026-08-26",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -176,7 +176,7 @@
     "context_length": 1048576,
     "released": "2026-08-21",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -188,19 +188,19 @@
     "context_length": 1048576,
     "released": "2026-08-21",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
     "slug": "z-ai/glm-5.3",
     "vendor": "z-ai",
     "name": "Z.ai: GLM 5.3",
-    "inP": 0.91,
-    "outP": 2.86,
+    "inP": 0.896,
+    "outP": 2.816,
     "context_length": 1310720,
     "released": "2026-08-18",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -212,19 +212,19 @@
     "context_length": 1048576,
     "released": "2026-08-18",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
     "slug": "qwen/qwen3.8-27b",
     "vendor": "qwen",
     "name": "Qwen: Qwen3.8 27B",
-    "inP": 0.214,
-    "outP": 2.55,
+    "inP": 0.42,
+    "outP": 3,
     "context_length": 1000000,
     "released": "2026-08-14",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -236,7 +236,7 @@
     "context_length": 262144,
     "released": "2026-08-14",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -248,7 +248,7 @@
     "context_length": 1048576,
     "released": "2026-08-13",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -260,7 +260,7 @@
     "context_length": 1048576,
     "released": "2026-08-12",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -272,19 +272,19 @@
     "context_length": 1010000,
     "released": "2026-08-12",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
     "slug": "deepseek/deepseek-v4-pro-0813",
     "vendor": "deepseek",
     "name": "DeepSeek: DeepSeek V4 Pro 0813",
-    "inP": 0.5782,
-    "outP": 1.7345,
+    "inP": 0.66,
+    "outP": 1.98,
     "context_length": 1048576,
     "released": "2026-08-12",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -296,7 +296,7 @@
     "context_length": 1048576,
     "released": "2026-08-12",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -308,7 +308,7 @@
     "context_length": 262144,
     "released": "2026-08-11",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   },
   {
@@ -320,7 +320,7 @@
     "context_length": 1000000,
     "released": "2026-08-11",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-09-19",
+    "last_seen": "2026-09-20",
     "status": "pending"
   }
 ]
