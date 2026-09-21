@@ -981,5 +981,41 @@
     "old": 0.0868,
     "new": 0.0728,
     "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-21",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.0364,
+    "new": 0.0886,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-21",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "outP",
+    "old": 0.0728,
+    "new": 0.1772,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-21",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "inP",
+    "old": 0.4223,
+    "new": 0.9553,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-21",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "outP",
+    "old": 0.8446,
+    "new": 1.9105,
+    "kind": "promo_price"
   }
 ]
