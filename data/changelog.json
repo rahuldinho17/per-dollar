@@ -1017,5 +1017,30 @@
     "old": 0.8446,
     "new": 1.9105,
     "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-22",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "inP",
+    "old": 1.7,
+    "new": 3,
+    "kind": "promo_end"
+  },
+  {
+    "date": "2026-09-22",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "outP",
+    "old": 8.5,
+    "new": 15,
+    "kind": "promo_end"
+  },
+  {
+    "date": "2026-09-22",
+    "source": "openrouter-api",
+    "model": "x-ai/grok-4.7",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
