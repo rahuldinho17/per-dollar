@@ -1,6 +1,6 @@
 {
-  "as_of": "2026-09-23",
-  "as_of_display": "23 SEPT 2026",
+  "as_of": "2026-09-24",
+  "as_of_display": "24 SEPT 2026",
   "note": "Human verification retired 2026-09-19. Every price is now checked automatically once a day; checked_at on each model is the date of the bot's last check.",
   "models": [
     {
@@ -12,12 +12,12 @@
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "price_changed_at": "2026-08-18",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "openrouter",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": "not confirmed on the provider page (model name not found on the page — it may be renamed, moved, or the page is JavaScript-rendered); price matches OpenRouter's listing",
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 2,
         "outP": 6
@@ -36,12 +36,12 @@
       "promoEnds": "2026-12-31",
       "promo_kind": "introductory",
       "price_changed_at": "2026-08-18",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "openrouter",
-      "confirmed_at": "2026-09-23",
-      "check_note": "not confirmed on the provider page (page shows $1, $3, $7, $14 near the model name; we publish $1.5/$7.5); price matches OpenRouter's listing",
+      "confirmed_at": "2026-09-24",
+      "check_note": "not confirmed on the provider page (model name found but no prices near it — the page is probably rendered client-side); price matches OpenRouter's listing",
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 0.75,
         "outP": 3.75
@@ -57,12 +57,12 @@
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
       "price_changed_at": "2026-08-03",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "provider-page",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": null,
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 5,
         "outP": 25
@@ -78,12 +78,12 @@
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
       "price_changed_at": "2026-07-22",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "provider-page",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": null,
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 2,
         "outP": 10
@@ -102,12 +102,12 @@
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
       "price_changed_at": "2026-07-22",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "provider-page",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": null,
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 10,
         "outP": 50
@@ -123,12 +123,12 @@
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "provider-page",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": null,
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 5,
         "outP": 25
@@ -148,12 +148,12 @@
       "promoOut": null,
       "promoEnds": null,
       "price_changed_at": "2026-07-22",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "openrouter",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": "not confirmed on the provider page (model name not found on the page — it may be renamed, moved, or the page is JavaScript-rendered); price matches OpenRouter's listing",
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 2,
         "outP": 12
@@ -173,12 +173,12 @@
       "promoEnds": null,
       "cachedIn": 0.2,
       "price_changed_at": "2026-07-22",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "provider-page",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": null,
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 2,
         "outP": 10
@@ -194,12 +194,12 @@
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "provider-page",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": null,
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 3,
         "outP": 15
@@ -216,12 +216,12 @@
       "self_hosted": false,
       "cachedIn": 0.3,
       "price_changed_at": "2026-07-22",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "openrouter",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": "not confirmed on the provider page (model name found but no prices near it — the page is probably rendered client-side); price matches OpenRouter's listing",
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 3,
         "outP": 15
@@ -236,16 +236,16 @@
       "inP": 2,
       "outP": 12,
       "verification": "confirmed",
-      "source": "https://ai.google.dev/gemini-api/docs/pricing",
+      "source": "https://openrouter.ai/api/v1/models",
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing",
       "self_hosted": false,
-      "checked_at": "2026-09-23",
-      "check_source": "provider-page",
-      "confirmed_at": "2026-09-23",
-      "check_note": null,
+      "checked_at": "2026-09-24",
+      "check_source": "openrouter",
+      "confirmed_at": "2026-09-24",
+      "check_note": "not confirmed on the provider page (model name found but no prices near it — the page is probably rendered client-side); price matches OpenRouter's listing",
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 2,
         "outP": 12
@@ -265,12 +265,12 @@
       "promoOut": null,
       "promoEnds": null,
       "price_changed_at": "2026-07-22",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "openrouter",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": "not confirmed on the provider page (model name not found on the page — it may be renamed, moved, or the page is JavaScript-rendered); price matches OpenRouter's listing",
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 0.2,
         "outP": 1.2
@@ -291,12 +291,12 @@
       "promoEnds": "2026-12-31",
       "promo_kind": "introductory",
       "price_changed_at": "2026-07-22",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "openrouter",
-      "confirmed_at": "2026-09-23",
-      "check_note": "not confirmed on the provider page (page shows $1, $3, $7, $14 near the model name; we publish $1.5/$7.5); price matches OpenRouter's listing",
+      "confirmed_at": "2026-09-24",
+      "check_note": "not confirmed on the provider page (model name found but no prices near it — the page is probably rendered client-side); price matches OpenRouter's listing",
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 0.75,
         "outP": 3.75
@@ -311,12 +311,12 @@
       "residency": "us",
       "residency_note": "US-operated API; EU data residency only under a specific enterprise agreement",
       "self_hosted": false,
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "provider-page",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": null,
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 1,
         "outP": 5
@@ -334,12 +334,12 @@
       "residency": "non-eu",
       "residency_note": "operated outside the EU/US",
       "self_hosted": false,
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "openrouter",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": "not confirmed on the provider page (model name found but no prices near it — the page is probably rendered client-side); price matches OpenRouter's listing",
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 0.3,
         "outP": 1.2
@@ -354,12 +354,12 @@
       "residency": "global",
       "residency_note": "regional endpoints available; confirm the contract covers EU processing",
       "self_hosted": false,
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "openrouter",
-      "confirmed_at": "2026-09-23",
-      "check_note": "not confirmed on the provider page (page shows $1, $3 near the model name; we publish $0.5/$3 (output matched, input did not)); price matches OpenRouter's listing",
+      "confirmed_at": "2026-09-24",
+      "check_note": "not confirmed on the provider page (page shows $1.5, $3 near the model name; we publish $0.5/$3 (output matched, input did not)); price matches OpenRouter's listing",
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 0.5,
         "outP": 3
@@ -379,12 +379,12 @@
       "off_peak_out": 0.66,
       "off_peak_cached_in": 0.007,
       "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted.",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "openrouter",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": "not confirmed on the provider page (page shows $0.6, $1.2, $1.98, $3.96 near the model name; we publish $0.44/$1.32); price matches OpenRouter's listing",
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 0.0886,
         "outP": 0.1772
@@ -403,12 +403,12 @@
       "residency_note": "regional endpoints available; confirm the contract covers EU processing",
       "self_hosted": false,
       "audio_in": 0.5,
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "openrouter",
-      "confirmed_at": "2026-09-23",
-      "check_note": "not confirmed on the provider page (page shows $1, $30 near the model name; we publish $0.25/$1.5); price matches OpenRouter's listing",
+      "confirmed_at": "2026-09-24",
+      "check_note": "not confirmed on the provider page (page shows $0.75, $1.5 near the model name; we publish $0.25/$1.5 (output matched, input did not)); price matches OpenRouter's listing",
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
         "inP": 0.25,
         "outP": 1.5
@@ -428,21 +428,21 @@
       "off_peak_out": 1.98,
       "off_peak_cached_in": 0.022,
       "pricing_note": "Billed by time of day. Peak 01:00-04:00 and 06:00-10:00 UTC Mon-Fri; off-peak is half. We publish the peak rate so a bill can only come in lower than quoted.",
-      "checked_at": "2026-09-23",
+      "checked_at": "2026-09-24",
       "check_source": "provider-page",
-      "confirmed_at": "2026-09-23",
+      "confirmed_at": "2026-09-24",
       "check_note": null,
       "or_check": {
-        "date": "2026-09-23",
+        "date": "2026-09-24",
         "listed": true,
-        "inP": 0.9553,
-        "outP": 1.9105
+        "inP": 0.9396,
+        "outP": 1.8792
       },
-      "promoIn": 0.9553,
-      "promo_tracked_at": "2026-09-21",
-      "promoOut": 1.9105
+      "promoIn": 0.9396,
+      "promo_tracked_at": "2026-09-24",
+      "promoOut": 1.8792
     }
   ],
-  "last_change": "2026-09-22",
-  "checked_at": "2026-09-23"
+  "last_change": "2026-09-24",
+  "checked_at": "2026-09-24"
 }
