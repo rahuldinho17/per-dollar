@@ -1172,5 +1172,55 @@
     "model": "nvidia/nemotron-3.5-lightning:free",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-09-25",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.0886,
+    "new": 0.049,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-25",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "outP",
+    "old": 0.1772,
+    "new": 0.098,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-25",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "inP",
+    "old": 0.9396,
+    "new": 0.783,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-25",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "outP",
+    "old": 1.8792,
+    "new": 1.566,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-09-25",
+    "source": "openrouter-api",
+    "model": "nvidia/nemotron-3.5-lightning",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-09-25",
+    "source": "openrouter-api",
+    "model": "nvidia/nemotron-3.5-lightning:free",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
