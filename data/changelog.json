@@ -1444,5 +1444,23 @@
     "old": 1.566,
     "new": 0.4176,
     "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-02",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "inP",
+    "old": 0.713,
+    "new": 2.7,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-02",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "outP",
+    "old": 10,
+    "new": 13.5,
+    "kind": "promo_price"
   }
 ]
