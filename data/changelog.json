@@ -1462,5 +1462,30 @@
     "old": 10,
     "new": 13.5,
     "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-03",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.042,
+    "new": 0.028,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-03",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "outP",
+    "old": 0.084,
+    "new": 0.056,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-03",
+    "source": "openrouter-api",
+    "model": "nvidia/switchyard",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
