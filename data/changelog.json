@@ -1487,5 +1487,41 @@
     "model": "nvidia/switchyard",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-10-04",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "inP",
+    "old": 2.7,
+    "new": 0.72,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-04",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "outP",
+    "old": 13.5,
+    "new": 13,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-04",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.028,
+    "new": 0.0224,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-04",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "outP",
+    "old": 1.32,
+    "new": 1.28,
+    "kind": "cut"
   }
 ]
