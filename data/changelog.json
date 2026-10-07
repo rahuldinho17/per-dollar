@@ -1568,5 +1568,46 @@
     "old": 0.03,
     "new": 0.0157,
     "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-07",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "inP",
+    "old": 0.95,
+    "new": 0.62,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-07",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "outP",
+    "old": 14,
+    "new": 15,
+    "kind": "promo_end"
+  },
+  {
+    "date": "2026-10-07",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.0157,
+    "new": 0.03,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-07",
+    "source": "openrouter-api",
+    "model": "google/gemini-nano-banana-2.1",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-10-07",
+    "source": "openrouter-api",
+    "model": "mistralai/mistral-large-4-0",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
