@@ -1912,5 +1912,32 @@
     "model": "google/gemini-4-argon:batch",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-10-15",
+    "source": "openrouter-api",
+    "model": "gpt56sol",
+    "dimension": "inP",
+    "old": 2,
+    "new": 4,
+    "kind": "promo_end"
+  },
+  {
+    "date": "2026-10-15",
+    "source": "openrouter-api",
+    "model": "gpt56sol",
+    "dimension": "outP",
+    "old": 10,
+    "new": 20,
+    "kind": "promo_end"
+  },
+  {
+    "date": "2026-10-15",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "inP",
+    "old": 0.62,
+    "new": 0.45,
+    "kind": "promo_price"
   }
 ]
