@@ -1939,5 +1939,37 @@
     "old": 0.62,
     "new": 0.45,
     "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-16",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "inP",
+    "old": 0.45,
+    "new": 0.304,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-16",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "outP",
+    "old": 15,
+    "new": 11.936,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-16",
+    "source": "openrouter-api",
+    "model": "nvidia/nemotron-3.5-super-vl",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-10-16",
+    "source": "openrouter-api",
+    "model": "nvidia/nemotron-3.5-super-vl:free",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
