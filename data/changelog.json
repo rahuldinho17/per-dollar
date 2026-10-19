@@ -1996,5 +1996,32 @@
     "model": "deepseek/deepseek-v4.1-flash-1017",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-10-19",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "inP",
+    "old": 0.304,
+    "new": 0.239,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-19",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "inP",
+    "old": 0.2088,
+    "new": 0.9553,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-19",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "outP",
+    "old": 0.4176,
+    "new": 1.9105,
+    "kind": "promo_price"
   }
 ]
