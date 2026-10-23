@@ -2030,5 +2030,12 @@
     "model": "minimax/minimax-m3.1-flash:free",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-10-23",
+    "source": "openrouter-api",
+    "model": "minimax/minimax-m3.1-flash",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]

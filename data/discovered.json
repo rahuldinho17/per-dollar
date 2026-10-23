@@ -12,6 +12,18 @@
     "status": "pending"
   },
   {
+    "slug": "minimax/minimax-m3.1-flash",
+    "vendor": "minimax",
+    "name": "MiniMax: MiniMax M3.1 Flash",
+    "inP": 0.15,
+    "outP": 0.6,
+    "context_length": 1048576,
+    "released": "2026-10-19",
+    "first_seen": "2026-10-23",
+    "last_seen": "2026-10-23",
+    "status": "pending"
+  },
+  {
     "slug": "deepseek/deepseek-v4.1-flash-1017",
     "vendor": "deepseek",
     "name": "DeepSeek: DeepSeek V4.1 Flash 1017",
@@ -20,7 +32,7 @@
     "context_length": 1048576,
     "released": "2026-10-17",
     "first_seen": "2026-10-17",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -32,7 +44,7 @@
     "context_length": 1048576,
     "released": "2026-10-15",
     "first_seen": "2026-10-16",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -44,7 +56,7 @@
     "context_length": 1000000,
     "released": "2026-10-15",
     "first_seen": "2026-10-16",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -56,7 +68,7 @@
     "context_length": 1048576,
     "released": "2026-10-13",
     "first_seen": "2026-10-14",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -68,7 +80,7 @@
     "context_length": 1048576,
     "released": "2026-10-13",
     "first_seen": "2026-10-14",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -80,7 +92,7 @@
     "context_length": 1000000,
     "released": "2026-10-07",
     "first_seen": "2026-10-08",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -92,7 +104,7 @@
     "context_length": 1000000,
     "released": "2026-10-07",
     "first_seen": "2026-10-08",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -104,7 +116,7 @@
     "context_length": 65536,
     "released": "2026-10-06",
     "first_seen": "2026-10-07",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -116,7 +128,7 @@
     "context_length": 524288,
     "released": "2026-10-06",
     "first_seen": "2026-10-07",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -128,7 +140,7 @@
     "context_length": 1050000,
     "released": "2026-09-29",
     "first_seen": "2026-09-30",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -140,7 +152,7 @@
     "context_length": 1050000,
     "released": "2026-09-29",
     "first_seen": "2026-09-30",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -152,7 +164,7 @@
     "context_length": 1050000,
     "released": "2026-09-29",
     "first_seen": "2026-09-30",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -164,7 +176,7 @@
     "context_length": 1050000,
     "released": "2026-09-29",
     "first_seen": "2026-09-30",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -176,7 +188,7 @@
     "context_length": 1000000,
     "released": "2026-09-28",
     "first_seen": "2026-09-29",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -188,7 +200,7 @@
     "context_length": 1000000,
     "released": "2026-09-28",
     "first_seen": "2026-09-29",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -200,7 +212,7 @@
     "context_length": 1000000,
     "released": "2026-09-23",
     "first_seen": "2026-09-24",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -212,7 +224,7 @@
     "context_length": 1000000,
     "released": "2026-09-23",
     "first_seen": "2026-09-24",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -224,7 +236,7 @@
     "context_length": 192000,
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -236,7 +248,7 @@
     "context_length": 1050000,
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -248,7 +260,7 @@
     "context_length": 1050000,
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -260,7 +272,7 @@
     "context_length": 1050000,
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -272,7 +284,7 @@
     "context_length": 1050000,
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -284,7 +296,7 @@
     "context_length": 1050000,
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -296,7 +308,7 @@
     "context_length": 1050000,
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -308,7 +320,7 @@
     "context_length": 1050000,
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -320,7 +332,7 @@
     "context_length": 1050000,
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -332,7 +344,7 @@
     "context_length": 1000000,
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -344,7 +356,7 @@
     "context_length": 1000000,
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -356,7 +368,7 @@
     "context_length": 500000,
     "released": "2026-09-21",
     "first_seen": "2026-09-22",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -368,7 +380,7 @@
     "context_length": 1000000,
     "released": "2026-09-21",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -380,7 +392,7 @@
     "context_length": 1000000,
     "released": "2026-09-21",
     "first_seen": "2026-10-03",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -392,7 +404,7 @@
     "context_length": 1048576,
     "released": "2026-09-18",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -404,7 +416,7 @@
     "context_length": 1048576,
     "released": "2026-09-10",
     "first_seen": "2026-09-19",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -416,7 +428,7 @@
     "context_length": 1048576,
     "released": "2026-09-10",
     "first_seen": "2026-09-23",
-    "last_seen": "2026-10-22",
+    "last_seen": "2026-10-23",
     "status": "pending"
   },
   {
@@ -465,18 +477,6 @@
     "released": "2026-09-04",
     "first_seen": "2026-09-19",
     "last_seen": "2026-10-19",
-    "status": "pending"
-  },
-  {
-    "slug": "qwen/qwen3.8-max-0902",
-    "vendor": "qwen",
-    "name": "Qwen: Qwen3.8 Max (0902)",
-    "inP": 2,
-    "outP": 6,
-    "context_length": 1000000,
-    "released": "2026-09-03",
-    "first_seen": "2026-09-19",
-    "last_seen": "2026-10-18",
     "status": "pending"
   }
 ]
