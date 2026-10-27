@@ -2123,5 +2123,69 @@
     "kind": "unconfirmed",
     "source": "daily price check",
     "note": "model name found but no prices near it — the page is probably rendered client-side; OpenRouter lists $0.152/$20; a move to $3/$20 is waiting for the provider page to show it"
+  },
+  {
+    "date": "2026-10-27",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "inP",
+    "old": 0.152,
+    "new": 0.179,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-27",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "outP",
+    "old": 10.8,
+    "new": 11.5,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-27",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.091,
+    "new": 0.05,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-27",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "outP",
+    "old": 0.182,
+    "new": 0.45,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-10-27",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.1-terra-pro",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-10-27",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.1-terra-pro:batch",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-10-27",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.1-terra",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-10-27",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.1-terra:batch",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
