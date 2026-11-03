@@ -2293,5 +2293,12 @@
     "kind": "unconfirmed",
     "source": "daily price check",
     "note": "page shows $0.003, $0.006, $0.022, $0.044, $0.15, $0.3, $0.6, $0.66 near the model name; we publish $1.6/$3.96 (output matched, input did not); OpenRouter lists $1.6/$3.2"
+  },
+  {
+    "date": "2026-11-03",
+    "source": "openrouter-api",
+    "model": "z-ai/glm-5.3-flashx-legal",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
