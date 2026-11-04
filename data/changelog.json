@@ -2300,5 +2300,28 @@
     "model": "z-ai/glm-5.3-flashx-legal",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-04",
+    "source": "openrouter-api",
+    "model": "kimik3",
+    "dimension": "outP",
+    "old": 15,
+    "new": 16,
+    "kind": "hike"
+  },
+  {
+    "date": "2026-11-04",
+    "source": "openrouter-api",
+    "model": "x-ai/grok-4.7:batch",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-04",
+    "model": "kimik3",
+    "kind": "confirmed",
+    "source": "daily price check",
+    "note": "not confirmed on the provider page (model name found but no prices near it — the page is probably rendered client-side); price matches OpenRouter's listing"
   }
 ]
