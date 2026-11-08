@@ -2380,5 +2380,30 @@
     "old": 1.7946,
     "new": 1.4967,
     "kind": "promo_price"
+  },
+  {
+    "date": "2026-11-08",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "inP",
+    "old": 0.7484,
+    "new": 0.2718,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-11-08",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "outP",
+    "old": 1.4967,
+    "new": 0.5436,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-11-08",
+    "source": "openrouter-api",
+    "model": "deepseek/deepseek-v4.1-flash-1017:batch",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
