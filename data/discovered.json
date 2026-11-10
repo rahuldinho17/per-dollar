@@ -1,5 +1,41 @@
 [
   {
+    "slug": "thinkingmachines/inkling-2-small:free",
+    "vendor": "thinkingmachines",
+    "name": "Thinking Machines: Inkling 2 Small (free)",
+    "inP": 0,
+    "outP": 0,
+    "context_length": 1048576,
+    "released": "2026-11-09",
+    "first_seen": "2026-11-10",
+    "last_seen": "2026-11-10",
+    "status": "pending"
+  },
+  {
+    "slug": "anthropic/claude-fable-5.2",
+    "vendor": "anthropic",
+    "name": "Anthropic: Claude Fable 5.2",
+    "inP": 8,
+    "outP": 40,
+    "context_length": 1000000,
+    "released": "2026-11-09",
+    "first_seen": "2026-11-10",
+    "last_seen": "2026-11-10",
+    "status": "pending"
+  },
+  {
+    "slug": "anthropic/claude-fable-5.2:batch",
+    "vendor": "anthropic",
+    "name": "Anthropic: Claude Fable 5.2 (batch)",
+    "inP": 4,
+    "outP": 20,
+    "context_length": 1000000,
+    "released": "2026-11-09",
+    "first_seen": "2026-11-10",
+    "last_seen": "2026-11-10",
+    "status": "pending"
+  },
+  {
     "slug": "google/gemini-omni-1.2-flash",
     "vendor": "google",
     "name": "Google: Gemini Omni 1.2 Flash",
@@ -8,7 +44,7 @@
     "context_length": 131072,
     "released": "2026-11-05",
     "first_seen": "2026-11-06",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -20,7 +56,7 @@
     "context_length": 131072,
     "released": "2026-11-04",
     "first_seen": "2026-11-06",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -32,7 +68,7 @@
     "context_length": 1048576,
     "released": "2026-11-02",
     "first_seen": "2026-11-03",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -44,7 +80,7 @@
     "context_length": 1050000,
     "released": "2026-10-26",
     "first_seen": "2026-10-27",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -56,7 +92,7 @@
     "context_length": 1050000,
     "released": "2026-10-26",
     "first_seen": "2026-10-27",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -68,7 +104,7 @@
     "context_length": 1050000,
     "released": "2026-10-26",
     "first_seen": "2026-10-27",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -80,7 +116,7 @@
     "context_length": 1050000,
     "released": "2026-10-26",
     "first_seen": "2026-10-27",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -92,7 +128,7 @@
     "context_length": 1048576,
     "released": "2026-10-23",
     "first_seen": "2026-10-24",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -116,7 +152,7 @@
     "context_length": 1048576,
     "released": "2026-10-19",
     "first_seen": "2026-10-23",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -128,7 +164,7 @@
     "context_length": 1048576,
     "released": "2026-10-17",
     "first_seen": "2026-10-17",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -140,7 +176,7 @@
     "context_length": 1048576,
     "released": "2026-10-17",
     "first_seen": "2026-11-08",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -148,11 +184,11 @@
     "vendor": "nvidia",
     "name": "NVIDIA: Nemotron 3.5 Super VL",
     "inP": 0.15,
-    "outP": 0.5,
+    "outP": 0.47,
     "context_length": 1048576,
     "released": "2026-10-15",
     "first_seen": "2026-10-16",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -164,7 +200,7 @@
     "context_length": 1000000,
     "released": "2026-10-15",
     "first_seen": "2026-10-16",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -176,7 +212,7 @@
     "context_length": 1048576,
     "released": "2026-10-13",
     "first_seen": "2026-10-14",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -188,7 +224,7 @@
     "context_length": 1048576,
     "released": "2026-10-13",
     "first_seen": "2026-10-14",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -200,7 +236,7 @@
     "context_length": 1000000,
     "released": "2026-10-07",
     "first_seen": "2026-10-08",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -212,7 +248,7 @@
     "context_length": 1000000,
     "released": "2026-10-07",
     "first_seen": "2026-10-08",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -224,7 +260,7 @@
     "context_length": 65536,
     "released": "2026-10-06",
     "first_seen": "2026-10-07",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -236,7 +272,7 @@
     "context_length": 524288,
     "released": "2026-10-06",
     "first_seen": "2026-10-07",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -248,7 +284,7 @@
     "context_length": 1050000,
     "released": "2026-09-29",
     "first_seen": "2026-09-30",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -260,7 +296,7 @@
     "context_length": 1050000,
     "released": "2026-09-29",
     "first_seen": "2026-09-30",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -272,7 +308,7 @@
     "context_length": 1050000,
     "released": "2026-09-29",
     "first_seen": "2026-09-30",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -284,7 +320,7 @@
     "context_length": 1050000,
     "released": "2026-09-29",
     "first_seen": "2026-09-30",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -296,7 +332,7 @@
     "context_length": 1000000,
     "released": "2026-09-28",
     "first_seen": "2026-09-29",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -308,7 +344,7 @@
     "context_length": 1000000,
     "released": "2026-09-28",
     "first_seen": "2026-09-29",
-    "last_seen": "2026-11-09",
+    "last_seen": "2026-11-10",
     "status": "pending"
   },
   {
@@ -441,42 +477,6 @@
     "released": "2026-09-22",
     "first_seen": "2026-09-23",
     "last_seen": "2026-11-06",
-    "status": "pending"
-  },
-  {
-    "slug": "anthropic/claude-opus-5.5",
-    "vendor": "anthropic",
-    "name": "Anthropic: Claude Opus 5.5",
-    "inP": 4,
-    "outP": 20,
-    "context_length": 1000000,
-    "released": "2026-09-22",
-    "first_seen": "2026-09-23",
-    "last_seen": "2026-11-06",
-    "status": "pending"
-  },
-  {
-    "slug": "anthropic/claude-opus-5.5:batch",
-    "vendor": "anthropic",
-    "name": "Anthropic: Claude Opus 5.5 (batch)",
-    "inP": 2,
-    "outP": 10,
-    "context_length": 1000000,
-    "released": "2026-09-22",
-    "first_seen": "2026-09-23",
-    "last_seen": "2026-11-06",
-    "status": "pending"
-  },
-  {
-    "slug": "x-ai/grok-4.7",
-    "vendor": "x-ai",
-    "name": "SpaceXAI: Grok 4.7",
-    "inP": 2,
-    "outP": 6,
-    "context_length": 500000,
-    "released": "2026-09-21",
-    "first_seen": "2026-09-22",
-    "last_seen": "2026-11-05",
     "status": "pending"
   }
 ]
