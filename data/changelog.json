@@ -2462,5 +2462,37 @@
     "model": "anthropic/claude-fable-5.2:batch",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-11",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "inP",
+    "old": 0.091,
+    "new": 0.09,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-11-11",
+    "source": "openrouter-api",
+    "model": "dsv4f",
+    "dimension": "outP",
+    "old": 0.182,
+    "new": 0.18,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-11-11",
+    "source": "openrouter-api",
+    "model": "google/gemini-4-carbon",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-11",
+    "source": "openrouter-api",
+    "model": "google/gemini-4-carbon:batch",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
