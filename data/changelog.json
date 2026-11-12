@@ -2494,5 +2494,48 @@
     "model": "google/gemini-4-carbon:batch",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-12",
+    "source": "openrouter-api",
+    "model": "gpt56sol",
+    "dimension": "inP",
+    "old": 4,
+    "new": 4.4,
+    "kind": "hike"
+  },
+  {
+    "date": "2026-11-12",
+    "source": "openrouter-api",
+    "model": "gpt56sol",
+    "dimension": "outP",
+    "old": 20,
+    "new": 22,
+    "kind": "hike"
+  },
+  {
+    "date": "2026-11-12",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "inP",
+    "old": 0.9553,
+    "new": 0.8923,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-11-12",
+    "source": "openrouter-api",
+    "model": "dsv4pro",
+    "dimension": "outP",
+    "old": 1.9105,
+    "new": 1.7845,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-11-12",
+    "source": "openrouter-api",
+    "model": "moonshotai/kimi-k3.1-pro:batch",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
