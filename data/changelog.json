@@ -2576,5 +2576,23 @@
     "model": "thinkingmachines/inkling-2-small",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-14",
+    "source": "openrouter-api",
+    "model": "gpt56sol",
+    "dimension": "inP",
+    "old": 4.4,
+    "new": 4,
+    "kind": "promo_price"
+  },
+  {
+    "date": "2026-11-14",
+    "source": "openrouter-api",
+    "model": "gpt56sol",
+    "dimension": "outP",
+    "old": 22,
+    "new": 20,
+    "kind": "promo_price"
   }
 ]
