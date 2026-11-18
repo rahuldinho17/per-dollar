@@ -2637,5 +2637,61 @@
     "model": "qwen/qwen4-max",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-18",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.2-astra-pro",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-18",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.2-astra-pro:batch",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-18",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.2-astra",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-18",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.2-astra:batch",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-18",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.2-sol-pro",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-18",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.2-sol-pro:batch",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-18",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.2-sol",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-18",
+    "source": "openrouter-api",
+    "model": "openai/gpt-6.2-sol:batch",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
