@@ -2707,5 +2707,12 @@
     "model": "google/gemini-4-neon:batch",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-20",
+    "source": "openrouter-api",
+    "model": "mistralai/pixtral-large-2502",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
