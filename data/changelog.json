@@ -2714,5 +2714,12 @@
     "model": "mistralai/pixtral-large-2502",
     "kind": "discovered",
     "note": "new listing from a tracked vendor, not yet in the price sheet"
+  },
+  {
+    "date": "2026-11-21",
+    "source": "openrouter-api",
+    "model": "thinkingmachines/inkling-2-mini",
+    "kind": "discovered",
+    "note": "new listing from a tracked vendor, not yet in the price sheet"
   }
 ]
